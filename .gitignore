@@ -1,0 +1,52 @@
+# ─────────────────────────────────────────────
+# ✅ Node modules and build artifacts
+# ─────────────────────────────────────────────
+node_modules/
+dist/
+.vite/
+.oracle-prefect/
+*.tsbuildinfo
+
+# ─────────────────────────────────────────────
+# ✅ Environment variables
+# ─────────────────────────────────────────────
+.env
+.env.*
+!.env.example  # Use this to show required env vars (without secrets)
+
+# ─────────────────────────────────────────────
+# ✅ Logs and debug files
+# ─────────────────────────────────────────────
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ─────────────────────────────────────────────
+# ✅ Vite + TypeScript cache
+# ─────────────────────────────────────────────
+.vite/
+*.tsbuildinfo
+
+# ─────────────────────────────────────────────
+# ✅ OS + Editor files
+# ─────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+Icon?
+
+.vscode/
+.idea/        # JetBrains/WebStorm/IntelliJ
+
+# ─────────────────────────────────────────────
+# ✅ Test + coverage artifacts
+# ─────────────────────────────────────────────
+coverage/
+__pycache__/
+
+# ─────────────────────────────────────────────
+# ✅ Monorepo support (optional, for future)
+# ─────────────────────────────────────────────
+packages/*/dist/
+packages/*/.vite/
