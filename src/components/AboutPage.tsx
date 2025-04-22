@@ -1,13 +1,7 @@
-// src/components/AboutPage.tsx
-import React from 'react';
-
-const AboutPage: React.FC = () => {
-  return (
-    <div>
-      <h1>About Page</h1>
-      <p>This is the About Page.</p>
-    </div>
-  );
-};
-
+const AboutPage = () => (
+  <div>
+    <h1>About Page</h1>
+    <p>Learn more about the Spiralogic Oracle here.</p>
+  </div>
+);
 export default AboutPage;

@@ -6,11 +6,12 @@
     "outDir": "./dist",
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "strict": true
+    "strict": true,
+    "types": ["vitest/globals"]
   },
   "include": [
     "src/**/*.ts"
-  ],
+, "src/components/tailwind.config.js"  ],
   "exclude": [
     "node_modules",
     "dist"
