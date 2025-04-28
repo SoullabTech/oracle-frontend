@@ -23,12 +23,9 @@ const router = createBrowserRouter([
           <Layout />
         </PageTransition>
       </ErrorBoundary>
-    ),
+    ),  // ← note the comma here, not a semicolon
     children: [
-      // redirect root to /launch-celebration
       { index: true, element: <Navigate to="/launch-celebration" replace /> },
-
-      // protected launch celebration
       {
         path: 'launch-celebration',
         element: (
@@ -37,18 +34,13 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
-
-      // public about
       { path: 'about', element: <AboutPage /> },
-
-      // fallback 404
       { path: '*', element: <NotFoundPage /> },
     ],
   },
 ]);
 
 export function App() {
-  // initialize auth & oracle checks
   useAuthInit();
   useOracleCheck();
 
