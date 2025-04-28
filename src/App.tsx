@@ -1,6 +1,6 @@
-// src/App.tsx (excerpt)
+// src/App.tsx
 import React, { Suspense, lazy } from 'react';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom';
 import { Layout } from '@/components/Layout';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import ProtectedRoute from '@/components/ProtectedRoute';
@@ -8,8 +8,11 @@ import { PageTransition } from '@/components/PageTransition';
 import { useAuthInit } from '@/hooks/useAuthInit';
 import { useOracleCheck } from '@/hooks/useOracleCheck';
 
+// lazy‐load pages
 const HomePage = lazy(() => import('@/pages/HomePage'));
-// … other lazy imports
+const LaunchCelebration = lazy(() => import('@/pages/LaunchCelebration'));
+const AboutPage = lazy(() => import('@/pages/AboutPage'));
+const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'));
 
 const router = createBrowserRouter([
   {
@@ -22,20 +25,30 @@ const router = createBrowserRouter([
       </ErrorBoundary>
     ),
     children: [
+      // redirect root to /launch-celebration
+      { index: true, element: <Navigate to="/launch-celebration" replace /> },
+
+      // protected launch celebration
       {
-        index: true,
+        path: 'launch-celebration',
         element: (
           <ProtectedRoute>
-            <HomePage />
+            <LaunchCelebration />
           </ProtectedRoute>
         ),
       },
-      // …your other child routes here
+
+      // public about
+      { path: 'about', element: <AboutPage /> },
+
+      // fallback 404
+      { path: '*', element: <NotFoundPage /> },
     ],
   },
 ]);
 
 export function App() {
+  // initialize auth & oracle checks
   useAuthInit();
   useOracleCheck();
 
@@ -45,19 +58,6 @@ export function App() {
     </Suspense>
   );
 }
-
-  return (
-    <ErrorBoundary>
-      {/* PageTransition for route transitions */}
-      <PageTransition>
-        <Suspense fallback={<div>Loading...</div>}>
-          <RouterProvider router={router} />
-        </Suspense>
-      </PageTransition>
-    </ErrorBoundary>
-  );
-}
-
 // Lazy imports
 const LaunchCelebration = lazy(() => import('@/pages/LaunchCelebration'));
 const Dashboard = lazy(() => import('@/pages/Dashboard'));
