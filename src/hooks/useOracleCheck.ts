@@ -1,39 +1,42 @@
 // src/hooks/useOracleCheck.ts
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { supabase } from '@/lib/supabaseClient';
 
 export function useOracleCheck() {
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     async function checkOracle() {
-      const { data: { user }, error: userError } = await supabase.auth.getUser();
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser();
 
       if (userError || !user) {
-        console.error('User not authenticated.');
+        // Not logged in, do nothing
         return;
       }
 
-      const { data: userOracle, error: oracleError } = await supabase
+      const { data, error } = await supabase
         .from('user_oracles')
-        .select('*')
+        .select('oracle_id')
         .eq('user_id', user.id)
         .maybeSingle();
 
-      if (oracleError) {
-        console.error('Error checking Oracle:', oracleError.message);
+      if (error) {
+        console.error('Oracle check error:', error.message);
         return;
       }
 
-      if (!userOracle) {
-        console.log('No Oracle assigned. Redirecting to Ceremony.');
-        navigate('/ceremony');
-      } else {
-        console.log('Oracle already assigned:', userOracle.oracle_name);
+      // 🚨 Critical Fix:
+      // If no oracle, redirect (only if not already on ceremony or blessing pages)
+      if (!data?.oracle_id && !location.pathname.startsWith('/ceremony') && !location.pathname.startsWith('/blessing')) {
+        navigate('/ceremony', { replace: true });
       }
     }
 
     checkOracle();
-  }, []);
+  }, [navigate, location]);
 }

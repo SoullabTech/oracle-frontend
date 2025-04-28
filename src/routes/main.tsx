@@ -1,28 +1,28 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import LandingPage from './pages/landing';
-import BetaPortalPage from './pages/beta-portal';
-import LoginPage from './pages/login'; // Assuming you have this
-import { useAuth } from '@supabase/auth-helpers-react'; // or wherever you manage auth
+import LandingPage from '@/pages/landing';
+import BetaPortalPage from '@/pages/beta-portal';
+import LoginPage from '@/pages/login'; // Make sure you have this file
+import { useAuth } from '@supabase/auth-helpers-react'; // Good!
 
 function App() {
-  const { user } = useAuth(); // however you check user state
+  const { user } = useAuth(); // Gets current user session
 
   return (
     <Router>
       <Routes>
-        {/* 🌸 Home shows Landing */}
+        {/* 🌸 Landing page */}
         <Route path="/" element={<LandingPage />} />
 
-        {/* 🌀 Beta Portal (protected) */}
+        {/* 🌀 Beta Portal (only if logged in) */}
         <Route
           path="/beta-portal"
-          element={user ? <BetaPortalPage /> : <Navigate to="/landing" />}
+          element={user ? <BetaPortalPage /> : <Navigate to="/login" />}
         />
 
         {/* 🔐 Login page */}
         <Route path="/login" element={<LoginPage />} />
 
-        {/* 🌿 Catch-all unknown routes */}
+        {/* 🌿 Catch-all unknown routes -> home */}
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>

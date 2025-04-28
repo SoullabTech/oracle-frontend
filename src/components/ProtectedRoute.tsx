@@ -1,4 +1,3 @@
-// src/components/ProtectedRoute.tsx
 import React, { ReactNode, useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { supabase } from '@/lib/supabaseClient';
@@ -7,7 +6,7 @@ interface ProtectedRouteProps {
   children: ReactNode;
 }
 
-export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [loading, setLoading] = useState(true);
@@ -20,7 +19,7 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
       } = await supabase.auth.getUser();
 
       if (error || !user) {
-        // Not authenticated → redirect to login, preserve destination
+        // 🚪 Not authenticated → redirect to login
         navigate('/login', { state: { from: location }, replace: true });
       } else {
         setLoading(false);
@@ -32,8 +31,8 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <p>Loading...</p>
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-indigo-50 via-pink-50 to-yellow-50">
+        <p className="text-xl text-indigo-700 animate-pulse">Preparing your Portal...</p>
       </div>
     );
   }
@@ -41,41 +40,4 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   return <>{children}</>;
 };
 
-// src/hooks/useOracleCheck.ts
-import { useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { supabase } from '@/lib/supabaseClient';
-
-export function useOracleCheck() {
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  useEffect(() => {
-    async function checkOracle() {
-      const {
-        data: { user },
-        error: userError,
-      } = await supabase.auth.getUser();
-
-      if (userError || !user) return; // Not logged in
-
-      const { data, error } = await supabase
-        .from('user_oracles')
-        .select('oracle_id')
-        .eq('user_id', user.id)
-        .maybeSingle();
-
-      if (error) {
-        console.error('Oracle check error:', error.message);
-        return;
-      }
-
-      // If no oracle and not already on ceremony or blessing pages, redirect
-      if (!data && !location.pathname.startsWith('/ceremony') && !location.pathname.startsWith('/blessing')) {
-        navigate('/ceremony', { replace: true });
-      }
-    }
-
-    checkOracle();
-  }, [navigate, location]);
-}
+export default ProtectedRoute;
