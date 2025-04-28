@@ -3,22 +3,15 @@ import React, { Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Layout } from '@/components/Layout';
-
 import ProtectedRoute from '@/components/ProtectedRoute';
 import { PageTransition } from '@/components/PageTransition';
 import { useAuthInit } from '@/hooks/useAuthInit';
 import { useOracleCheck } from '@/hooks/useOracleCheck';
 import { PageWrapper } from '@/components/PageWrapper'; // ✅
 import { AuthProvider } from '@/context/AuthContext';
+import ReactDOM from 'react-dom/client'; // ✅ missing import
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <AuthProvider>
-      <App />
-    </AuthProvider>
-);
-
-// Lazy imports
+// ✅ Correct Lazy imports
 const LaunchCelebration = lazy(() => import('@/pages/LaunchCelebration'));
 const Dashboard = lazy(() => import('@/pages/Dashboard'));
 const MemoryCreatePage = lazy(() => import('@/pages/MemoryCreatePage'));
@@ -39,12 +32,18 @@ const NotFound = lazy(() => import('@/pages/NotFound'));
 const LoginSuccessPage = lazy(() => import('@/pages/LoginSuccessPage'));
 const MagicLinkSentPage = lazy(() => import('@/pages/MagicLinkSentPage'));
 
-// ✅ Helper to wrap transitions
-const withTransition = (Component: JSX.Element) => (
-  <PageTransition>{Component}</PageTransition>
-);
+// ✅ Correct Helper to wrap transitions
+const withTransition = (Component: React.ComponentType) => {
+  return function WrappedComponent(props: any) {
+    return (
+      <PageTransition>
+        <Component {...props} />
+      </PageTransition>
+    );
+  };
+};
 
-export default function App() {
+function App() {
   const authReady = useAuthInit();
   useOracleCheck();
 
@@ -81,48 +80,56 @@ export default function App() {
         }>
           <Routes>
             {/* Public Sacred Flow */}
-            <Route path="/" element={withTransition(<LaunchCelebration />)} />
-            <Route path="/launch-celebration" element={withTransition(<LaunchCelebration />)} />
-            <Route path="/ceremony" element={withTransition(<OracleCeremonyPage />)} />
-            <Route path="/blessing-arrival" element={withTransition(<BlessingArrival />)} />
-            <Route path="/blessing" element={withTransition(<BlessingPage />)} />
-            <Route path="/magic-link-sent" element={withTransition(<MagicLinkSentPage />)} />
-            <Route path="/login-success" element={withTransition(<LoginSuccessPage />)} />
+            <Route path="/" element={withTransition(LaunchCelebration)()} />
+            <Route path="/launch-celebration" element={withTransition(LaunchCelebration)()} />
+            <Route path="/ceremony" element={withTransition(OracleCeremonyPage)()} />
+            <Route path="/blessing-arrival" element={withTransition(BlessingArrival)()} />
+            <Route path="/blessing" element={withTransition(BlessingPage)()} />
+            <Route path="/magic-link-sent" element={withTransition(MagicLinkSentPage)()} />
+            <Route path="/login-success" element={withTransition(LoginSuccessPage)()} />
 
             {/* Public Utility Routes */}
-            <Route path="/about" element={withTransition(<AboutPage />)} />
-            <Route path="/chat" element={withTransition(<ChatInterface />)} />
-            <Route path="/login" element={withTransition(<LoginPage />)} />
-            <Route path="/auth" element={withTransition(<AuthPage />)} />
+            <Route path="/about" element={withTransition(AboutPage)()} />
+            <Route path="/chat" element={withTransition(ChatInterface)()} />
+            <Route path="/login" element={withTransition(LoginPage)()} />
+            <Route path="/auth" element={withTransition(AuthPage)()} />
 
             {/* Protected Journey Routes */}
             <Route path="/dashboard" element={
-              <ProtectedRoute>{withTransition(<Dashboard />)}</ProtectedRoute>
+              <ProtectedRoute>{withTransition(Dashboard)()}</ProtectedRoute>
             } />
             <Route path="/transcripts" element={
-              <ProtectedRoute>{withTransition(<TranscriptsPage />)}</ProtectedRoute>
+              <ProtectedRoute>{withTransition(TranscriptsPage)()}</ProtectedRoute>
             } />
             <Route path="/create-memory" element={
-              <ProtectedRoute>{withTransition(<MemoryCreatePage />)}</ProtectedRoute>
+              <ProtectedRoute>{withTransition(MemoryCreatePage)()}</ProtectedRoute>
             } />
             <Route path="/memories" element={
-              <ProtectedRoute>{withTransition(<MemoryListPage />)}</ProtectedRoute>
+              <ProtectedRoute>{withTransition(MemoryListPage)()}</ProtectedRoute>
             } />
             <Route path="/insights" element={
-              <ProtectedRoute>{withTransition(<MemoryInsightsPage />)}</ProtectedRoute>
+              <ProtectedRoute>{withTransition(MemoryInsightsPage)()}</ProtectedRoute>
             } />
             <Route path="/memory-blossom" element={
-              <ProtectedRoute>{withTransition(<MemoryBlossom />)}</ProtectedRoute>
+              <ProtectedRoute>{withTransition(MemoryBlossom)()}</ProtectedRoute>
             } />
             <Route path="/spiralogic-path" element={
-              <ProtectedRoute>{withTransition(<SpiralogicPath />)}</ProtectedRoute>
+              <ProtectedRoute>{withTransition(SpiralogicPath)()}</ProtectedRoute>
             } />
 
             {/* Catch-All */}
-            <Route path="*" element={withTransition(<NotFound />)} />
+            <Route path="*" element={withTransition(NotFound)()} />
           </Routes>
         </Suspense>
       </Layout>
     </BrowserRouter>
   );
 }
+
+// ✅ Correctly wrapping App into ReactDOM root
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <AuthProvider>
+      <App />
+    </AuthProvider>
+);
