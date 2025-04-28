@@ -7,6 +7,26 @@ import Header from '@/components/Header';
 import { SacredFooter } from '@/components/SacredFooter';
 import { PageTransition } from '@/components/PageTransition';
 import { motion } from 'framer-motion';
+// Example inside Dashboard.tsx
+import { useAuth } from '@/context/AuthContext';
+import { Navigate } from 'react-router-dom';
+
+export default function Dashboard() {
+  const { user, loading } = useAuth();
+
+  if (loading) return <div>Loading...</div>;
+
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return (
+    <div>
+      <h1>Welcome, {user.email}!</h1>
+    </div>
+  );
+}
+
 
 interface Oracle {
   oracle_name: string;

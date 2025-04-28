@@ -3,11 +3,20 @@ import React, { Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Layout } from '@/components/Layout';
+
 import ProtectedRoute from '@/components/ProtectedRoute';
 import { PageTransition } from '@/components/PageTransition';
 import { useAuthInit } from '@/hooks/useAuthInit';
 import { useOracleCheck } from '@/hooks/useOracleCheck';
 import { PageWrapper } from '@/components/PageWrapper'; // ✅
+import { AuthProvider } from '@/context/AuthContext';
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <AuthProvider>
+      <App />
+    </AuthProvider>
+);
 
 // Lazy imports
 const LaunchCelebration = lazy(() => import('@/pages/LaunchCelebration'));
