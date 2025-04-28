@@ -1,40 +1,26 @@
-// src/components/Header.tsx
-import React from 'react';
-import { Link } from 'react-router-dom';
-
-const Header: React.FC = () => {
+export const Header: React.FC = () => {
   return (
     <header className="bg-indigo-700 text-white py-4">
       <div className="container mx-auto flex justify-between items-center px-6">
         {/* Logo or Branding */}
         <div className="text-2xl font-bold">
-          <Link to="/" className="hover:text-pink-500 transition">
-            My App
-          </Link>
+          <Link to="/" className="hover:text-pink-500 transition">My App</Link>
         </div>
 
         {/* Navigation Menu */}
         <nav>
           <ul className="flex space-x-6">
             <li>
-              <Link to="/" className="text-lg hover:text-pink-500 transition">
-                Home
-              </Link>
+              <Link to="/" className="text-lg hover:text-pink-500 transition">Home</Link>
             </li>
             <li>
-              <Link to="/memories" className="text-lg hover:text-pink-500 transition">
-                Memories
-              </Link>
+              <Link to="/memories" className="text-lg hover:text-pink-500 transition">Memories</Link>
             </li>
             <li>
-              <Link to="/about" className="text-lg hover:text-pink-500 transition">
-                About
-              </Link>
+              <Link to="/about" className="text-lg hover:text-pink-500 transition">About</Link>
             </li>
             <li>
-              <Link to="/contact" className="text-lg hover:text-pink-500 transition">
-                Contact
-              </Link>
+              <Link to="/contact" className="text-lg hover:text-pink-500 transition">Contact</Link>
             </li>
           </ul>
         </nav>

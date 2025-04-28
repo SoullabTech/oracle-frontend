@@ -50,3 +50,4 @@ __pycache__/
 # ─────────────────────────────────────────────
 packages/*/dist/
 packages/*/.vite/
+.vercel

@@ -2,7 +2,7 @@
 import React from 'react';
 import { PageTransition } from './PageTransition'; // Assuming you have this component
 import { SacredFooter } from './SacredFooter'; // Assuming you have this component
-import { Header } from './Header'; // Adjusted import to match your file structure
+import { Header } from './Header'; 
 
 interface LayoutProps {
   children: React.ReactNode;
