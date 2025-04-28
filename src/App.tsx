@@ -1,18 +1,18 @@
 // src/App.tsx
 import React, { Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-// src/App.tsx
-import { Layout } from './components/Layout';  // Make sure the relative path is correct
-
-
-import ProtectedRoute from '@/components/ProtectedRoute'; 
+import { motion } from 'framer-motion';
+import { Layout } from '@/components/Layout';
+import ProtectedRoute from '@/components/ProtectedRoute';
+import { PageTransition } from '@/components/PageTransition';
 import { useAuthInit } from '@/hooks/useAuthInit';
 import { useOracleCheck } from '@/hooks/useOracleCheck';
+import { PageWrapper } from '@/components/PageWrapper'; // ✅
 
-// 🌟 Lazy load pages
-const LaunchCelebration = lazy(() => import(/* webpackPrefetch: true */ '@/pages/LaunchCelebration'));
-const Dashboard = lazy(() => import(/* webpackPrefetch: true */ '@/pages/Dashboard'));
-const MemoryCreatePage = lazy(() => import(/* webpackPrefetch: true */ '@/pages/MemoryCreatePage'));
+// Lazy imports
+const LaunchCelebration = lazy(() => import('@/pages/LaunchCelebration'));
+const Dashboard = lazy(() => import('@/pages/Dashboard'));
+const MemoryCreatePage = lazy(() => import('@/pages/MemoryCreatePage'));
 const HomePage = lazy(() => import('@/components/HomePage'));
 const AboutPage = lazy(() => import('@/components/AboutPage'));
 const ChatInterface = lazy(() => import('@/components/ChatInterface'));
@@ -29,6 +29,11 @@ const SpiralogicPath = lazy(() => import('@/pages/SpiralogicPath'));
 const NotFound = lazy(() => import('@/pages/NotFound'));
 const LoginSuccessPage = lazy(() => import('@/pages/LoginSuccessPage'));
 const MagicLinkSentPage = lazy(() => import('@/pages/MagicLinkSentPage'));
+
+// ✅ Helper to wrap transitions
+const withTransition = (Component: JSX.Element) => (
+  <PageTransition>{Component}</PageTransition>
+);
 
 export default function App() {
   const authReady = useAuthInit();
@@ -47,65 +52,65 @@ export default function App() {
       <Layout>
         <Suspense fallback={
           <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-indigo-50 via-pink-50 to-yellow-50">
-            <div className="w-16 h-16 border-4 border-dashed rounded-full animate-spin border-indigo-500"></div>
-            <p className="mt-4 text-indigo-700 text-xl animate-pulse">Weaving the Spiral of Dreams...</p>
+            <motion.img
+              src="/spiral-loader.png"
+              alt="Spiralogic Loading"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1, rotate: 360 }}
+              transition={{ repeat: Infinity, duration: 6, ease: "linear", repeatType: "loop" }}
+              className="w-36 h-36 object-contain"
+            />
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5, duration: 1 }}
+              className="mt-6 text-indigo-700 text-xl"
+            >
+              Weaving the Spiral of Dreams...
+            </motion.p>
           </div>
         }>
           <Routes>
             {/* Public Sacred Flow */}
-            <Route path="/" element={<LaunchCelebration />} />
-            <Route path="/launch-celebration" element={<LaunchCelebration />} />
-            <Route path="/ceremony" element={<OracleCeremonyPage />} />
-            <Route path="/blessing-arrival" element={<BlessingArrival />} />
-            <Route path="/blessing" element={<BlessingPage />} />
-            <Route path="/magic-link-sent" element={<MagicLinkSentPage />} />
-            <Route path="/login-success" element={<LoginSuccessPage />} />
+            <Route path="/" element={withTransition(<LaunchCelebration />)} />
+            <Route path="/launch-celebration" element={withTransition(<LaunchCelebration />)} />
+            <Route path="/ceremony" element={withTransition(<OracleCeremonyPage />)} />
+            <Route path="/blessing-arrival" element={withTransition(<BlessingArrival />)} />
+            <Route path="/blessing" element={withTransition(<BlessingPage />)} />
+            <Route path="/magic-link-sent" element={withTransition(<MagicLinkSentPage />)} />
+            <Route path="/login-success" element={withTransition(<LoginSuccessPage />)} />
 
             {/* Public Utility Routes */}
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/chat" element={<ChatInterface />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/auth" element={<AuthPage />} />
+            <Route path="/about" element={withTransition(<AboutPage />)} />
+            <Route path="/chat" element={withTransition(<ChatInterface />)} />
+            <Route path="/login" element={withTransition(<LoginPage />)} />
+            <Route path="/auth" element={withTransition(<AuthPage />)} />
 
             {/* Protected Journey Routes */}
             <Route path="/dashboard" element={
-              <ProtectedRoute>
-                <Dashboard />
-              </ProtectedRoute>
+              <ProtectedRoute>{withTransition(<Dashboard />)}</ProtectedRoute>
             } />
             <Route path="/transcripts" element={
-              <ProtectedRoute>
-                <TranscriptsPage />
-              </ProtectedRoute>
+              <ProtectedRoute>{withTransition(<TranscriptsPage />)}</ProtectedRoute>
             } />
             <Route path="/create-memory" element={
-              <ProtectedRoute>
-                <MemoryCreatePage />
-              </ProtectedRoute>
+              <ProtectedRoute>{withTransition(<MemoryCreatePage />)}</ProtectedRoute>
             } />
             <Route path="/memories" element={
-              <ProtectedRoute>
-                <MemoryListPage />
-              </ProtectedRoute>
+              <ProtectedRoute>{withTransition(<MemoryListPage />)}</ProtectedRoute>
             } />
             <Route path="/insights" element={
-              <ProtectedRoute>
-                <MemoryInsightsPage />
-              </ProtectedRoute>
+              <ProtectedRoute>{withTransition(<MemoryInsightsPage />)}</ProtectedRoute>
             } />
             <Route path="/memory-blossom" element={
-              <ProtectedRoute>
-                <MemoryBlossom />
-              </ProtectedRoute>
+              <ProtectedRoute>{withTransition(<MemoryBlossom />)}</ProtectedRoute>
             } />
             <Route path="/spiralogic-path" element={
-              <ProtectedRoute>
-                <SpiralogicPath />
-              </ProtectedRoute>
+              <ProtectedRoute>{withTransition(<SpiralogicPath />)}</ProtectedRoute>
             } />
 
             {/* Catch-All */}
-            <Route path="*" element={<NotFound />} />
+            <Route path="*" element={withTransition(<NotFound />)} />
           </Routes>
         </Suspense>
       </Layout>

@@ -1,6 +1,8 @@
+// src/components/ProtectedRoute.tsx
 import React, { ReactNode, useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { supabase } from '@/lib/supabaseClient';
+import { PageTransition } from '@/components/PageTransition';
 
 interface ProtectedRouteProps {
   children: ReactNode;
@@ -19,7 +21,6 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
       } = await supabase.auth.getUser();
 
       if (error || !user) {
-        // 🚪 Not authenticated → redirect to login
         navigate('/login', { state: { from: location }, replace: true });
       } else {
         setLoading(false);
@@ -32,12 +33,16 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-indigo-50 via-pink-50 to-yellow-50">
-        <p className="text-xl text-indigo-700 animate-pulse">Preparing your Portal...</p>
+        <p className="text-xl text-indigo-600 animate-pulse">Checking your path...</p>
       </div>
     );
   }
 
-  return <>{children}</>;
+  return (
+    <PageTransition>
+      {children}
+    </PageTransition>
+  );
 };
 
 export default ProtectedRoute;

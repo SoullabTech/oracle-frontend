@@ -5,7 +5,6 @@ import path from 'path';
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
-
   const port = Number(env.PORT ?? env.VITE_PORT) || 3000;
 
   return {
@@ -16,7 +15,7 @@ export default defineConfig(({ mode }) => {
         '@components': path.resolve(__dirname, 'src/components'),
         '@lib': path.resolve(__dirname, 'src/lib'),
         '@services': path.resolve(__dirname, 'src/services'),
-        '@test-utils': path.resolve(__dirname, 'src/test-utils.tsx'),
+        '@test-utils': path.resolve(__dirname, 'src/test-utils'), // ✅ Correct — no .tsx extension!
       },
     },
     build: {
@@ -30,9 +29,9 @@ export default defineConfig(({ mode }) => {
         output: {
           manualChunks: {
             react: ['react', 'react-dom'],
-            supabase: ['@supabase/supabase-js'],
             framer: ['framer-motion'],
-            vendor: ['react-router-dom', 'classnames', 'zustand'], // you can add more libraries
+            supabase: ['@supabase/supabase-js'],
+            vendor: ['react-router-dom', 'classnames', 'zustand'],
           },
         },
       },

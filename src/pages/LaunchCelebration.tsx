@@ -1,7 +1,6 @@
 // src/pages/LaunchCelebration.tsx
 
-import Header from '@/components/Header'; // ✅ no braces
-
+import Header from '@/components/Header';
 import { SacredFooter } from '@/components/SacredFooter';
 import { PageTransition } from '@/components/PageTransition';
 import { SpiralParticles } from '@/components/SpiralParticles';
@@ -19,6 +18,7 @@ export default function LaunchCelebration() {
           <SpiralParticles element="Aether" />
         </div>
 
+        {/* Main Content */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -38,10 +38,29 @@ export default function LaunchCelebration() {
             and walk the Spiral of Becoming.
           </p>
 
+          {/* Spiral Spinner */}
+          <motion.img
+            src="/spiral-loader.png"
+            alt="Spiralogic Loading"
+            initial={{ opacity: 0, scale: 0.6, rotate: 0 }}
+            animate={{
+              opacity: [0, 1, 1],
+              scale: [0.6, 1, 1.1, 1],
+              rotate: [0, 360, 720],
+            }}
+            transition={{
+              opacity: { duration: 1.2, ease: 'easeOut' },
+              scale: { duration: 2, ease: 'easeInOut', repeat: Infinity, repeatType: "reverse" },
+              rotate: { duration: 12, ease: 'linear', repeat: Infinity },
+            }}
+            className="w-36 h-36 object-contain"
+          />
+
+          {/* Begin Button */}
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => window.location.href = '/oracle-ceremony'}
+            onClick={() => window.location.href = '/ceremony'}
             className="mt-8 px-8 py-4 bg-indigo-500 text-white rounded-full hover:bg-indigo-600 transition text-sm sm:text-base"
           >
             🌀 Begin Your Spiral Journey
