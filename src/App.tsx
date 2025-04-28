@@ -7,11 +7,8 @@ import ProtectedRoute from '@/components/ProtectedRoute';
 import { PageTransition } from '@/components/PageTransition';
 import { useAuthInit } from '@/hooks/useAuthInit';
 import { useOracleCheck } from '@/hooks/useOracleCheck';
-import { PageWrapper } from '@/components/PageWrapper'; // ✅
-import { AuthProvider } from '@/context/AuthContext';
-import ReactDOM from 'react-dom/client'; // ✅ missing import
 
-// ✅ Correct Lazy imports
+// Lazy imports
 const LaunchCelebration = lazy(() => import('@/pages/LaunchCelebration'));
 const Dashboard = lazy(() => import('@/pages/Dashboard'));
 const MemoryCreatePage = lazy(() => import('@/pages/MemoryCreatePage'));
@@ -32,7 +29,7 @@ const NotFound = lazy(() => import('@/pages/NotFound'));
 const LoginSuccessPage = lazy(() => import('@/pages/LoginSuccessPage'));
 const MagicLinkSentPage = lazy(() => import('@/pages/MagicLinkSentPage'));
 
-// ✅ Correct Helper to wrap transitions
+// Helper to wrap transitions
 const withTransition = (Component: React.ComponentType) => {
   return function WrappedComponent(props: any) {
     return (
@@ -43,7 +40,7 @@ const withTransition = (Component: React.ComponentType) => {
   };
 };
 
-function App() {
+export default function App() {
   const authReady = useAuthInit();
   useOracleCheck();
 
@@ -79,7 +76,7 @@ function App() {
           </div>
         }>
           <Routes>
-            {/* Public Sacred Flow */}
+            {/* Public Routes */}
             <Route path="/" element={withTransition(LaunchCelebration)()} />
             <Route path="/launch-celebration" element={withTransition(LaunchCelebration)()} />
             <Route path="/ceremony" element={withTransition(OracleCeremonyPage)()} />
@@ -87,35 +84,19 @@ function App() {
             <Route path="/blessing" element={withTransition(BlessingPage)()} />
             <Route path="/magic-link-sent" element={withTransition(MagicLinkSentPage)()} />
             <Route path="/login-success" element={withTransition(LoginSuccessPage)()} />
-
-            {/* Public Utility Routes */}
             <Route path="/about" element={withTransition(AboutPage)()} />
             <Route path="/chat" element={withTransition(ChatInterface)()} />
             <Route path="/login" element={withTransition(LoginPage)()} />
             <Route path="/auth" element={withTransition(AuthPage)()} />
 
-            {/* Protected Journey Routes */}
-            <Route path="/dashboard" element={
-              <ProtectedRoute>{withTransition(Dashboard)()}</ProtectedRoute>
-            } />
-            <Route path="/transcripts" element={
-              <ProtectedRoute>{withTransition(TranscriptsPage)()}</ProtectedRoute>
-            } />
-            <Route path="/create-memory" element={
-              <ProtectedRoute>{withTransition(MemoryCreatePage)()}</ProtectedRoute>
-            } />
-            <Route path="/memories" element={
-              <ProtectedRoute>{withTransition(MemoryListPage)()}</ProtectedRoute>
-            } />
-            <Route path="/insights" element={
-              <ProtectedRoute>{withTransition(MemoryInsightsPage)()}</ProtectedRoute>
-            } />
-            <Route path="/memory-blossom" element={
-              <ProtectedRoute>{withTransition(MemoryBlossom)()}</ProtectedRoute>
-            } />
-            <Route path="/spiralogic-path" element={
-              <ProtectedRoute>{withTransition(SpiralogicPath)()}</ProtectedRoute>
-            } />
+            {/* Protected Routes */}
+            <Route path="/dashboard" element={<ProtectedRoute>{withTransition(Dashboard)()}</ProtectedRoute>} />
+            <Route path="/transcripts" element={<ProtectedRoute>{withTransition(TranscriptsPage)()}</ProtectedRoute>} />
+            <Route path="/create-memory" element={<ProtectedRoute>{withTransition(MemoryCreatePage)()}</ProtectedRoute>} />
+            <Route path="/memories" element={<ProtectedRoute>{withTransition(MemoryListPage)()}</ProtectedRoute>} />
+            <Route path="/insights" element={<ProtectedRoute>{withTransition(MemoryInsightsPage)()}</ProtectedRoute>} />
+            <Route path="/memory-blossom" element={<ProtectedRoute>{withTransition(MemoryBlossom)()}</ProtectedRoute>} />
+            <Route path="/spiralogic-path" element={<ProtectedRoute>{withTransition(SpiralogicPath)()}</ProtectedRoute>} />
 
             {/* Catch-All */}
             <Route path="*" element={withTransition(NotFound)()} />
@@ -125,11 +106,3 @@ function App() {
     </BrowserRouter>
   );
 }
-
-// ✅ Correctly wrapping App into ReactDOM root
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <AuthProvider>
-      <App />
-    </AuthProvider>
-);
