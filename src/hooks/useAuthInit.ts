@@ -1,19 +1,24 @@
 // src/hooks/useAuthInit.ts
-import { useEffect } from 'react';
-import { useUser } from '@supabase/auth-helpers-react';
+
+import { useState, useEffect } from 'react';
+import { supabase } from '@/lib/supabaseClient';
 
 export function useAuthInit() {
-  const user = useUser();
+  const [authReady, setAuthReady] = useState(false);
 
   useEffect(() => {
-    if (user?.id) {
-      fetch('/api/auth/initialize', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ user_id: user.id }),
-      }).catch((err) => {
-        console.error('❌ Failed to initialize user profile:', err);
-      });
+    async function checkSession() {
+      const { data: { session }, error } = await supabase.auth.getSession();
+      if (error) {
+        console.error('Error getting session:', error.message);
+      } else {
+        console.log('Session:', session ? 'found' : 'not found');
+      }
+      setAuthReady(true);  // ✅ very important: set ready after checking
     }
-  }, [user?.id]);
+
+    checkSession();
+  }, []);
+
+  return authReady;
 }

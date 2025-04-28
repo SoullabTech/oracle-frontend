@@ -1,0 +1,12 @@
+// src/components/__tests__/SessionManagement.test.tsx
+import { render, screen, fireEvent } from '@testing-library/react';
+import SessionManagement from '../SessionManagement'; // Your component
+
+test('creates and ends a session correctly', async () => {
+  render(<SessionManagement />);
+
+  fireEvent.click(screen.getByText("Start Session"));
+  
+  // Mock the API and ensure the session state changes
+  expect(await screen.findByText("Session Started")).toBeInTheDocument();
+});

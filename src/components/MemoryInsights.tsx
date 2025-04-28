@@ -1,25 +1,16 @@
 // src/components/MemoryInsights.tsx
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const MemoryInsights: React.FC = () => {
   const [insights, setInsights] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Simulated function to fetch memory insights
+  // Fetch memory insights from backend API
   const fetchMemoryInsights = async () => {
     try {
-      // Replace with your API call later:
-      // const res = await fetch('http://localhost:3000/api/memory/insights');
-      // const data = await res.json();
-      // setInsights(data.insights);
-
-      // Simulated data:
-      const simulatedInsights = [
-        "Insight 1: Transformation begins with self-reflection.",
-        "Insight 2: Every memory holds a lesson.",
-        "Insight 3: Your journey is unique and evolving."
-      ];
-      setInsights(simulatedInsights);
+      const response = await axios.get('/api/memory/insights'); // Backend route for insights
+      setInsights(response.data.insights);  // Assuming the response has an 'insights' field
     } catch (error) {
       console.error("Error fetching memory insights:", error);
     } finally {

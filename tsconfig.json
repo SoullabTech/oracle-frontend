@@ -7,11 +7,16 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "strict": true,
-    "types": ["vitest/globals"]
+    "types": ["vitest/globals"],
+    "baseUrl": "./src",  // Add this line
+    "paths": {
+      "@/*": ["src/*"]  // Add this line to define the @ alias
+    }
   },
   "include": [
-    "src/**/*.ts"
-, "src/components/tailwind.config.js"  ],
+    "src/**/*.ts",
+    "src/components/tailwind.config.js"
+  ],
   "exclude": [
     "node_modules",
     "dist"

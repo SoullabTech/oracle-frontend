@@ -1,4 +1,15 @@
 // src/apiService.ts
+import axios from 'axios';
+
+export const fetchMemoryInsights = async () => {
+  try {
+    const response = await axios.get('/api/memory/insights');
+    return response.data.insights;
+  } catch (error) {
+    throw new Error('Failed to fetch memory insights');
+  }
+};
+
 const BACKEND_URL = "http://localhost:5001"; // Replace with Render URL later
 
 export const generatePrompt = async (query: string, userId: string) => {
