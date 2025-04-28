@@ -1,5 +1,3 @@
-// src/pages/Dashboard.tsx
-
 import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabaseClient';
 import { SpiralParticles } from '@/components/SpiralParticles';
@@ -7,33 +5,17 @@ import Header from '@/components/Header';
 import { SacredFooter } from '@/components/SacredFooter';
 import { PageTransition } from '@/components/PageTransition';
 import { motion } from 'framer-motion';
-// Example inside Dashboard.tsx
 import { useAuth } from '@/context/AuthContext';
 import { Navigate } from 'react-router-dom';
 
-export default function Dashboard() {
-  const { user, loading } = useAuth();
-
-  if (loading) return <div>Loading...</div>;
-
-  if (!user) {
-    return <Navigate to="/login" replace />;
-  }
-
-  return (
-    <div>
-      <h1>Welcome, {user.email}!</h1>
-    </div>
-  );
-}
-
-
+// Oracle interface
 interface Oracle {
   oracle_name: string;
   oracle_element: keyof typeof blessingsByElement;
   oracle_archetype: string;
 }
 
+// Blessings data
 const blessingsByElement = {
   Fire: ["Your passion lights the way 🔥", "A spark within you ignites the stars 🌟"],
   Water: ["Your emotions are your compass 🌊", "Flow gracefully with the tides 🐚"],
@@ -42,176 +24,81 @@ const blessingsByElement = {
   Aether: ["You are the breath between worlds ✨", "The unseen realms open before you 🔮"],
 } as const;
 
-export default function DashboardPage() {
+export default function Dashboard() {
+  const { user, loading } = useAuth();
   const [oracle, setOracle] = useState<Oracle | null>(null);
   const [dailyBlessing, setDailyBlessing] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchOracle() {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
-        setLoading(false);
-        return;
-      }
+    if (!user) return;
 
+    const fetchOracle = async () => {
       const { data, error } = await supabase
-        .from('user_oracles')
+        .from('oracles')
         .select('oracle_name, oracle_element, oracle_archetype')
         .eq('user_id', user.id)
-        .maybeSingle();
+        .single();
 
       if (error) {
-        console.error('Error fetching oracle:', error.message);
-      }
-
-      if (data) {
-        const element = data.oracle_element as keyof typeof blessingsByElement;
-        setOracle(data);
-
-        const blessings = blessingsByElement[element] || [];
-        if (blessings.length > 0) {
-          const today = new Date().toISOString().slice(0, 10);
-          const lastBlessing = localStorage.getItem('lastBlessingDate');
-          const lastBlessingText = localStorage.getItem('dailyBlessingText');
-
-          if (lastBlessing === today && lastBlessingText) {
-            setDailyBlessing(lastBlessingText);
-          } else {
-            const randomBlessing = blessings[Math.floor(Math.random() * blessings.length)];
-            setDailyBlessing(randomBlessing);
-            localStorage.setItem('lastBlessingDate', today);
-            localStorage.setItem('dailyBlessingText', randomBlessing);
-          }
+        console.error('Error fetching oracle:', error);
+      } else if (data) {
+        setOracle(data as Oracle);
+        const blessings = blessingsByElement[data.oracle_element as keyof typeof blessingsByElement];
+        if (blessings) {
+          const randomBlessing = blessings[Math.floor(Math.random() * blessings.length)];
+          setDailyBlessing(randomBlessing);
         }
       }
-      setLoading(false);
-    }
+    };
 
     fetchOracle();
-  }, []);
+  }, [user]);
 
-  if (loading) {
-    return (
-      <PageTransition>
-        <Header />
-        <main className="flex items-center justify-center min-h-screen bg-gradient-to-br from-indigo-50 via-pink-50 to-yellow-50">
-          <p className="text-xl text-indigo-600 animate-pulse">Retrieving your Oracle...</p>
-        </main>
-        <SacredFooter />
-      </PageTransition>
-    );
-  }
+  if (loading) return <div>Loading...</div>;
 
-  if (!oracle) {
-    return (
-      <PageTransition>
-        <Header />
-        <main className="flex items-center justify-center min-h-screen bg-gradient-to-br from-indigo-50 via-pink-50 to-yellow-50">
-          <p className="text-xl text-red-500">
-            No Oracle assigned yet. Please complete your Oracle Ceremony!
-          </p>
-        </main>
-        <SacredFooter />
-      </PageTransition>
-    );
+  if (!user) {
+    return <Navigate to="/login" replace />;
   }
 
   return (
-    <PageTransition>
+    <div className="relative min-h-screen bg-gradient-to-b from-indigo-50 via-purple-50 to-yellow-50 overflow-hidden">
+      <SpiralParticles />
       <Header />
-      <main className="relative flex flex-col items-center justify-center min-h-screen p-8 space-y-6 bg-gradient-to-br from-indigo-100 via-pink-100 to-yellow-100 overflow-hidden">
-        
-        {/* Spiral Particles Background */}
-        <div className="absolute inset-0 z-0">
-          <SpiralParticles element={oracle.oracle_element} />
-        </div>
-
-        {/* Oracle Card */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
-          className="relative z-10 flex flex-col items-center text-center space-y-6 bg-white bg-opacity-70 backdrop-blur-md rounded-2xl shadow-2xl p-10 max-w-2xl"
-        >
+      <PageTransition>
+        <main className="flex flex-col items-center justify-center pt-24">
           <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 1 }}
-            className="text-4xl font-extrabold text-pink-700"
+            className="text-4xl font-bold text-indigo-700"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1 }}
           >
-            🌸 Welcome back, Dreamer
+            Welcome, {user.email}!
           </motion.h1>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 1 }}
-            className="text-2xl font-semibold text-indigo-700"
-          >
-            {oracle.oracle_name}
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 1 }}
-            className="text-lg text-purple-500 italic"
-          >
-            {oracle.oracle_archetype}
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8, duration: 1 }}
-            className="text-md text-gray-600"
-          >
-            Element: <span className="font-semibold">{oracle.oracle_element}</span>
-          </motion.div>
-
-          {dailyBlessing && (
+          {oracle && (
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.0, duration: 1 }}
-              className="mt-4 text-green-700 text-md italic"
+              className="mt-8 p-6 bg-white bg-opacity-70 rounded-lg shadow-lg text-center"
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.6 }}
             >
-              ✨ {dailyBlessing}
+              <h2 className="text-2xl font-semibold text-indigo-600 mb-2">
+                Oracle: {oracle.oracle_name}
+              </h2>
+              <p className="text-lg text-gray-700 mb-1">
+                Archetype: {oracle.oracle_archetype}
+              </p>
+              <p className="text-lg text-gray-700 mb-1">
+                Element: {oracle.oracle_element}
+              </p>
+              {dailyBlessing && (
+                <p className="mt-4 italic text-indigo-500">{dailyBlessing}</p>
+              )}
             </motion.div>
           )}
-
-          {/* Action Buttons */}
-          <div className="flex flex-col space-y-4 mt-8 w-full">
-            <ActionButton label="✍️ Reflect Now" href="/create-memory" color="bg-indigo-500" />
-            <ActionButton label="🌀 Return to Spiral" href="/spiralogic-path" color="bg-pink-500" />
-            <ActionButton label="🌸 View My Memories" href="/memory-blossom" color="bg-green-500" />
-          </div>
-        </motion.div>
-      </main>
+        </main>
+      </PageTransition>
       <SacredFooter />
-    </PageTransition>
-  );
-}
-
-interface ActionButtonProps {
-  label: string;
-  href: string;
-  color: string;
-}
-
-function ActionButton({ label, href, color }: ActionButtonProps) {
-  return (
-    <motion.button
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95 }}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 1 }}
-      onClick={() => (window.location.href = href)}
-      className={`px-8 py-4 ${color} text-white rounded-full hover:brightness-110 transition`}
-    >
-      {label}
-    </motion.button>
+    </div>
   );
 }
