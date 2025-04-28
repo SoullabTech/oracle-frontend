@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/lib/supabaseClient';
 import { OracleCeremonyModal } from '@/components/OracleCeremonyModal';
-import { Header } from '@/components/Header';
+import Header from '@/components/Header'; // ✅ no braces
+
 import { SacredFooter } from '@/components/SacredFooter';
 import { PageTransition } from '@/components/PageTransition';
 import { motion } from 'framer-motion';

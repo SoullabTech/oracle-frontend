@@ -1,5 +1,4 @@
 // src/App.tsx
-
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Layout } from '@/components/Layout';
@@ -27,8 +26,8 @@ import { useAuthInit } from '@/hooks/useAuthInit';
 import { useOracleCheck } from '@/hooks/useOracleCheck';
 
 export default function App() {
-  const authReady = useAuthInit();  // 👈 wait for auth to be ready
-  useOracleCheck();                 // 👈 optional (can also delay inside protected areas)
+  const authReady = useAuthInit();  // Initialize auth state
+  useOracleCheck();                 // Check for Oracle logic (optional but good)
 
   if (!authReady) {
     return (
@@ -56,7 +55,7 @@ export default function App() {
           <Route path="/chat" element={<ChatInterface />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/auth" element={<AuthPage />} />
-          
+
           {/* Protected Journey Routes */}
           <Route
             path="/dashboard"

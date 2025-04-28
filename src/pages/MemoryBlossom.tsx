@@ -1,111 +1,111 @@
-import React, { useEffect, useState } from 'react';
+// src/pages/MemoryBlossom.tsx
+
+import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabaseClient';
+import { SacredFooter } from '@/components/SacredFooter';
+import { PageTransition } from '@/components/PageTransition';
+import { SpiralParticles } from '@/components/SpiralParticles';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import Header from '@/components/Header';  // Ensure it's imported correctly
 
-interface Memory {
-  id: string;
-  content: string;
-  metadata: string;
-  created_at: string;
-}
-
-const MemoryBlossom: React.FC = () => {
-  const [memories, setMemories] = useState<Memory[]>([]);
+export default function MemoryBlossom() {
+  const [memories, setMemories] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
-  // Fetch memories from Supabase on component mount
   useEffect(() => {
-    const fetchMemories = async () => {
-      try {
-        // Get authenticated user
-        const { data: { user } } = await supabase.auth.getUser();
-        if (!user?.id) {
-          setError('Please log in to view your memories.');
-          return;
-        }
-
-        // Fetch memories specific to the logged-in user
-        const { data, error } = await supabase
-          .from('memories')
-          .select('id, content, metadata, created_at')
-          .eq('user_id', user.id)
-          .order('created_at', { ascending: true });
-
-        if (error) throw error;
-        setMemories(data || []);  // Save memories to state
-      } catch (error) {
-        console.error('Error fetching memories:', error);
-        setError('Failed to fetch memories. Please try again later.');
-      } finally {
-        setLoading(false);  // Set loading to false once data is fetched or error occurs
+    async function fetchMemories() {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        setLoading(false);
+        return;
       }
-    };
 
-    fetchMemories();  // Invoke fetch function
+      const { data, error } = await supabase
+        .from('memories')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error('Error fetching memories:', error.message);
+      } else {
+        setMemories(data || []);
+      }
+      setLoading(false);
+    }
+
+    fetchMemories();
   }, []);
 
-  // Loading state (when data is being fetched)
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen text-indigo-600 animate-pulse">
-        ✨ Blossoming your memories...
-      </div>
-    );
-  }
-
-  // Error state (if there is an issue with fetching the data)
-  if (error) {
-    return (
-      <div className="flex items-center justify-center min-h-screen text-red-600">
-        <p>{error}</p>  {/* Display error message if there's an issue */}
-      </div>
-    );
-  }
-
-  // Rendering memories once data is fetched and there are no errors
   return (
-    <div className="max-w-2xl mx-auto p-8">
-      <h2 className="text-3xl font-bold text-center text-indigo-700 mb-6">🌸 Memory Blossom Timeline</h2>
-      {memories.length === 0 ? (
-        <p className="text-center text-gray-500">You don't have any memories yet. 🌿 Start creating them!</p>
-      ) : (
-        <div className="relative border-l-2 border-indigo-200 pl-6">
-          {memories.map((memory, index) => (
-            <motion.div
-              key={memory.id}
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: index * 0.2 }}  // Stagger animation delay based on index
-              className="mb-8 relative"
-            >
-              <div className="absolute -left-3 top-1 w-6 h-6 bg-pink-400 rounded-full border-2 border-white shadow"></div>
-              <div className="bg-white p-6 rounded-lg shadow-md">
-                <h3 className="text-xl font-semibold text-indigo-700">{memory.metadata || "Untitled Memory"}</h3>
-                <p className="text-sm text-gray-500 mb-2">{new Date(memory.created_at).toLocaleDateString()}</p>
-                <p className="text-gray-700">{memory.content.slice(0, 100)}...</p>
-                <Link
-                  to={`/insights?memoryId=${memory.id}`}
-                  className="text-sm text-pink-500 hover:underline mt-2 inline-block"
-                >
-                  View Insights →
-                </Link>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      )}
-      <div className="text-center mt-12">
-        <Link
-          to="/dashboard"
-          className="text-indigo-600 hover:underline text-sm"
-        >
-          🌀 Return to Dashboard
-        </Link>
-      </div>
-    </div>
-  );
-};
+    <PageTransition>
+      <Header />  {/* Correct Header component */}
 
-export default MemoryBlossom;
+      <main className="relative flex flex-col items-center justify-start min-h-screen p-6 sm:p-8 bg-gradient-to-br from-indigo-100 via-pink-100 to-yellow-100 overflow-hidden">
+        
+        {/* Spiral Particles */}
+        <div className="absolute inset-0 z-0">
+          <SpiralParticles element="Aether" />
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+          className="relative z-10 flex flex-col items-center space-y-6 text-center max-w-4xl mt-8"
+        >
+          <h1 className="text-4xl sm:text-5xl font-extrabold text-pink-700">🌸 Your Memory Blossoms</h1>
+
+          {loading ? (
+            <p className="text-indigo-600 text-xl animate-pulse">Retrieving your memories...</p>
+          ) : memories.length === 0 ? (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1 }}
+              className="flex flex-col items-center space-y-6"
+            >
+              {/* Empty Garden Illustration / Text */}
+              <p className="text-indigo-500 text-lg italic">
+                🌱 Your Spiral Garden is waiting for its first blossom.
+              </p>
+              <p className="text-md text-purple-600">
+                Every reflection you plant will one day bloom into wisdom and wonder.
+              </p>
+
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => window.location.href = '/create-memory'}
+                className="mt-4 px-8 py-4 bg-green-500 text-white rounded-full hover:bg-green-600 transition text-sm sm:text-base"
+              >
+                ✍️ Plant Your First Memory
+              </motion.button>
+            </motion.div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-8">
+              {memories.map((memory) => (
+                <motion.div
+                  key={memory.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8 }}
+                  className="bg-white bg-opacity-70 backdrop-blur-md rounded-xl shadow-md p-6 text-left"
+                >
+                  <p className="text-gray-700 text-md whitespace-pre-line">
+                    {memory.content}
+                  </p>
+                  <div className="text-right text-sm text-indigo-400 mt-4">
+                    {new Date(memory.created_at).toLocaleDateString()}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          )}
+        </motion.div>
+      </main>
+
+      <SacredFooter />
+    </PageTransition>
+  );
+}

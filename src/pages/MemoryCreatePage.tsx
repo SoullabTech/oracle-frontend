@@ -1,3 +1,4 @@
+// src/pages/MemoryCreatePage.tsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -16,16 +17,14 @@ const MemoryCreatePage: React.FC = () => {
     try {
       const { data: { user } } = await supabase.auth.getUser();
       const clientId = user?.id;
-      if (!clientId || !content) {
+      if (!clientId || !content.trim()) {
         alert('Please fill out all fields!');
         setLoading(false);
         return;
       }
       await supabase.from('memories').insert([{ content, metadata, clientId }]);
-      // Show confirmation blessing
       setShowBlessing(true);
-      // After a brief moment, navigate to memories list
-      setTimeout(() => navigate('/memories'), 2500);
+      setTimeout(() => navigate('/memories'), 2500); // Navigate after delay
     } catch (error) {
       console.error('Error creating memory:', error);
       alert('Failed to create memory.');

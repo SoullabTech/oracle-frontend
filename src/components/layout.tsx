@@ -2,7 +2,8 @@
 import React from 'react';
 import { PageTransition } from './PageTransition';
 import { SacredFooter } from './SacredFooter';
-import { Header } from './Header'; // adjust path if Header is moved
+import Header from './Header'; // ✅ no braces
+
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -21,6 +22,8 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
     </PageTransition>
   );
 };
+
+
 
 // Then update your App.tsx to use Layout:
 

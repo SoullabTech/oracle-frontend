@@ -3,7 +3,8 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabaseClient';
 import { SpiralParticles } from '@/components/SpiralParticles';
-import { Header } from '@/components/Header';
+import Header from '@/components/Header'; // ✅ no braces
+
 import { SacredFooter } from '@/components/SacredFooter';
 import { PageTransition } from '@/components/PageTransition';
 import { motion } from 'framer-motion';

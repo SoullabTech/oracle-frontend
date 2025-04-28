@@ -1,6 +1,7 @@
 // src/pages/LaunchCelebration.tsx
 
-import { Header } from '@/components/Header';
+import Header from '@/components/Header'; // ✅ no braces
+
 import { SacredFooter } from '@/components/SacredFooter';
 import { PageTransition } from '@/components/PageTransition';
 import { SpiralParticles } from '@/components/SpiralParticles';
