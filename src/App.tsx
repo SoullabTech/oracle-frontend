@@ -1,7 +1,9 @@
 // src/App.tsx
 import React, { Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Layout } from './components/Layout';
+// src/App.tsx
+import { Layout } from './components/Layout'; // Make sure this path is correct
+
 import ProtectedRoute from '@/components/ProtectedRoute'; 
 import { useAuthInit } from '@/hooks/useAuthInit';
 import { useOracleCheck } from '@/hooks/useOracleCheck';
