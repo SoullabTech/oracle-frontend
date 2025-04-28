@@ -1,13 +1,27 @@
-import Link from 'next/link';
+// src/components/Navigation.tsx
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default function Navigation() {
   return (
-    <nav className="w-full flex justify-center bg-indigo-200 py-4 shadow-md sticky top-0 z-50">
-      <div className="flex space-x-8 text-lg font-semibold text-indigo-800">
-        <Link href="/">Home</Link>
-        <Link href="/spiral-checkin">Spiral Check-In</Link>
-        <Link href="/wild-portal">Wild Petal Portal</Link>
-      </div>
+    <nav className="bg-white shadow">
+      <ul className="flex space-x-4 p-4">
+        <li>
+          <Link to="/" className="hover:text-indigo-600 transition">
+            Home
+          </Link>
+        </li>
+        <li>
+          <Link to="/spiral-checkin" className="hover:text-indigo-600 transition">
+            Spiral Check-In
+          </Link>
+        </li>
+        <li>
+          <Link to="/wild-portal" className="hover:text-indigo-600 transition">
+            Wild Petal Portal
+          </Link>
+        </li>
+      </ul>
     </nav>
   );
 }
