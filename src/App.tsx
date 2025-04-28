@@ -1,12 +1,62 @@
-// src/App.tsx
+// src/App.tsx (excerpt)
 import React, { Suspense, lazy } from 'react';
-import { Routes, Route } from 'react-router-dom'; // ❗ no BrowserRouter here
-import { motion } from 'framer-motion';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Layout } from '@/components/Layout';
+import { ErrorBoundary } from '@/components/ErrorBoundary';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import { PageTransition } from '@/components/PageTransition';
 import { useAuthInit } from '@/hooks/useAuthInit';
 import { useOracleCheck } from '@/hooks/useOracleCheck';
+
+const HomePage = lazy(() => import('@/pages/HomePage'));
+// … other lazy imports
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: (
+      <ErrorBoundary>
+        <PageTransition>
+          <Layout />
+        </PageTransition>
+      </ErrorBoundary>
+    ),
+    children: [
+      {
+        index: true,
+        element: (
+          <ProtectedRoute>
+            <HomePage />
+          </ProtectedRoute>
+        ),
+      },
+      // …your other child routes here
+    ],
+  },
+]);
+
+export function App() {
+  useAuthInit();
+  useOracleCheck();
+
+  return (
+    <Suspense fallback={<div className="p-10 text-center">Loading…</div>}>
+      <RouterProvider router={router} />
+    </Suspense>
+  );
+}
+
+  return (
+    <ErrorBoundary>
+      {/* PageTransition for route transitions */}
+      <PageTransition>
+        <Suspense fallback={<div>Loading...</div>}>
+          <RouterProvider router={router} />
+        </Suspense>
+      </PageTransition>
+    </ErrorBoundary>
+  );
+}
 
 // Lazy imports
 const LaunchCelebration = lazy(() => import('@/pages/LaunchCelebration'));
@@ -39,6 +89,31 @@ const withTransition = (Component: React.ComponentType) => {
     );
   };
 };
+
+// 🚀 Auto-mapped routes
+const publicRoutes = [
+  { path: '/', component: LaunchCelebration },
+  { path: '/launch-celebration', component: LaunchCelebration },
+  { path: '/ceremony', component: OracleCeremonyPage },
+  { path: '/blessing-arrival', component: BlessingArrival },
+  { path: '/blessing', component: BlessingPage },
+  { path: '/magic-link-sent', component: MagicLinkSentPage },
+  { path: '/login-success', component: LoginSuccessPage },
+  { path: '/about', component: AboutPage },
+  { path: '/chat', component: ChatInterface },
+  { path: '/login', component: LoginPage },
+  { path: '/auth', component: AuthPage },
+];
+
+const protectedRoutes = [
+  { path: '/dashboard', component: Dashboard },
+  { path: '/transcripts', component: TranscriptsPage },
+  { path: '/create-memory', component: MemoryCreatePage },
+  { path: '/memories', component: MemoryListPage },
+  { path: '/insights', component: MemoryInsightsPage },
+  { path: '/memory-blossom', component: MemoryBlossom },
+  { path: '/spiralogic-path', component: SpiralogicPath },
+];
 
 export default function App() {
   const authReady = useAuthInit();
@@ -76,26 +151,23 @@ export default function App() {
       }>
         <Routes>
           {/* Public Routes */}
-          <Route path="/" element={withTransition(LaunchCelebration)()} />
-          <Route path="/launch-celebration" element={withTransition(LaunchCelebration)()} />
-          <Route path="/ceremony" element={withTransition(OracleCeremonyPage)()} />
-          <Route path="/blessing-arrival" element={withTransition(BlessingArrival)()} />
-          <Route path="/blessing" element={withTransition(BlessingPage)()} />
-          <Route path="/magic-link-sent" element={withTransition(MagicLinkSentPage)()} />
-          <Route path="/login-success" element={withTransition(LoginSuccessPage)()} />
-          <Route path="/about" element={withTransition(AboutPage)()} />
-          <Route path="/chat" element={withTransition(ChatInterface)()} />
-          <Route path="/login" element={withTransition(LoginPage)()} />
-          <Route path="/auth" element={withTransition(AuthPage)()} />
+          {publicRoutes.map(({ path, component: Component }) => (
+            <Route key={path} path={path} element={withTransition(Component)()} />
+          ))}
 
           {/* Protected Routes */}
-          <Route path="/dashboard" element={<ProtectedRoute>{withTransition(Dashboard)()}</ProtectedRoute>} />
-          <Route path="/transcripts" element={<ProtectedRoute>{withTransition(TranscriptsPage)()}</ProtectedRoute>} />
-          <Route path="/create-memory" element={<ProtectedRoute>{withTransition(MemoryCreatePage)()}</ProtectedRoute>} />
-          <Route path="/memories" element={<ProtectedRoute>{withTransition(MemoryListPage)()}</ProtectedRoute>} />
-          <Route path="/insights" element={<ProtectedRoute>{withTransition(MemoryInsightsPage)()}</ProtectedRoute>} />
-          <Route path="/memory-blossom" element={<ProtectedRoute>{withTransition(MemoryBlossom)()}</ProtectedRoute>} />
-          <Route path="/spiralogic-path" element={<ProtectedRoute>{withTransition(SpiralogicPath)()}</ProtectedRoute>} />
+          {protectedRoutes.map(({ path, component: Component }) => (
+            <Route
+              key={path}
+              path={path}
+              element={
+                <ProtectedRoute>
+                  {withTransition(Component)()}
+                </ProtectedRoute>
+              }
+            />
+          ))}
+        
 
           {/* Catch-All */}
           <Route path="*" element={withTransition(NotFound)()} />
