@@ -1,7 +1,7 @@
 // src/App.tsx
 import React, { Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Layout } from '@/components/Layout';
+import { Layout } from './components/Layout';
 import ProtectedRoute from '@/components/ProtectedRoute'; 
 import { useAuthInit } from '@/hooks/useAuthInit';
 import { useOracleCheck } from '@/hooks/useOracleCheck';
