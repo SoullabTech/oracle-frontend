@@ -1,0 +1,17 @@
+node_modules
+.vscode
+.git
+.gitignore
+README.md
+readme.md
+tests
+test
+coverage
+*.log
+*.tsbuildinfo
+public/sounds/
+src/components/_tests_/
+src/tests/
+supabase/functions/ # (optional if not needed server-side)
+.env
+.env.local
