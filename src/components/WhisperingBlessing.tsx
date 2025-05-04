@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 
 const blessings = [
-  "🕊️ Your breath is your prayer today.",
-  "🌿 Trust the Spiral even when it turns inward.",
-  "🔮 A small act today will weave a great destiny tomorrow.",
-  "🌟 Listen closely — your soul is speaking.",
-  "🍃 Every threshold crossed shapes a new world within you.",
-  "🌸 Gratitude opens hidden gateways.",
-  "🌀 The Spiral remembers even when you forget."
+  '🕊️ Your breath is your prayer today.',
+  '🌿 Trust the Spiral even when it turns inward.',
+  '🔮 A small act today will weave a great destiny tomorrow.',
+  '🌟 Listen closely — your soul is speaking.',
+  '🍃 Every threshold crossed shapes a new world within you.',
+  '🌸 Gratitude opens hidden gateways.',
+  '🌀 The Spiral remembers even when you forget.',
 ];
 
 export default function WhisperingBlessing() {
@@ -31,9 +31,7 @@ export default function WhisperingBlessing() {
         <h2 className="text-2xl font-soullab text-soullab-aether mb-4">
           ✨ Whisper from Your Oracle
         </h2>
-        <p className="text-lg text-soullab-earth mb-8 italic">
-          {blessing}
-        </p>
+        <p className="text-lg text-soullab-earth mb-8 italic">{blessing}</p>
         <button
           onClick={() => setShowBlessing(false)}
           className="bg-soullab-gold hover:bg-soullab-fire text-white font-semibold py-2 px-8 rounded-xl shadow-lg transition-all duration-300"

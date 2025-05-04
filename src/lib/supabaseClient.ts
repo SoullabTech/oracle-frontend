@@ -62,7 +62,10 @@ export const fetchUserProfile = async (userId: string) => {
   return data;
 };
 
-export const updateUserProfile = async (userId: string, profileData: { full_name?: string; role?: string }) => {
+export const updateUserProfile = async (
+  userId: string,
+  profileData: { full_name?: string; role?: string },
+) => {
   const { data, error } = await supabase
     .from('user_profiles')
     .update(profileData)
@@ -131,10 +134,7 @@ export const createMemory = async (userId: string, content: string, metadata: st
 };
 
 export const fetchInsightsForMemory = async (memoryId: string) => {
-  const { data, error } = await supabase
-    .from('insights')
-    .select('*')
-    .eq('memory_id', memoryId);
+  const { data, error } = await supabase.from('insights').select('*').eq('memory_id', memoryId);
 
   if (error) {
     console.error('Error fetching insights:', error);

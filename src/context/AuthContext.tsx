@@ -1,7 +1,7 @@
 // src/context/AuthContext.tsx
+import { Session, User } from '@supabase/supabase-js';
 import { createContext, useContext, useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabaseClient';
-import { Session, User } from '@supabase/supabase-js';
 
 // 1. Define the AuthContext types
 interface AuthContextType {
@@ -49,11 +49,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const value: AuthContextType = { session, user, loading };
 
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
 // 4. Hook to easily use the context

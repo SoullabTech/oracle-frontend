@@ -1,6 +1,6 @@
 // src/components/QueryPanel.tsx
-import React, { useState } from 'react';
 import axios from 'axios';
+import React, { useState } from 'react';
 
 const QueryPanel: React.FC = () => {
   const [query, setQuery] = useState('');

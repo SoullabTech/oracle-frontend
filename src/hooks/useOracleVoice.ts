@@ -31,7 +31,7 @@ export function useOracleChat() {
     text: string,
     detectedElement?: string,
     detectedPhase?: number,
-    emotionOverride?: string
+    emotionOverride?: string,
   ) => {
     const userMessage = text.trim();
     if (!userMessage) return;

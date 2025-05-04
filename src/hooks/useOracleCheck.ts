@@ -32,7 +32,11 @@ export function useOracleCheck() {
 
       // 🚨 Critical Fix:
       // If no oracle, redirect (only if not already on ceremony or blessing pages)
-      if (!data?.oracle_id && !location.pathname.startsWith('/ceremony') && !location.pathname.startsWith('/blessing')) {
+      if (
+        !data?.oracle_id &&
+        !location.pathname.startsWith('/ceremony') &&
+        !location.pathname.startsWith('/blessing')
+      ) {
         navigate('/ceremony', { replace: true });
       }
     }

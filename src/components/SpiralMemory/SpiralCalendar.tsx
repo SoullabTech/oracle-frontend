@@ -1,6 +1,6 @@
 // src/components/SpiralMemory/SpiralCalendar.tsx
-import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useEffect, useState } from 'react';
 import { supabase } from '../../lib/supabaseClient';
 
 export default function SpiralCalendar({ breaths }: { breaths: any[] }) {
@@ -99,9 +99,7 @@ export default function SpiralCalendar({ breaths }: { breaths: any[] }) {
                     {dayData.breath.wild_petals?.length > 0 && (
                       <div className="mt-1 text-lg animate-bounce">🌸</div>
                     )}
-                    {dayData.breath.dream && (
-                      <div className="mt-1 text-lg">💭</div>
-                    )}
+                    {dayData.breath.dream && <div className="mt-1 text-lg">💭</div>}
                   </>
                 )}
               </>
@@ -125,7 +123,9 @@ export default function SpiralCalendar({ breaths }: { breaths: any[] }) {
               onClick={(e) => e.stopPropagation()}
             >
               <h2 className="text-2xl font-bold mb-4 text-indigo-700">🌸 Spiral Breath Detail</h2>
-              <p className="mb-2">Lightness: <strong>{selectedBreath.lightness}</strong></p>
+              <p className="mb-2">
+                Lightness: <strong>{selectedBreath.lightness}</strong>
+              </p>
               <div className="flex justify-center flex-wrap">
                 {selectedBreath.elements &&
                   Object.keys(selectedBreath.elements).map((element) => (
@@ -138,7 +138,9 @@ export default function SpiralCalendar({ breaths }: { breaths: any[] }) {
                 <div className="mt-4">
                   <p className="font-bold text-purple-600">Wild Petals:</p>
                   {selectedBreath.wild_petals.map((petal: string, idx: number) => (
-                    <p key={idx} className="text-sm italic text-gray-600">"{petal}"</p>
+                    <p key={idx} className="text-sm italic text-gray-600">
+                      "{petal}"
+                    </p>
                   ))}
                 </div>
               )}
@@ -167,10 +169,10 @@ export default function SpiralCalendar({ breaths }: { breaths: any[] }) {
               className="bg-white rounded-2xl p-8 shadow-2xl text-center w-full max-w-sm"
               onClick={(e) => e.stopPropagation()}
             >
-              <h2 className="text-2xl font-bold mb-4 text-purple-700">🌙 Dream Spiral Reflection</h2>
-              <p className="mb-4 italic text-gray-700">
-                "{selectedDream.dream}"
-              </p>
+              <h2 className="text-2xl font-bold mb-4 text-purple-700">
+                🌙 Dream Spiral Reflection
+              </h2>
+              <p className="mb-4 italic text-gray-700">"{selectedDream.dream}"</p>
               {selectedDream.dreamPetal && (
                 <div className="text-2xl mb-4">
                   🌀 Dream Petal: <span className="font-bold">{selectedDream.dreamPetal}</span>

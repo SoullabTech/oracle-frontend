@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react';
-import { supabase } from '@/lib/supabaseClient';
-import { SpiralParticles } from '@/components/SpiralParticles';
-import Header from '@/components/Header';
-import { SacredFooter } from '@/components/SacredFooter';
-import { PageTransition } from '@/components/PageTransition';
 import { motion } from 'framer-motion';
-import { useAuth } from '@/context/AuthContext';
+import { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
+import Header from '@/components/Header';
+import { PageTransition } from '@/components/PageTransition';
+import { SacredFooter } from '@/components/SacredFooter';
+import { SpiralParticles } from '@/components/SpiralParticles';
+import { useAuth } from '@/context/AuthContext';
+import { supabase } from '@/lib/supabaseClient';
 
 // Oracle interface
 interface Oracle {
@@ -17,11 +17,11 @@ interface Oracle {
 
 // Blessings data
 const blessingsByElement = {
-  Fire: ["Your passion lights the way 🔥", "A spark within you ignites the stars 🌟"],
-  Water: ["Your emotions are your compass 🌊", "Flow gracefully with the tides 🐚"],
-  Earth: ["Your roots grow deep and strong 🌿", "Patience blossoms into miracles 🌻"],
-  Air: ["Your thoughts weave new worlds 🌬️", "Speak your dreams into being 🕊️"],
-  Aether: ["You are the breath between worlds ✨", "The unseen realms open before you 🔮"],
+  Fire: ['Your passion lights the way 🔥', 'A spark within you ignites the stars 🌟'],
+  Water: ['Your emotions are your compass 🌊', 'Flow gracefully with the tides 🐚'],
+  Earth: ['Your roots grow deep and strong 🌿', 'Patience blossoms into miracles 🌻'],
+  Air: ['Your thoughts weave new worlds 🌬️', 'Speak your dreams into being 🕊️'],
+  Aether: ['You are the breath between worlds ✨', 'The unseen realms open before you 🔮'],
 } as const;
 
 export default function Dashboard() {
@@ -43,7 +43,8 @@ export default function Dashboard() {
         console.error('Error fetching oracle:', error);
       } else if (data) {
         setOracle(data as Oracle);
-        const blessings = blessingsByElement[data.oracle_element as keyof typeof blessingsByElement];
+        const blessings =
+          blessingsByElement[data.oracle_element as keyof typeof blessingsByElement];
         if (blessings) {
           const randomBlessing = blessings[Math.floor(Math.random() * blessings.length)];
           setDailyBlessing(randomBlessing);
@@ -85,15 +86,9 @@ export default function Dashboard() {
               <h2 className="text-2xl font-semibold text-indigo-600 mb-2">
                 Oracle: {oracle.oracle_name}
               </h2>
-              <p className="text-lg text-gray-700 mb-1">
-                Archetype: {oracle.oracle_archetype}
-              </p>
-              <p className="text-lg text-gray-700 mb-1">
-                Element: {oracle.oracle_element}
-              </p>
-              {dailyBlessing && (
-                <p className="mt-4 italic text-indigo-500">{dailyBlessing}</p>
-              )}
+              <p className="text-lg text-gray-700 mb-1">Archetype: {oracle.oracle_archetype}</p>
+              <p className="text-lg text-gray-700 mb-1">Element: {oracle.oracle_element}</p>
+              {dailyBlessing && <p className="mt-4 italic text-indigo-500">{dailyBlessing}</p>}
             </motion.div>
           )}
         </main>

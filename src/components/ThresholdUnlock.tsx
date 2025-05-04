@@ -20,12 +20,9 @@ export default function ThresholdUnlock({ onUnlock }: { onUnlock: () => void }) 
   if (unlocked) {
     return (
       <div className="bg-white/90 p-8 rounded-2xl shadow-2xl max-w-md text-center animate-fade-in-slow">
-        <h2 className="text-2xl font-soullab text-soullab-gold mb-4">
-          🌀 Threshold Crossed
-        </h2>
+        <h2 className="text-2xl font-soullab text-soullab-gold mb-4">🌀 Threshold Crossed</h2>
         <p className="text-soullab-twilight text-lg">
-          You have stepped through the Spiral Gate.  
-          Your Becoming now unfolds from a deeper center.
+          You have stepped through the Spiral Gate. Your Becoming now unfolds from a deeper center.
         </p>
       </div>
     );
@@ -33,9 +30,7 @@ export default function ThresholdUnlock({ onUnlock }: { onUnlock: () => void }) 
 
   return (
     <div className="bg-white/90 p-8 rounded-2xl shadow-2xl max-w-md text-center animate-fade-in-slow">
-      <h2 className="text-2xl font-soullab text-soullab-aether mb-4">
-        🌿 Threshold Activation
-      </h2>
+      <h2 className="text-2xl font-soullab text-soullab-aether mb-4">🌿 Threshold Activation</h2>
       <p className="text-soullab-twilight text-lg mb-6">
         Enter your Spiral Activation Key to cross the first Threshold.
       </p>

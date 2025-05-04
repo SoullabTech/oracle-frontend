@@ -3,9 +3,7 @@ import { supabase } from '../../lib/supabaseClient';
 import DreamPetalGallery from '../components/SpiralMemory/DreamPetalGallery';
 
 export default function DreamJournalPage() {
-  return (
-    <DreamPetalGallery />
-  );
+  return <DreamPetalGallery />;
 }
 
 export default function DreamJournal() {
@@ -36,7 +34,9 @@ export default function DreamJournal() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {dreams.map((dream) => (
             <div key={dream.id} className="bg-white p-6 rounded-xl shadow-md">
-              <p className="text-sm text-gray-500 mb-2">{new Date(dream.date).toLocaleDateString()}</p>
+              <p className="text-sm text-gray-500 mb-2">
+                {new Date(dream.date).toLocaleDateString()}
+              </p>
               <p className="text-md text-indigo-700">{dream.dream}</p>
             </div>
           ))}

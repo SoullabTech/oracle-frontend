@@ -10,7 +10,9 @@ export default function SacredKeyGate({ children }: { children: React.ReactNode 
   useEffect(() => {
     // 🌀 Check if the user already claimed a key
     const checkAccess = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return;
 
       const { data, error } = await supabase
@@ -30,7 +32,9 @@ export default function SacredKeyGate({ children }: { children: React.ReactNode 
   }, []);
 
   const handleClaimKey = async () => {
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     if (!user) return;
 
     const { data, error } = await supabase
@@ -49,14 +53,20 @@ export default function SacredKeyGate({ children }: { children: React.ReactNode 
   };
 
   if (hasAccess === null) {
-    return <div className="flex items-center justify-center min-h-screen">🌬️ Checking your sacred access...</div>;
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        🌬️ Checking your sacred access...
+      </div>
+    );
   }
 
   if (!hasAccess) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center p-6 bg-gradient-to-br from-pink-100 to-indigo-100">
         <div className="bg-white bg-opacity-80 p-8 rounded-xl shadow-xl space-y-6">
-          <h1 className="text-3xl font-bold text-center text-indigo-700">🔑 Enter Your Sacred Key</h1>
+          <h1 className="text-3xl font-bold text-center text-indigo-700">
+            🔑 Enter Your Sacred Key
+          </h1>
           <input
             type="text"
             value={sacredKeyInput}

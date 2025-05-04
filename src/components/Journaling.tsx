@@ -11,4 +11,3 @@ const Journaling: React.FC = () => {
 };
 
 export default Journaling;
-

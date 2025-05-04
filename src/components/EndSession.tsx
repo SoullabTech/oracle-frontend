@@ -1,9 +1,9 @@
 // src/components/EndSession.tsx
-import React, { useState } from 'react';
 import axios from 'axios';
+import React, { useState } from 'react';
 
 const EndSession: React.FC = () => {
-  const [sessionId, setSessionId] = useState("");
+  const [sessionId, setSessionId] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -11,10 +11,10 @@ const EndSession: React.FC = () => {
     setLoading(true);
     try {
       const response = await axios.post(`/api/sessions/end/${sessionId}`);
-      console.log("Session ended:", response.data);
+      console.log('Session ended:', response.data);
     } catch (err) {
-      setError("Failed to end session. Please try again.");
-      console.error("Error ending session:", err);
+      setError('Failed to end session. Please try again.');
+      console.error('Error ending session:', err);
     } finally {
       setLoading(false);
     }

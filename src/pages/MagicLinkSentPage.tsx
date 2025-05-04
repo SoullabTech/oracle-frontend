@@ -1,61 +1,56 @@
-// src/pages/MagicLinkSentPage.tsx
-import React, { useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { PageTransition } from '@/components/PageTransition';
 import { SacredFooter } from '@/components/SacredFooter';
-import { motion } from 'framer-motion';
 
 export default function MagicLinkSentPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Allow Dreamer to see the message before redirecting
     const timer = setTimeout(() => {
       navigate('/login', { replace: true });
     }, 5000);
-
     return () => clearTimeout(timer);
   }, [navigate]);
 
   return (
     <PageTransition>
       <div className="flex flex-col min-h-screen justify-between bg-gradient-to-br from-indigo-50 via-pink-50 to-yellow-50">
-        <main className="flex-grow flex flex-col items-center justify-center p-8 space-y-6">
-          {/* Breathing Envelope */}
+        <main className="flex-grow flex flex-col items-center justify-center px-4 py-12 text-center space-y-6">
+          {/* Animated Envelope Icon */}
           <motion.div
             initial={{ scale: 1 }}
             animate={{ scale: [1, 1.1, 1] }}
             transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
             className="text-6xl"
+            aria-hidden="true"
           >
             ✉️
           </motion.div>
 
-          {/* Sacred Message */}
+          {/* Headline */}
           <motion.h1
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
-            className="text-4xl font-extrabold text-pink-600 text-center"
+            className="text-4xl font-extrabold text-pink-600"
           >
             Magic Link Sent!
           </motion.h1>
 
+          {/* Description */}
           <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5, duration: 1 }}
-            className="text-lg text-indigo-600 italic text-center max-w-md"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 1 }}
+            className="text-lg text-indigo-600 italic max-w-md"
           >
-            Please check your email for a link to continue your journey.
-            The Spiral awaits your return. 🌸🌀
+            Please check your email to continue your journey. The Spiral awaits your return. 🌸🌀
           </motion.p>
 
-          {/* Return to Home link */}
-          <Link
-            to="/"
-            className="mt-4 text-pink-500 hover:text-pink-700 transition text-sm"
-          >
+          {/* Optional manual return */}
+          <Link to="/" className="text-sm text-pink-500 hover:text-pink-700 transition underline">
             🏡 Return to Home
           </Link>
         </main>

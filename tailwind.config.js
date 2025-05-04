@@ -1,7 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: 'class', // 🌙 Enables dark mode via class
   content: [
-    "./src/**/*.{js,ts,jsx,tsx}", // ✅ Scans your project
+    "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {
@@ -15,13 +16,13 @@ module.exports = {
         'soullab-aether': '#A78BFA',
       },
       fontFamily: {
-        'soullab': ['"Cormorant Garamond"', 'serif'], // 🌀 Mythopoetic vibe
+        'soullab': ['"Cormorant Garamond"', 'serif'],
       },
       animation: {
         'spin-slow': 'spin 12s linear infinite',
         'fade-in': 'fadeIn 3s ease-in forwards',
         'breathe': 'breathe 6s ease-in-out infinite',
-        'background-move': 'backgroundMove 30s ease infinite', // 🌟 Moving background
+        'background-move': 'backgroundMove 30s ease infinite',
       },
       keyframes: {
         fadeIn: {
@@ -39,5 +40,9 @@ module.exports = {
       },
     },
   },
-  plugins: [],
-}
+  plugins: [
+    require('@tailwindcss/typography'),
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/aspect-ratio'), // 📐 Responsive media aspect ratios
+  ],
+};

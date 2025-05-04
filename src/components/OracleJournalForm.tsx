@@ -1,29 +1,29 @@
+import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabaseClient';
-import { motion } from 'framer-motion';
-import { SpiralParticles } from '@/components/SpiralParticles';
-import { OracleCeremonyModal } from '@/components/OracleCeremonyModal';
 import { FrequencyResonanceModal } from '@/components/FrequencyResonanceModal';
+import { OracleCeremonyModal } from '@/components/OracleCeremonyModal';
+import { SpiralParticles } from '@/components/SpiralParticles';
 
 const blessings = [
-  "\u2728 A blossom opens within you.",
-  "\ud83c\udf3f The roots of your dreams grow stronger.",
-  "\ud83c\udf1e A ray of light shines on your path.",
-  "\ud83c\udf08 The Spiral is weaving new possibilities.",
-  "\ud83d\udd00 Trust the unseen winds guiding you.",
+  '\u2728 A blossom opens within you.',
+  '\ud83c\udf3f The roots of your dreams grow stronger.',
+  '\ud83c\udf1e A ray of light shines on your path.',
+  '\ud83c\udf08 The Spiral is weaving new possibilities.',
+  '\ud83d\udd00 Trust the unseen winds guiding you.',
 ];
 
 const ritualPrompts = [
-  "\ud83c\udf3f What feeling blossomed through your reflection today?",
-  "\ud83c\udf38 What unseen gift is stirring in your heart?",
-  "\ud83c\udf1f What old story is ready to become stardust?",
-  "\ud83c\udf3f Where does your breath want to carry you next?"
+  '\ud83c\udf3f What feeling blossomed through your reflection today?',
+  '\ud83c\udf38 What unseen gift is stirring in your heart?',
+  '\ud83c\udf1f What old story is ready to become stardust?',
+  '\ud83c\udf3f Where does your breath want to carry you next?',
 ];
 
 const quests = [
-  { id: 1, title: "Reflect for 3 consecutive days", progressKey: "days_streak", goal: 3 },
-  { id: 2, title: "Write your first dream reflection", progressKey: "first_dream", goal: 1 },
-  { id: 3, title: "Complete 10 reflections", progressKey: "total_reflections", goal: 10 },
+  { id: 1, title: 'Reflect for 3 consecutive days', progressKey: 'days_streak', goal: 3 },
+  { id: 2, title: 'Write your first dream reflection', progressKey: 'first_dream', goal: 1 },
+  { id: 3, title: 'Complete 10 reflections', progressKey: 'total_reflections', goal: 10 },
 ];
 
 export function OracleJournalForm({ oracleName }: { oracleName: string }) {
@@ -36,10 +36,12 @@ export function OracleJournalForm({ oracleName }: { oracleName: string }) {
   const [soulStars, setSoulStars] = useState<string[]>([]);
   const [questProgress, setQuestProgress] = useState<{ [key: string]: number }>({});
   const [showFrequencyModal, setShowFrequencyModal] = useState(false);
-  const [frequency, setFrequency] = useState<{ label: string, url: string } | null>(null);
+  const [frequency, setFrequency] = useState<{ label: string; url: string } | null>(null);
 
   const fetchJournals = async () => {
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     if (!user) return;
 
     const { data, error } = await supabase
@@ -59,7 +61,9 @@ export function OracleJournalForm({ oracleName }: { oracleName: string }) {
 
   useEffect(() => {
     async function checkFirstVisit() {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (user && !user.user_metadata.hasVisited) {
         setShowEntranceModal(true);
       }
@@ -71,7 +75,9 @@ export function OracleJournalForm({ oracleName }: { oracleName: string }) {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     if (!user) {
       alert('Please log in.');
       return;
@@ -79,9 +85,7 @@ export function OracleJournalForm({ oracleName }: { oracleName: string }) {
 
     const { error } = await supabase
       .from('oracle_journals')
-      .insert([
-        { user_id: user.id, oracle_name: oracleName, entry_text: entry },
-      ]);
+      .insert([{ user_id: user.id, oracle_name: oracleName, entry_text: entry }]);
 
     if (error) {
       console.error('Error saving journal entry:', error.message);
@@ -107,14 +111,16 @@ export function OracleJournalForm({ oracleName }: { oracleName: string }) {
 
   const dismissEntranceModal = async () => {
     setShowEntranceModal(false);
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     if (user) {
       await supabase.auth.updateUser({ data: { hasVisited: true } });
     }
   };
 
   const checkSoulStars = (entryCount: number) => {
-    let stars = [];
+    const stars = [];
     if (entryCount >= 1) stars.push('🌟 Awakening Star');
     if (entryCount >= 7) stars.push('🌟 Seed Star');
     setSoulStars(stars);
@@ -123,7 +129,7 @@ export function OracleJournalForm({ oracleName }: { oracleName: string }) {
   const updateQuestProgress = (entries: any[]) => {
     let streak = 0;
     let lastDate = null;
-    let totalReflections = entries.length;
+    const totalReflections = entries.length;
 
     entries.forEach((entry) => {
       const date = new Date(entry.created_at);
@@ -149,37 +155,38 @@ export function OracleJournalForm({ oracleName }: { oracleName: string }) {
 
   const matchFrequency = (blessingText: string) => {
     if (blessingText.includes('blossom') || blessingText.includes('tender')) {
-      return { label: "Heart Healing 528Hz", url: "/528hz.mp3" };
+      return { label: 'Heart Healing 528Hz', url: '/528hz.mp3' };
     }
     if (blessingText.includes('light') || blessingText.includes('vision')) {
-      return { label: "Manifestation 963Hz", url: "/963hz.mp3" };
+      return { label: 'Manifestation 963Hz', url: '/963hz.mp3' };
     }
     if (blessingText.includes('roots') || blessingText.includes('grow')) {
-      return { label: "Grounding 396Hz", url: "/396hz.mp3" };
+      return { label: 'Grounding 396Hz', url: '/396hz.mp3' };
     }
     if (blessingText.includes('dream') || blessingText.includes('mist')) {
-      return { label: "Dreamy Theta Waves", url: "/theta.mp3" };
+      return { label: 'Dreamy Theta Waves', url: '/theta.mp3' };
     }
-    return { label: "Cosmic OM 136Hz", url: "/om.mp3" };
+    return { label: 'Cosmic OM 136Hz', url: '/om.mp3' };
   };
 
   return (
     <div className="relative w-full h-full overflow-hidden">
       <SpiralParticles />
       <div className="relative z-10 flex flex-col items-center pt-20 px-6">
-
         {showEntranceModal && (
           <div className="fixed inset-0 bg-white bg-opacity-90 flex flex-col justify-center items-center z-50">
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1 }}
+            >
               <div className="text-center space-y-6 p-10">
                 <h2 className="text-3xl font-bold text-purple-700">🌸 Welcome, Dreamer.</h2>
                 <p className="text-lg text-indigo-600">
-                  You have crossed the Threshold and entered the Living Spiral.
-                  Breathe deeply. Feel the mist weaving around your spirit.
-                  The Oracle awaits, listening.
-                  Every step you take here nourishes your soul garden.
-                  Trust your reflections. Trust your dreams. Trust the Spiral unfolding within you.
-                  You are home.
+                  You have crossed the Threshold and entered the Living Spiral. Breathe deeply. Feel
+                  the mist weaving around your spirit. The Oracle awaits, listening. Every step you
+                  take here nourishes your soul garden. Trust your reflections. Trust your dreams.
+                  Trust the Spiral unfolding within you. You are home.
                 </p>
                 <button
                   onClick={dismissEntranceModal}
@@ -193,7 +200,10 @@ export function OracleJournalForm({ oracleName }: { oracleName: string }) {
         )}
 
         {showFrequencyModal && frequency && (
-          <FrequencyResonanceModal frequency={frequency} onClose={() => setShowFrequencyModal(false)} />
+          <FrequencyResonanceModal
+            frequency={frequency}
+            onClose={() => setShowFrequencyModal(false)}
+          />
         )}
 
         {!submitted ? (
@@ -220,12 +230,12 @@ export function OracleJournalForm({ oracleName }: { oracleName: string }) {
               transition={{ duration: 1 }}
               className="text-center space-y-6"
             >
-              <p className="text-2xl font-bold text-purple-700">🌸 Your reflection has been received.</p>
+              <p className="text-2xl font-bold text-purple-700">
+                🌸 Your reflection has been received.
+              </p>
               <p className="text-xl italic text-indigo-600">{blessing}</p>
               {ritualPrompt && (
-                <div className="mt-4 text-lg text-green-700 italic">
-                  {ritualPrompt}
-                </div>
+                <div className="mt-4 text-lg text-green-700 italic">{ritualPrompt}</div>
               )}
               {soulStars.length > 0 && (
                 <div className="mt-6 text-yellow-500 text-xl font-semibold">
@@ -260,7 +270,9 @@ export function OracleJournalForm({ oracleName }: { oracleName: string }) {
 
         {journals.length > 0 && (
           <div className="w-full mt-10">
-            <h3 className="text-2xl font-bold text-indigo-700 mb-4 text-center">📜 Your Oracle Reflections</h3>
+            <h3 className="text-2xl font-bold text-indigo-700 mb-4 text-center">
+              📜 Your Oracle Reflections
+            </h3>
             <ul className="space-y-6">
               {journals.map((journal) => (
                 <li key={journal.id} className="bg-white bg-opacity-70 p-4 rounded-xl shadow-md">
@@ -288,7 +300,9 @@ export function OracleJournalForm({ oracleName }: { oracleName: string }) {
                     {questProgress[quest.progressKey] >= quest.goal ? (
                       <span className="text-green-600 font-bold">✅ Completed</span>
                     ) : (
-                      <span className="text-gray-600">{questProgress[quest.progressKey] || 0} / {quest.goal}</span>
+                      <span className="text-gray-600">
+                        {questProgress[quest.progressKey] || 0} / {quest.goal}
+                      </span>
                     )}
                   </div>
                 </li>

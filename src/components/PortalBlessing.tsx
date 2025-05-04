@@ -8,7 +8,9 @@ export function SpiralMemoryMap({ dreams }: { dreams: any[] }) {
 
   return (
     <div className="w-full h-64 bg-white bg-opacity-80 rounded-2xl shadow-md p-6 mt-10">
-      <h3 className="text-2xl font-bold text-purple-700 text-center mb-4">🌀 Your Dream Spiral Growth</h3>
+      <h3 className="text-2xl font-bold text-purple-700 text-center mb-4">
+        🌀 Your Dream Spiral Growth
+      </h3>
       <ResponsiveContainer width="100%" height="100%">
         <LineChart data={data}>
           <XAxis dataKey="day" />

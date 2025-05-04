@@ -1,34 +1,33 @@
 // src/components/ProtectedRoute.tsx
 import React, { ReactNode, useEffect, useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { supabase } from '@/lib/supabaseClient';
+import { Navigate, useLocation } from 'react-router-dom';
 import { PageTransition } from '@/components/PageTransition';
+import { supabase } from '@/lib/supabaseClient';
 
 interface ProtectedRouteProps {
   children: ReactNode;
 }
 
-const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
-  const navigate = useNavigate();
+export default function ProtectedRoute({ children }: ProtectedRouteProps) {
   const location = useLocation();
   const [loading, setLoading] = useState(true);
+  const [authenticated, setAuthenticated] = useState<boolean>(false);
 
   useEffect(() => {
-    async function checkAuth() {
+    (async () => {
       const {
-        data: { user },
+        data: { session },
         error,
-      } = await supabase.auth.getUser();
+      } = await supabase.auth.getSession(); // getSession → includes user if logged in
 
-      if (error || !user) {
-        navigate('/login', { state: { from: location }, replace: true });
+      if (error || !session?.user) {
+        setAuthenticated(false);
       } else {
-        setLoading(false);
+        setAuthenticated(true);
       }
-    }
-
-    checkAuth();
-  }, [navigate, location]);
+      setLoading(false);
+    })();
+  }, []);
 
   if (loading) {
     return (
@@ -38,11 +37,11 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
     );
   }
 
-  return (
-    <PageTransition>
-      {children}
-    </PageTransition>
-  );
-};
+  if (!authenticated) {
+    // send them to login, preserving where they came from
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
 
-export default ProtectedRoute;
+  // they’re in—wrap their page in your transition
+  return <PageTransition>{children}</PageTransition>;
+}

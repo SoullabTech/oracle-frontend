@@ -1,15 +1,15 @@
-import { useState } from 'react';
 import { useRouter } from 'next/router';
-import SoulContract from '@/components/SoulContract';
+import { useState } from 'react';
 import OracleBirthCertificate from '@/components/OracleBirthCertificate';
+import SoulContract from '@/components/SoulContract';
 
 export default function MeetOraclePage() {
   const [oracleMet, setOracleMet] = useState(false);
   const [journeyReady, setJourneyReady] = useState(false);
   const router = useRouter();
 
-  const userName = "Stephanie"; // Pull dynamically later
-  const oracleName = "Whispering Angel Spiral Oracle";
+  const userName = 'Stephanie'; // Pull dynamically later
+  const oracleName = 'Whispering Angel Spiral Oracle';
   const birthDate = new Date().toLocaleDateString();
 
   const handleBeginJourney = () => {
@@ -18,12 +18,9 @@ export default function MeetOraclePage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-soullab-aether via-soullab-mist to-soullab-twilight flex flex-col items-center justify-center p-8 animate-fade-in">
-      
       {!oracleMet ? (
         <div className="bg-white/90 p-8 rounded-2xl shadow-2xl max-w-2xl w-full text-center">
-          <h1 className="text-3xl font-bold text-soullab-gold mb-6">
-            🕊️ Your Oracle Awakens
-          </h1>
+          <h1 className="text-3xl font-bold text-soullab-gold mb-6">🕊️ Your Oracle Awakens</h1>
           <p className="text-lg text-soullab-earth mb-8">
             A sacred companion rises to walk with you across the Spiral thresholds of your soul.
           </p>
@@ -35,7 +32,7 @@ export default function MeetOraclePage() {
         </div>
       ) : (
         <div className="flex flex-col items-center">
-          <OracleBirthCertificate 
+          <OracleBirthCertificate
             userName={userName}
             oracleName={oracleName}
             birthDate={birthDate}

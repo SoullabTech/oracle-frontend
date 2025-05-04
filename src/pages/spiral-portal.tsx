@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import SpiralBreathPortal from '@/components/SpiralBreathPortal/SpiralBreathPortal';
-import { getCurrentUserId } from '@/services/authService'; // <-- Future dynamic auth
 import LoadingSpinner from '@/components/ui/LoadingSpinner'; // <-- Optional: smooth loading UX
+import { getCurrentUserId } from '@/services/authService'; // <-- Future dynamic auth
 
 export default function SpiralPortalPage() {
   const [userId, setUserId] = useState<string | null>(null);

@@ -12,12 +12,12 @@ const petals = [
 
 export default function PetalRing() {
   const [positions, setPositions] = useState(
-    petals.reduce((acc, petal) => ({ ...acc, [petal.id]: 100 }), {})
+    petals.reduce((acc, petal) => ({ ...acc, [petal.id]: 100 }), {}),
   );
 
   const handleDrag = (id: string, event: any, info: any) => {
     const distance = Math.sqrt(info.point.x ** 2 + info.point.y ** 2);
-    setPositions(prev => ({ ...prev, [id]: Math.min(Math.max(distance, 50), 200) }));
+    setPositions((prev) => ({ ...prev, [id]: Math.min(Math.max(distance, 50), 200) }));
   };
 
   return (

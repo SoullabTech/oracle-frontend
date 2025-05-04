@@ -13,7 +13,7 @@ const Login: React.FC = () => {
       const response = await fetch('http://localhost:5001/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({ email, password }),
       });
 
       const data = await response.json();
@@ -25,7 +25,7 @@ const Login: React.FC = () => {
         setEmail('');
         setPassword('');
         setErrorMessage('');
-        alert('Login successful!'); 
+        alert('Login successful!');
         // Optionally, navigate the user to a different page
       } else {
         setErrorMessage(data.error || 'Login failed. Please check your credentials.');
@@ -37,7 +37,14 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div style={{ padding: '2rem', maxWidth: '400px', margin: '0 auto', fontFamily: 'Lato, sans-serif' }}>
+    <div
+      style={{
+        padding: '2rem',
+        maxWidth: '400px',
+        margin: '0 auto',
+        fontFamily: 'Lato, sans-serif',
+      }}
+    >
       <h2>Login</h2>
       <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column' }}>
         <label style={{ marginBottom: '0.5rem' }}>
@@ -60,9 +67,7 @@ const Login: React.FC = () => {
             required
           />
         </label>
-        {errorMessage && (
-          <p style={{ color: 'red', marginTop: '0.5rem' }}>{errorMessage}</p>
-        )}
+        {errorMessage && <p style={{ color: 'red', marginTop: '0.5rem' }}>{errorMessage}</p>}
         <button
           type="submit"
           style={{
@@ -72,7 +77,7 @@ const Login: React.FC = () => {
             color: '#fff',
             border: 'none',
             borderRadius: '5px',
-            cursor: 'pointer'
+            cursor: 'pointer',
           }}
         >
           Log In

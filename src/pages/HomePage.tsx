@@ -1,7 +1,7 @@
 // src/pages/HomePage.tsx
 import React, { useState, useRef, useEffect } from 'react';
-import { saveTurn } from '@/utils/autoSave';
 import { PageTransition } from '@/components/PageTransition';
+import { saveTurn } from '@/utils/autoSave';
 
 interface TurnData {
   id: string;

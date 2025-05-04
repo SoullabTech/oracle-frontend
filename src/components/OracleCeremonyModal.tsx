@@ -1,8 +1,8 @@
 // src/components/OracleCeremonyModal.tsx
-import { useEffect, useState } from 'react';
-import { supabase } from '@/lib/supabaseClient';
-import { SpiralParticles } from '@/components/SpiralParticles';
 import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import { SpiralParticles } from '@/components/SpiralParticles';
+import { supabase } from '@/lib/supabaseClient';
 // import useSound from 'use-sound'; // 🎵 optional, if you want portal sound
 // import portalSound from '@/assets/portal-woosh.mp3'; // 🎵 optional sound
 

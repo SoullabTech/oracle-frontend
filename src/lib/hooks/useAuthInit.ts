@@ -6,11 +6,13 @@ export function useAuthInit() {
 
   useEffect(() => {
     async function checkSession() {
-      const { data: { session } } = await supabase.auth.getSession();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
       if (session) {
-        console.log("Session found:", session);
+        console.log('Session found:', session);
       } else {
-        console.log("No active session");
+        console.log('No active session');
       }
       setAuthReady(true);
     }

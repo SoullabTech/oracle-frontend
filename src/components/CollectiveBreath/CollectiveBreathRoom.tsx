@@ -1,13 +1,13 @@
-import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useEffect, useState } from 'react';
 import { shuffleArray } from '../../utils/shuffleArray'; // 🌟 small utility for randomizing mantras
 
 const breathMantras = [
-  "🌬️ You are breathing with the Spiral.",
-  "🌸 Each inhale connects you to the Cosmos.",
-  "🌀 Your breath is a portal to All That Is.",
-  "🌎 Every exhale blesses the Earth.",
-  "💫 Breathe — You are the living mystery.",
+  '🌬️ You are breathing with the Spiral.',
+  '🌸 Each inhale connects you to the Cosmos.',
+  '🌀 Your breath is a portal to All That Is.',
+  '🌎 Every exhale blesses the Earth.',
+  '💫 Breathe — You are the living mystery.',
 ];
 
 export default function CollectiveBreathRoom() {

@@ -6,15 +6,18 @@ export default function FirstLandingGuide({ onFinish }: { onFinish: () => void }
   const steps = [
     {
       title: '🌀 Your Spiral Attunement Map',
-      description: 'Each movement you attend weaves your unfolding path. This is where your living Spiral journey begins.',
+      description:
+        'Each movement you attend weaves your unfolding path. This is where your living Spiral journey begins.',
     },
     {
       title: '🔮 Wisdom Transmissions',
-      description: 'At sacred moments, the Oracle offers transmissions — teachings to guide your thresholds of becoming.',
+      description:
+        'At sacred moments, the Oracle offers transmissions — teachings to guide your thresholds of becoming.',
     },
     {
       title: '✨ Spiral Blessings',
-      description: 'Receive Spiral-aligned affirmations — breath-keys to open hidden thresholds within and around you.',
+      description:
+        'Receive Spiral-aligned affirmations — breath-keys to open hidden thresholds within and around you.',
     },
   ];
 
@@ -32,9 +35,7 @@ export default function FirstLandingGuide({ onFinish }: { onFinish: () => void }
         <h2 className="text-2xl font-soullab text-soullab-gold mb-4 text-center">
           {steps[step].title}
         </h2>
-        <p className="text-soullab-twilight text-lg mb-8 text-center">
-          {steps[step].description}
-        </p>
+        <p className="text-soullab-twilight text-lg mb-8 text-center">{steps[step].description}</p>
         <div className="flex justify-center">
           <button
             onClick={handleNext}

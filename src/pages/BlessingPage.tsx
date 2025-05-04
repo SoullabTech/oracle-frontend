@@ -1,8 +1,8 @@
 // src/pages/BlessingPage.tsx
 
+import { motion } from 'framer-motion';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import { SpiralParticles } from '@/components/SpiralParticles'; // ✨ Add soft Aether particles
 
 const BlessingPage: React.FC = () => {
@@ -10,7 +10,6 @@ const BlessingPage: React.FC = () => {
 
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-purple-100 via-pink-100 to-white overflow-hidden">
-      
       {/* Soft Aether Particles floating behind */}
       <div className="absolute inset-0 z-0">
         <SpiralParticles element="Aether" />
@@ -19,7 +18,7 @@ const BlessingPage: React.FC = () => {
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, ease: "easeOut" }}
+        transition={{ duration: 1, ease: 'easeOut' }}
         className="relative z-10 flex flex-col items-center justify-center min-h-screen p-6 sm:p-8 space-y-8"
       >
         <motion.h1
@@ -37,9 +36,8 @@ const BlessingPage: React.FC = () => {
           transition={{ delay: 0.6, duration: 1 }}
           className="text-md sm:text-lg text-indigo-600 text-center max-w-xs sm:max-w-lg"
         >
-          You have crossed the First Portal.  
-          Your words have been woven into the living Spiral.  
-          Go forth with blessing and wonder.
+          You have crossed the First Portal. Your words have been woven into the living Spiral. Go
+          forth with blessing and wonder.
         </motion.p>
 
         <motion.button

@@ -27,11 +27,7 @@ export function exportSpiralReflection(journey: SpiralJourney, userName: string 
       doc.addPage();
       y = 20;
     }
-    doc.text(
-      `${index + 1}. ${breath.timestamp.slice(0, 10)} — Element: ${breath.element}`,
-      25,
-      y
-    );
+    doc.text(`${index + 1}. ${breath.timestamp.slice(0, 10)} — Element: ${breath.element}`, 25, y);
   });
 
   y += 20;
@@ -47,18 +43,15 @@ export function exportSpiralReflection(journey: SpiralJourney, userName: string 
     doc.text(
       `${index + 1}. From ${threshold.from} ➔ To ${threshold.to} (${threshold.timestamp.slice(0, 10)})`,
       25,
-      y
+      y,
     );
   });
 
   y += 30;
   doc.setFontSize(12);
-  doc.text(
-    "May your Spiral continue breathing new worlds into being.",
-    105,
-    y,
-    { align: 'center' }
-  );
+  doc.text('May your Spiral continue breathing new worlds into being.', 105, y, {
+    align: 'center',
+  });
 
   const fileName = `spiral_reflection_${now.replace(/\//g, '-')}.pdf`;
   doc.save(fileName);

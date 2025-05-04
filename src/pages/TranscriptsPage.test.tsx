@@ -1,5 +1,5 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
+import React from 'react';
 import TranscriptsPage from './TranscriptsPage';
 
 // Mock the child components to isolate the page rendering
@@ -8,9 +8,7 @@ vi.mock('../components/TranscriptForm', () => ({
 }));
 
 vi.mock('../components/TranscriptCard', () => ({
-  default: ({ title }: { title: string }) => (
-    <div data-testid="transcript-card">{title}</div>
-  ),
+  default: ({ title }: { title: string }) => <div data-testid="transcript-card">{title}</div>,
 }));
 
 // Mock fetch for transcripts
@@ -25,7 +23,7 @@ beforeAll(() => {
             { id: '2', title: 'Workshop B', content: '', created_at: new Date().toISOString() },
           ],
         }),
-    })
+    }),
   ) as unknown as typeof fetch;
 });
 

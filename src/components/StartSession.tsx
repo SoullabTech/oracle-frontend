@@ -1,9 +1,9 @@
 // src/components/StartSession.tsx
-import React, { useState } from 'react';
 import axios from 'axios';
+import React, { useState } from 'react';
 
 const StartSession: React.FC = () => {
-  const [metadata, setMetadata] = useState("");
+  const [metadata, setMetadata] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -11,10 +11,10 @@ const StartSession: React.FC = () => {
     setLoading(true);
     try {
       const response = await axios.post('/api/sessions/start', { metadata });
-      console.log("Session started:", response.data);
+      console.log('Session started:', response.data);
     } catch (err) {
-      setError("Failed to start session. Please try again.");
-      console.error("Error starting session:", err);
+      setError('Failed to start session. Please try again.');
+      console.error('Error starting session:', err);
     } finally {
       setLoading(false);
     }
@@ -38,4 +38,3 @@ const StartSession: React.FC = () => {
 };
 
 export default StartSession;
-

@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 import { supabase } from '../../lib/supabaseClient'; // adjust if needed
 
 const elementColors: { [key: string]: string } = {
@@ -42,14 +42,10 @@ export default function DreamPetalGallery() {
             whileHover={{ scale: 1.05 }}
             className={`p-6 rounded-2xl shadow-xl bg-white bg-opacity-80 flex flex-col items-center justify-between ${elementColors[breath.dream_petal] || 'bg-gray-100'}`}
           >
-            <p className="italic text-center text-gray-700 mb-4">
-              "{breath.dream}"
-            </p>
+            <p className="italic text-center text-gray-700 mb-4">"{breath.dream}"</p>
 
             {breath.dream_petal && (
-              <div className="text-3xl font-bold mt-2">
-                🌀 {breath.dream_petal}
-              </div>
+              <div className="text-3xl font-bold mt-2">🌀 {breath.dream_petal}</div>
             )}
 
             <p className="mt-4 text-xs text-gray-500">

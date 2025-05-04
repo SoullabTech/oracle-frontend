@@ -6,7 +6,7 @@ interface SpiralBreathMapProps {
 }
 
 const SpiralBreathMap: React.FC<SpiralBreathMapProps> = ({ journey }) => {
-  const radius = 250;  // Radius of Spiral
+  const radius = 250; // Radius of Spiral
   const centerX = 300; // Center X of Canvas
   const centerY = 300; // Center Y of Canvas
 
@@ -19,7 +19,7 @@ const SpiralBreathMap: React.FC<SpiralBreathMapProps> = ({ journey }) => {
         stroke="lightgray"
         strokeWidth="2"
       />
-      
+
       {/* Draw Breath Stars */}
       {journey.breaths.map((breath, index) => {
         const angle = (index / journey.breaths.length) * 2 * Math.PI;
@@ -37,7 +37,7 @@ const SpiralBreathMap: React.FC<SpiralBreathMapProps> = ({ journey }) => {
           />
         );
       })}
-      
+
       {/* Optional: Add Threshold Nodes */}
       {journey.thresholds.map((threshold, index) => (
         <circle
@@ -49,7 +49,7 @@ const SpiralBreathMap: React.FC<SpiralBreathMapProps> = ({ journey }) => {
           title={`Threshold Crossed: ${threshold.from} ➔ ${threshold.to}`}
         />
       ))}
-      
+
       {/* Optional: Add Elemental Flow Ribbons */}
       {journey.elementalFlows.map((flow, index) => (
         <line
@@ -69,18 +69,18 @@ const SpiralBreathMap: React.FC<SpiralBreathMapProps> = ({ journey }) => {
 
 function getElementColor(element: string): string {
   switch (element) {
-    case "Fire":
-      return "red";
-    case "Water":
-      return "blue";
-    case "Earth":
-      return "green";
-    case "Air":
-      return "yellow";
-    case "Aether":
-      return "purple";
+    case 'Fire':
+      return 'red';
+    case 'Water':
+      return 'blue';
+    case 'Earth':
+      return 'green';
+    case 'Air':
+      return 'yellow';
+    case 'Aether':
+      return 'purple';
     default:
-      return "gray";
+      return 'gray';
   }
 }
 

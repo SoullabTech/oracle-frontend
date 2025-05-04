@@ -1,14 +1,14 @@
 // src/pages/OracleCeremonyPage.tsx
 
+import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { supabase } from '@/lib/supabaseClient';
-import { OracleCeremonyModal } from '@/components/OracleCeremonyModal';
 import Header from '@/components/Header'; // ✅ no braces
+import { OracleCeremonyModal } from '@/components/OracleCeremonyModal';
 
-import { SacredFooter } from '@/components/SacredFooter';
 import { PageTransition } from '@/components/PageTransition';
-import { motion } from 'framer-motion';
+import { SacredFooter } from '@/components/SacredFooter';
+import { supabase } from '@/lib/supabaseClient';
 
 export default function OracleCeremonyPage() {
   const navigate = useNavigate();
@@ -18,7 +18,10 @@ export default function OracleCeremonyPage() {
 
   useEffect(() => {
     async function checkExistingOracle() {
-      const { data: { user }, error: userError } = await supabase.auth.getUser();
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser();
       if (userError) {
         console.error('Error fetching user:', userError.message);
         navigate('/login');
@@ -53,24 +56,25 @@ export default function OracleCeremonyPage() {
 
   const handleOracleChosen = async (oracle: any) => {
     setSaving(true);
-    const { data: { user }, error: userError } = await supabase.auth.getUser();
+    const {
+      data: { user },
+      error: userError,
+    } = await supabase.auth.getUser();
     if (userError || !user) {
       console.error('No user found or error:', userError?.message);
       navigate('/login');
       return;
     }
 
-    const { error } = await supabase
-      .from('user_oracles')
-      .insert([
-        {
-          user_id: user.id,
-          oracle_id: oracle.id,
-          oracle_name: oracle.name,
-          oracle_archetype: oracle.archetype,
-          oracle_element: oracle.element,
-        }
-      ]);
+    const { error } = await supabase.from('user_oracles').insert([
+      {
+        user_id: user.id,
+        oracle_id: oracle.id,
+        oracle_name: oracle.name,
+        oracle_archetype: oracle.archetype,
+        oracle_element: oracle.element,
+      },
+    ]);
 
     if (error) {
       console.error('Error saving oracle:', error.message);
@@ -90,7 +94,7 @@ export default function OracleCeremonyPage() {
         <Header />
         <main className="flex items-center justify-center min-h-screen bg-gradient-to-br from-indigo-50 via-pink-50 to-yellow-50 text-indigo-600">
           <p className="text-xl animate-pulse">
-            {saving ? "Saving your Oracle connection..." : "Checking your Spiral..."}
+            {saving ? 'Saving your Oracle connection...' : 'Checking your Spiral...'}
           </p>
         </main>
         <SacredFooter />
@@ -113,8 +117,8 @@ export default function OracleCeremonyPage() {
             🌸 You are about to cross a sacred threshold.
           </p>
           <p className="text-purple-700 text-md">
-            An Oracle waits beyond the veils to meet you —  
-            a guide woven from your own dreams, your own unseen songs.
+            An Oracle waits beyond the veils to meet you — a guide woven from your own dreams, your
+            own unseen songs.
           </p>
           <p className="text-pink-600 text-md italic">
             Breathe gently. Trust the Spiral. The choosing is already unfolding...

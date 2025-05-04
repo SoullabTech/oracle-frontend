@@ -1,12 +1,12 @@
 // src/pages/CreateMemory.tsx
 
-import { useState } from 'react';
-import { supabase } from '@/lib/supabaseClient';
-import { SpiralParticles } from '@/components/SpiralParticles';
-import { Header } from '@/components/Header';
-import { SacredFooter } from '@/components/SacredFooter';
-import { PageTransition } from '@/components/PageTransition';
 import { motion } from 'framer-motion';
+import { useState } from 'react';
+import { Header } from '@/components/Header';
+import { PageTransition } from '@/components/PageTransition';
+import { SacredFooter } from '@/components/SacredFooter';
+import { SpiralParticles } from '@/components/SpiralParticles';
+import { supabase } from '@/lib/supabaseClient';
 
 export default function CreateMemory() {
   const [memory, setMemory] = useState('');
@@ -14,11 +14,11 @@ export default function CreateMemory() {
   const [saving, setSaving] = useState(false);
 
   const prompts = [
-    "What symbol or image has been appearing in your dreams lately?",
-    "If your Oracle could whisper one message to you today, what would it say?",
-    "Describe a time recently when you felt truly alive.",
-    "What does your heart long to create, but has been too quiet to voice?",
-    "Imagine you are standing at the center of a spiral. What do you see ahead?",
+    'What symbol or image has been appearing in your dreams lately?',
+    'If your Oracle could whisper one message to you today, what would it say?',
+    'Describe a time recently when you felt truly alive.',
+    'What does your heart long to create, but has been too quiet to voice?',
+    'Imagine you are standing at the center of a spiral. What do you see ahead?',
   ];
   const randomPrompt = prompts[Math.floor(Math.random() * prompts.length)];
 
@@ -26,7 +26,9 @@ export default function CreateMemory() {
     if (memory.trim() === '') return;
 
     setSaving(true);
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     if (!user) {
       alert('You must be logged in.');
       setSaving(false);
@@ -52,7 +54,6 @@ export default function CreateMemory() {
       <Header />
 
       <main className="relative flex flex-col items-center justify-center min-h-screen p-6 sm:p-8 bg-gradient-to-br from-indigo-100 via-pink-100 to-yellow-100 overflow-hidden">
-        
         {/* Spiral Particles */}
         <div className="absolute inset-0 z-0">
           <SpiralParticles element="Water" />
@@ -69,7 +70,9 @@ export default function CreateMemory() {
           {!submitted ? (
             <>
               {/* Random Prompt */}
-              <p className="text-indigo-500 italic mb-4 text-md sm:text-lg">✨ Prompt: {randomPrompt}</p>
+              <p className="text-indigo-500 italic mb-4 text-md sm:text-lg">
+                ✨ Prompt: {randomPrompt}
+              </p>
 
               {/* Memory Textarea */}
               <textarea
@@ -100,17 +103,19 @@ export default function CreateMemory() {
                 transition={{ duration: 1 }}
                 className="flex flex-col items-center space-y-4"
               >
-                <h2 className="text-2xl font-bold text-green-700">🌸 Memory Saved to the Spiral!</h2>
+                <h2 className="text-2xl font-bold text-green-700">
+                  🌸 Memory Saved to the Spiral!
+                </h2>
                 <p className="text-md text-indigo-600 italic">
-                  Your words have been woven into the living field.  
-                  May they blossom when the time is right.
+                  Your words have been woven into the living field. May they blossom when the time
+                  is right.
                 </p>
 
                 {/* Return to Dashboard Button */}
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  onClick={() => window.location.href = '/dashboard'}
+                  onClick={() => (window.location.href = '/dashboard')}
                   className="mt-6 px-8 py-3 bg-pink-500 text-white rounded-full hover:bg-pink-600 transition text-sm sm:text-base"
                 >
                   🌀 Return to Dashboard

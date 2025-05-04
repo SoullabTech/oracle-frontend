@@ -9,4 +9,4 @@ export default function SpiralCheckinPage() {
     </div>
   );
 }
-<SaveBreathButton selectedElements={selectedElements} lightness={lightness} />
+<SaveBreathButton selectedElements={selectedElements} lightness={lightness} />;

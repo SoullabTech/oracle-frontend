@@ -1,5 +1,5 @@
-import { supabase } from '../../lib/supabaseClient'; // adjust path if needed
 import { useRouter } from 'next/router';
+import { supabase } from '../../lib/supabaseClient'; // adjust path if needed
 
 interface SaveBreathButtonProps {
   selectedElements: { [id: string]: string };
@@ -14,14 +14,12 @@ export default function SaveBreathButton({ selectedElements, lightness }: SaveBr
       date: new Date().toISOString(),
       elements: selectedElements,
       lightness: lightness,
-      dream: null,         // empty for now (can fill later)
-      dream_petal: null,   // empty for now (draw later)
-      wild_petals: [],     // empty for now (summon later)
+      dream: null, // empty for now (can fill later)
+      dream_petal: null, // empty for now (draw later)
+      wild_petals: [], // empty for now (summon later)
     };
 
-    const { error } = await supabase
-      .from('spiral_breaths')
-      .insert([ritualData]);
+    const { error } = await supabase.from('spiral_breaths').insert([ritualData]);
 
     if (error) {
       console.error('Error saving Spiral Breath:', error.message);

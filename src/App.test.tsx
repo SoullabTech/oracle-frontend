@@ -1,8 +1,8 @@
 // src/App.test.tsx
-import React from 'react';
 import { render, screen, within } from '@testing-library/react';
-import App from './App';
+import React from 'react';
 import { RouterProvider, createMemoryRouter } from 'react-router-dom';
+import App from './App';
 
 test('renders navigation links', () => {
   const router = createMemoryRouter(
@@ -10,9 +10,9 @@ test('renders navigation links', () => {
       {
         path: '/',
         element: <App />,
-      }
+      },
     ],
-    { initialEntries: ['/'] }
+    { initialEntries: ['/'] },
   );
 
   render(<RouterProvider router={router} />);

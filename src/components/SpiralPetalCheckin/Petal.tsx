@@ -27,8 +27,8 @@ export default function Petal({ id, color, label, angle, distance, onDrag }: Pet
       transition={{
         duration: 2,
         repeat: Infinity,
-        repeatType: "reverse",
-        ease: "easeInOut",
+        repeatType: 'reverse',
+        ease: 'easeInOut',
       }}
       className="absolute w-16 h-16 rounded-full flex items-center justify-center text-white font-bold shadow-lg cursor-pointer"
       style={{

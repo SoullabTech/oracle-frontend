@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { supabase } from "../supabaseClient"; // adjust if your Supabase client is in a different path
+import { useEffect, useState } from 'react';
+import { supabase } from '../supabaseClient'; // adjust if your Supabase client is in a different path
 
 export function useSession() {
   const [session, setSession] = useState<null | any>(null);
@@ -7,8 +7,11 @@ export function useSession() {
 
   useEffect(() => {
     const getSession = async () => {
-      const { data: { session }, error } = await supabase.auth.getSession();
-      if (error) console.error("Error fetching session:", error);
+      const {
+        data: { session },
+        error,
+      } = await supabase.auth.getSession();
+      if (error) console.error('Error fetching session:', error);
       setSession(session);
       setLoading(false);
     };

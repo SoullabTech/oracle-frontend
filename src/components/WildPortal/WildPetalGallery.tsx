@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 import { supabase } from '../../lib/supabaseClient';
 
 export default function WildPetalGallery() {
@@ -20,7 +20,7 @@ export default function WildPetalGallery() {
           (entry.wild_petals || []).map((petal: string) => ({
             message: petal,
             date: entry.date,
-          }))
+          })),
         );
         setWildPetals(petals);
       }
@@ -31,7 +31,9 @@ export default function WildPetalGallery() {
 
   return (
     <div className="p-6 min-h-screen flex flex-col items-center bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100">
-      <h1 className="text-4xl font-bold text-indigo-700 mb-10">🌸 Wild Petal Blessings Archive 🌀</h1>
+      <h1 className="text-4xl font-bold text-indigo-700 mb-10">
+        🌸 Wild Petal Blessings Archive 🌀
+      </h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl">
         {wildPetals.map((petal, index) => (

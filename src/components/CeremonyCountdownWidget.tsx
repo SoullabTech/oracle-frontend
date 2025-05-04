@@ -1,12 +1,12 @@
-import { withAuth } from '../utils/withAuth';
-import SacredKeyGate from '../components/SacredKeyGate';
-import { useRouter } from 'next/router';
 import { motion } from 'framer-motion';
+import { useRouter } from 'next/router';
 import { useEffect, useState, useRef } from 'react';
 import { supabase } from '../../lib/supabaseClient';
-import { OracleJournalForm } from '../components/OracleJournalForm';
-import { DreamSpiralDashboard } from '../components/DreamSpiralDashboard';
 import { CeremonyCountdownWidget } from '../components/CeremonyCountdownWidget';
+import { DreamSpiralDashboard } from '../components/DreamSpiralDashboard';
+import { OracleJournalForm } from '../components/OracleJournalForm';
+import SacredKeyGate from '../components/SacredKeyGate';
+import { withAuth } from '../utils/withAuth';
 
 function BetaPortalPage() {
   const router = useRouter();
@@ -16,14 +16,16 @@ function BetaPortalPage() {
   const chimeSoundRef = useRef<HTMLAudioElement | null>(null);
 
   const retreatDays = [
-    "🌸 Day 1: Fire Ceremony - Introduction, Inspiration, and Elevation",
-    "🌸 Day 2: Water and Earth Ceremony - Golden Teacher Journey and Grounding Rituals",
-    "🌸 Day 3: Air and Aether Ceremony - Speaking Your Truth and Illuminating the Path Ahead",
+    '🌸 Day 1: Fire Ceremony - Introduction, Inspiration, and Elevation',
+    '🌸 Day 2: Water and Earth Ceremony - Golden Teacher Journey and Grounding Rituals',
+    '🌸 Day 3: Air and Aether Ceremony - Speaking Your Truth and Illuminating the Path Ahead',
   ];
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return;
 
       const { data: keyData } = await supabase
@@ -73,11 +75,18 @@ function BetaPortalPage() {
           transition={{ duration: 1.5 }}
           className="max-w-4xl w-full bg-white bg-opacity-90 rounded-3xl shadow-2xl p-10 flex flex-col items-center space-y-12"
         >
-          <h1 className="text-4xl font-bold text-pink-700 text-center">🌸 Welcome to the Spiral Beta Portal 🌀</h1>
+          <h1 className="text-4xl font-bold text-pink-700 text-center">
+            🌸 Welcome to the Spiral Beta Portal 🌀
+          </h1>
 
           {/* Profile */}
           {profile && (
-            <motion.div className="text-center space-y-2" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}>
+            <motion.div
+              className="text-center space-y-2"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+            >
               <p className="text-2xl font-bold text-indigo-700">🌟 {profile.full_name}</p>
               <p className="italic text-pink-500">🌀 {profile.elemental_archetype} Archetype</p>
               <p className="text-md text-gray-600 mt-2">🌱 {profile.intention}</p>
@@ -137,7 +146,16 @@ function BetaPortalPage() {
 
               {/* Oracle Profile */}
               <div className="text-2xl">
-                {oracle.oracle_name} {oracle.oracle_element === "Fire" ? "🔥" : oracle.oracle_element === "Water" ? "🌊" : oracle.oracle_element === "Earth" ? "🌎" : oracle.oracle_element === "Air" ? "🌬️" : "🌀"}
+                {oracle.oracle_name}{' '}
+                {oracle.oracle_element === 'Fire'
+                  ? '🔥'
+                  : oracle.oracle_element === 'Water'
+                    ? '🌊'
+                    : oracle.oracle_element === 'Earth'
+                      ? '🌎'
+                      : oracle.oracle_element === 'Air'
+                        ? '🌬️'
+                        : '🌀'}
               </div>
               <p className="italic text-indigo-600">{oracle.oracle_message}</p>
 

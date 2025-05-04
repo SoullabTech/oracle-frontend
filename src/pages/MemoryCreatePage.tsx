@@ -1,7 +1,7 @@
 // src/pages/MemoryCreatePage.tsx
+import { motion } from 'framer-motion';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import { supabase } from '@/lib/supabaseClient';
 
 const MemoryCreatePage: React.FC = () => {
@@ -15,7 +15,9 @@ const MemoryCreatePage: React.FC = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       const clientId = user?.id;
       if (!clientId || !content.trim()) {
         alert('Please fill out all fields!');

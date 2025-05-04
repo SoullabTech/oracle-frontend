@@ -1,6 +1,6 @@
+import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabaseClient';
-import { motion } from 'framer-motion';
 
 export function SpiralAchievements() {
   const [oracleCount, setOracleCount] = useState(0);
@@ -10,7 +10,9 @@ export function SpiralAchievements() {
 
   useEffect(() => {
     const fetchAchievements = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return;
 
       const { data: oracleJournals } = await supabase
@@ -31,13 +33,13 @@ export function SpiralAchievements() {
       const unlocked: string[] = [];
 
       if ((oracleJournals?.length || 0) >= 3) {
-        unlocked.push("🌸 Spiral Insight Unlocked");
+        unlocked.push('🌸 Spiral Insight Unlocked');
       }
       if ((dreamJournals?.length || 0) >= 5) {
-        unlocked.push("🌀 Dream Spiral Blessing");
+        unlocked.push('🌀 Dream Spiral Blessing');
       }
       if (ceremonyCount >= 1) {
-        unlocked.push("🌟 Spiral Seed Badge");
+        unlocked.push('🌟 Spiral Seed Badge');
       }
 
       setAchievements(unlocked);

@@ -3,11 +3,11 @@
 'use client';
 
 import { useState } from 'react';
+import InsightModal from './InsightModal'; // Modal for displaying insights
+import { PolarChart } from '@/components/PolarChart'; // Your PolarChart component
 import VoiceRecorder from '@/components/VoiceRecorder';
 import { useOracleChat } from '@/hooks/useOracleChat';
 import type { VoiceData } from '@/hooks/useOracleChat';
-import InsightModal from './InsightModal'; // Modal for displaying insights
-import { PolarChart } from '@/components/PolarChart'; // Your PolarChart component
 
 export default function OracleChat() {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -51,11 +51,13 @@ export default function OracleChat() {
           body: JSON.stringify({ text: oracleResponse, emotion: emotion }),
         });
 
-        ttsRes.then(res => res.blob()).then((audioBlob) => {
-          const audioURL = URL.createObjectURL(audioBlob);
-          const audio = new Audio(audioURL);
-          audio.play();
-        });
+        ttsRes
+          .then((res) => res.blob())
+          .then((audioBlob) => {
+            const audioURL = URL.createObjectURL(audioBlob);
+            const audio = new Audio(audioURL);
+            audio.play();
+          });
       } catch (error) {
         console.error('TTS fallback error:', error);
         const fallback = new SpeechSynthesisUtterance(oracleResponse);
@@ -81,11 +83,7 @@ export default function OracleChat() {
       {/* 🧩 Feature Toggles */}
       <div className="flex flex-wrap gap-4 justify-center text-sm text-gray-700">
         <label className="flex items-center gap-2">
-          <input
-            type="checkbox"
-            checked={ttsEnabled}
-            onChange={() => setTtsEnabled(!ttsEnabled)}
-          />
+          <input type="checkbox" checked={ttsEnabled} onChange={() => setTtsEnabled(!ttsEnabled)} />
           🔊 TTS Enabled
         </label>
         <label className="flex items-center gap-2">
@@ -108,7 +106,9 @@ export default function OracleChat() {
 
       {/* 🎭 Oracle Voice Selector */}
       <div className="flex items-center gap-2 justify-center">
-        <label htmlFor="oracleVoice" className="text-sm font-medium">🎭 Oracle Voice</label>
+        <label htmlFor="oracleVoice" className="text-sm font-medium">
+          🎭 Oracle Voice
+        </label>
         <select
           id="oracleVoice"
           value={emotion}
@@ -159,7 +159,7 @@ export default function OracleChat() {
 
       {/* 🧩 Polar Chart */}
       <PolarChart data={facets} />
-      
+
       {/* 🔮 Insight Modal */}
       {modalOpen && (
         <InsightModal
@@ -171,4 +171,3 @@ export default function OracleChat() {
     </div>
   );
 }
-

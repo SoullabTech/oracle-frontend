@@ -1,7 +1,7 @@
 // pages/oracle-journal.tsx
 
-import { SpiralParticles } from "@/components/SpiralParticles";
-import { OracleJournalForm } from "@/components/OracleJournalForm";
+import { OracleJournalForm } from '@/components/OracleJournalForm';
+import { SpiralParticles } from '@/components/SpiralParticles';
 
 export default function OracleJournalPage() {
   return (

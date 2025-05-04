@@ -8,13 +8,16 @@ export function useAuthInit() {
 
   useEffect(() => {
     async function checkSession() {
-      const { data: { session }, error } = await supabase.auth.getSession();
+      const {
+        data: { session },
+        error,
+      } = await supabase.auth.getSession();
       if (error) {
         console.error('Error getting session:', error.message);
       } else {
         console.log('Session:', session ? 'found' : 'not found');
       }
-      setAuthReady(true);  // ✅ very important: set ready after checking
+      setAuthReady(true); // ✅ very important: set ready after checking
     }
 
     checkSession();

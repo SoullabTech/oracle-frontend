@@ -33,19 +33,25 @@ const FacilitatorTools: React.FC = () => {
       ) : (
         <div>
           {clientSessions.map((session, index) => (
-            <div 
-              key={index} 
+            <div
+              key={index}
               style={{
                 backgroundColor: '#f9f9f9',
                 padding: '1rem',
                 borderRadius: '5px',
                 marginBottom: '1rem',
-                boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
+                boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
               }}
             >
-              <p><strong>Client ID:</strong> {session.clientId}</p>
-              <p><strong>Session Start:</strong> {session.sessionStart}</p>
-              <p><strong>Status:</strong> {session.status}</p>
+              <p>
+                <strong>Client ID:</strong> {session.clientId}
+              </p>
+              <p>
+                <strong>Session Start:</strong> {session.sessionStart}
+              </p>
+              <p>
+                <strong>Status:</strong> {session.status}
+              </p>
               {/* You can add more details as needed */}
             </div>
           ))}

@@ -11,10 +11,10 @@ const ChatInterface: React.FC = () => {
     if (!query.trim()) return;
     setLoading(true);
     try {
-      const result = await generatePrompt(query, "user-001");
+      const result = await generatePrompt(query, 'user-001');
       setResponse(result);
     } catch (error) {
-      console.error("Oracle error:", error);
+      console.error('Oracle error:', error);
       setResponse('Error connecting to Oracle backend');
     } finally {
       setLoading(false);
@@ -40,13 +40,15 @@ const ChatInterface: React.FC = () => {
           padding: '0.5rem 1rem',
           border: 'none',
           borderRadius: '4px',
-          cursor: 'pointer'
+          cursor: 'pointer',
         }}
       >
         {loading ? 'Asking...' : 'Ask Oracle'}
       </button>
       {response && (
-        <pre style={{ marginTop: '1rem', padding: '1rem', background: '#f9f9f9', borderRadius: '8px' }}>
+        <pre
+          style={{ marginTop: '1rem', padding: '1rem', background: '#f9f9f9', borderRadius: '8px' }}
+        >
           {response}
         </pre>
       )}

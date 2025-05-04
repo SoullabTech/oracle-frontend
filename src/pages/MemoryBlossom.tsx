@@ -1,12 +1,12 @@
 // src/pages/MemoryBlossom.tsx
 
-import { useEffect, useState } from 'react';
-import { supabase } from '@/lib/supabaseClient';
-import { SacredFooter } from '@/components/SacredFooter';
-import { PageTransition } from '@/components/PageTransition';
-import { SpiralParticles } from '@/components/SpiralParticles';
 import { motion } from 'framer-motion';
-import Header from '@/components/Header';  // Ensure it's imported correctly
+import { useEffect, useState } from 'react';
+import Header from '@/components/Header'; // Ensure it's imported correctly
+import { PageTransition } from '@/components/PageTransition';
+import { SacredFooter } from '@/components/SacredFooter';
+import { SpiralParticles } from '@/components/SpiralParticles';
+import { supabase } from '@/lib/supabaseClient';
 
 export default function MemoryBlossom() {
   const [memories, setMemories] = useState<any[]>([]);
@@ -14,7 +14,9 @@ export default function MemoryBlossom() {
 
   useEffect(() => {
     async function fetchMemories() {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) {
         setLoading(false);
         return;
@@ -39,10 +41,8 @@ export default function MemoryBlossom() {
 
   return (
     <PageTransition>
-      <Header />  {/* Correct Header component */}
-
+      <Header /> {/* Correct Header component */}
       <main className="relative flex flex-col items-center justify-start min-h-screen p-6 sm:p-8 bg-gradient-to-br from-indigo-100 via-pink-100 to-yellow-100 overflow-hidden">
-        
         {/* Spiral Particles */}
         <div className="absolute inset-0 z-0">
           <SpiralParticles element="Aether" />
@@ -54,7 +54,9 @@ export default function MemoryBlossom() {
           transition={{ duration: 1 }}
           className="relative z-10 flex flex-col items-center space-y-6 text-center max-w-4xl mt-8"
         >
-          <h1 className="text-4xl sm:text-5xl font-extrabold text-pink-700">🌸 Your Memory Blossoms</h1>
+          <h1 className="text-4xl sm:text-5xl font-extrabold text-pink-700">
+            🌸 Your Memory Blossoms
+          </h1>
 
           {loading ? (
             <p className="text-indigo-600 text-xl animate-pulse">Retrieving your memories...</p>
@@ -76,7 +78,7 @@ export default function MemoryBlossom() {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => window.location.href = '/create-memory'}
+                onClick={() => (window.location.href = '/create-memory')}
                 className="mt-4 px-8 py-4 bg-green-500 text-white rounded-full hover:bg-green-600 transition text-sm sm:text-base"
               >
                 ✍️ Plant Your First Memory
@@ -92,9 +94,7 @@ export default function MemoryBlossom() {
                   transition={{ duration: 0.8 }}
                   className="bg-white bg-opacity-70 backdrop-blur-md rounded-xl shadow-md p-6 text-left"
                 >
-                  <p className="text-gray-700 text-md whitespace-pre-line">
-                    {memory.content}
-                  </p>
+                  <p className="text-gray-700 text-md whitespace-pre-line">{memory.content}</p>
                   <div className="text-right text-sm text-indigo-400 mt-4">
                     {new Date(memory.created_at).toLocaleDateString()}
                   </div>
@@ -104,7 +104,6 @@ export default function MemoryBlossom() {
           )}
         </motion.div>
       </main>
-
       <SacredFooter />
     </PageTransition>
   );

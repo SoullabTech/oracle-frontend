@@ -1,7 +1,7 @@
 // src/components/BlessingsList.tsx
+import { motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabaseClient';
-import { motion } from 'framer-motion';
 
 interface Blessing {
   id: string;

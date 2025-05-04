@@ -13,9 +13,9 @@ const MemoryUpload: React.FC = () => {
       const response = await fetch('http://localhost:3000/api/memory/upload', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ type: 'text', content: textEntry })
+        body: JSON.stringify({ type: 'text', content: textEntry }),
       });
       const data = await response.json();
       setUploadStatus('Text uploaded successfully!');
@@ -36,7 +36,7 @@ const MemoryUpload: React.FC = () => {
     try {
       const response = await fetch('http://localhost:3000/api/memory/upload', {
         method: 'POST',
-        body: formData
+        body: formData,
       });
       const data = await response.json();
       setUploadStatus('Audio uploaded successfully!');
@@ -50,7 +50,7 @@ const MemoryUpload: React.FC = () => {
   return (
     <div style={{ padding: '2rem', fontFamily: 'Lato, sans-serif' }}>
       <h2>Upload Memory</h2>
-      
+
       <div style={{ marginBottom: '1rem' }}>
         <h3>Upload Text Memory</h3>
         <textarea
@@ -63,7 +63,7 @@ const MemoryUpload: React.FC = () => {
             padding: '1rem',
             border: '1px solid #ccc',
             borderRadius: '5px',
-            marginBottom: '0.5rem'
+            marginBottom: '0.5rem',
           }}
         />
         <button
@@ -74,13 +74,13 @@ const MemoryUpload: React.FC = () => {
             color: '#fff',
             border: 'none',
             borderRadius: '5px',
-            cursor: 'pointer'
+            cursor: 'pointer',
           }}
         >
           Upload Text
         </button>
       </div>
-      
+
       <div style={{ marginBottom: '1rem' }}>
         <h3>Upload Audio Memory</h3>
         <input
@@ -102,7 +102,7 @@ const MemoryUpload: React.FC = () => {
             color: '#fff',
             border: 'none',
             borderRadius: '5px',
-            cursor: 'pointer'
+            cursor: 'pointer',
           }}
         >
           Upload Audio

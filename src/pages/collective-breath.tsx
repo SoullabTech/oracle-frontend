@@ -1,6 +1,6 @@
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import CollectiveBreathRoom from '../components/CollectiveBreath/CollectiveBreathRoom';
-import { useRouter } from 'next/router';
 
 export default function CollectiveBreathPage() {
   const [timeLeft, setTimeLeft] = useState('');

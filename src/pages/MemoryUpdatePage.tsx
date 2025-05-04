@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { getAllMemories, updateMemory } from '../services/memoryService';  // Importing the functions to get and update memory
+import { getAllMemories, updateMemory } from '../services/memoryService'; // Importing the functions to get and update memory
 
 const MemoryUpdatePage = () => {
-  const { id } = useParams();  // Get memory ID from the URL
+  const { id } = useParams(); // Get memory ID from the URL
   const navigate = useNavigate();
   const [content, setContent] = useState('');
   const [metadata, setMetadata] = useState('');
@@ -12,7 +12,7 @@ const MemoryUpdatePage = () => {
   useEffect(() => {
     const fetchMemory = async () => {
       try {
-        const memories = await getAllMemories('your-client-id');  // Replace with dynamic clientId if necessary
+        const memories = await getAllMemories('your-client-id'); // Replace with dynamic clientId if necessary
         const memory = memories.find((m) => m.id === id);
         if (memory) {
           setContent(memory.content);
@@ -37,9 +37,9 @@ const MemoryUpdatePage = () => {
     }
 
     try {
-      const success = await updateMemory(id, content, 'your-client-id');  // Replace with dynamic clientId if necessary
+      const success = await updateMemory(id, content, 'your-client-id'); // Replace with dynamic clientId if necessary
       if (success) {
-        navigate('/memories');  // Redirect to the memories page
+        navigate('/memories'); // Redirect to the memories page
       } else {
         setError('Failed to update memory');
       }

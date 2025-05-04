@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
-import SpiralCalendar from '../components/SpiralMemory/SpiralCalendar';
-import { supabase } from '../../lib/supabaseClient'; // Adjust path if needed
 import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import { supabase } from '../../lib/supabaseClient'; // Adjust path if needed
+import SpiralCalendar from '../components/SpiralMemory/SpiralCalendar';
 
 export default function LightnessTrendGraph({ breaths }: { breaths: any[] }) {
   const lightnessScale = {
@@ -43,7 +43,7 @@ export default function LightnessTrendGraph({ breaths }: { breaths: any[] }) {
         transition={{
           duration: 8,
           repeat: Infinity,
-          ease: "linear",
+          ease: 'linear',
         }}
         className="absolute top-0 left-0 w-4 h-4 rounded-full bg-white opacity-80 shadow-lg"
       />

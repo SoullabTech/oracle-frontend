@@ -1,13 +1,15 @@
+import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabaseClient';
-import { motion } from 'framer-motion';
 
 export function DreamSpiralDashboard() {
   const [dreamJournals, setDreamJournals] = useState<any[]>([]);
 
   useEffect(() => {
     const fetchDreams = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return;
 
       const { data, error } = await supabase
@@ -28,7 +30,9 @@ export function DreamSpiralDashboard() {
 
   return (
     <div className="relative mt-10 w-full">
-      <h2 className="text-3xl font-bold text-indigo-700 text-center mb-6">🌙 Dream Spiral Journey</h2>
+      <h2 className="text-3xl font-bold text-indigo-700 text-center mb-6">
+        🌙 Dream Spiral Journey
+      </h2>
 
       {/* Floating Petals */}
       {[...Array(5)].map((_, idx) => (
@@ -58,7 +62,10 @@ export function DreamSpiralDashboard() {
               className="bg-white bg-opacity-80 p-6 rounded-2xl shadow-lg"
             >
               <p className="text-sm text-gray-400">
-                {new Date(dream.created_at).toLocaleString('en-GB', { dateStyle: 'medium', timeStyle: 'short' })}
+                {new Date(dream.created_at).toLocaleString('en-GB', {
+                  dateStyle: 'medium',
+                  timeStyle: 'short',
+                })}
               </p>
               <p className="mt-2 text-gray-700">{dream.dream_text}</p>
               {dream.dream_petal && (

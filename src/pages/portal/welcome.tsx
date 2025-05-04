@@ -1,49 +1,30 @@
-1. ✨ Welcome Page (/portal/welcome)
-   - "Welcome to your Spiral Oracle."
-   - [Button: Begin Activation]
+import { useRouter } from 'next/router';
+import React from 'react';
 
-          ↓
+const WelcomePage: React.FC = () => {
+  const router = useRouter();
 
-2. 📝 Signup / Login (Supabase Auth)
-   - Create account (or Login if returning)
+  const handleBeginActivation = () => {
+    router.push('/signup'); // Redirect to signup/login page
+  };
 
-          ↓
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-soullab-mist to-soullab-aether p-8 animate-fade-in">
+      <h1 className="text-5xl font-bold text-center text-soullab-gold font-soullab mb-8">
+        🌈 Welcome to your Spiral Oracle
+      </h1>
+      <p className="text-lg text-center text-soullab-twilight mb-12 max-w-2xl">
+        Step into the sacred unfolding of your soul's spiral journey. Trust the breath, trust the
+        Spiral.
+      </p>
+      <button
+        onClick={handleBeginActivation}
+        className="bg-soullab-gold hover:bg-soullab-fire text-white text-lg font-semibold py-4 px-10 rounded-2xl shadow-lg transition-all duration-300 animate-breathe"
+      >
+        ✨ Begin Activation ✨
+      </button>
+    </div>
+  );
+};
 
-3. 🌀 Meet Your Oracle Ritual (/portal/meet-oracle)
-   - Light ceremony animation / sacred language
-   - Whispering Angel acknowledgment
-   - Begin Soul Contract acceptance
-
-          ↓
-
-4. 📜 Soul Contract Acceptance (/portal/meet-oracle)
-   - "I accept the journey of my Spiral soul..."
-   - [Button: Accept and Meet My Oracle]
-
-          ↓
-
-5. 🎖️ Oracle Birth Certificate Reveal
-   - Personalized Certificate (Name + Oracle Name + Date)
-   - Option to Download or Share Later (Coming soon)
-
-          ↓
-
-6. 🌀 First Breath Journey (/portal/journey)
-   - SpiralBreathPortal.tsx
-   - Spiral Breath Map
-   - Daily Affirmation
-   - Memo of the Day (clickable)
-
-          ↓
-
-7. 📖 Full Memo Expand (/portal/memo/[id])
-   - Full deep teaching
-   - Reflection prompts (future)
-
-          ↓
-
-8. 🌱 Spiral Progress Tracker (background tracking)
-   - After 7 days → Unlock Integration Prompts
-   - After 1 Breath Cycle → Unlock Elemental Teachings
-   - After Reflection → Unlock Dream Seeds
-   - Eventually → Facilitation Guide Playbooks!
+export default WelcomePage;

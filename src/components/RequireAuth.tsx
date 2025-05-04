@@ -1,5 +1,5 @@
-import { Navigate } from "react-router-dom";
-import { useSession } from "../hooks/useSession";
+import { Navigate } from 'react-router-dom';
+import { useSession } from '../hooks/useSession';
 
 export function RequireAuth({ children }: { children: JSX.Element }) {
   const { session, loading } = useSession();

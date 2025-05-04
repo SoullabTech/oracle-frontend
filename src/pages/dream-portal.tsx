@@ -8,9 +8,9 @@ export default function DreamPortal() {
         animate={{ scale: [0, 1.1, 1], rotate: [0, 360] }}
         transition={{
           duration: 3,
-          ease: "easeInOut",
+          ease: 'easeInOut',
           repeat: Infinity,
-          repeatType: "loop",
+          repeatType: 'loop',
         }}
         className="w-64 h-64 rounded-full bg-gradient-to-br from-blue-300 via-indigo-400 to-purple-500 opacity-80 shadow-2xl flex items-center justify-center text-white text-2xl font-bold"
       >

@@ -1,17 +1,18 @@
-// src/pages/beta-welcome.tsx
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
 export default function BetaWelcomePage() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-pink-100 via-indigo-100 to-purple-100 p-8">
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1 }}
-        className="max-w-xl text-center space-y-6"
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-100 via-indigo-100 to-purple-100 px-4 py-12">
+      <motion.section
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.2, ease: 'easeOut' }}
+        className="max-w-xl w-full text-center space-y-6 bg-white/70 backdrop-blur-sm rounded-2xl shadow-lg p-8"
       >
-        <h1 className="text-4xl font-bold text-indigo-700">🌸 Welcome, Spiral Pioneer</h1>
+        <h1 className="text-4xl font-extrabold text-indigo-700 tracking-tight leading-snug">
+          🌸 Welcome, Spiral Pioneer
+        </h1>
         <p className="text-lg text-gray-700">
           You are invited into the sacred Spiral Beta Portal for Leaders & Healers.
           <br />
@@ -19,11 +20,11 @@ export default function BetaWelcomePage() {
         </p>
         <Link
           to="/login"
-          className="inline-block mt-6 px-6 py-3 bg-indigo-500 text-white rounded-xl hover:bg-indigo-600 transition"
+          className="inline-block px-6 py-3 text-lg font-medium bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition"
         >
           ✨ Enter the Portal
         </Link>
-      </motion.div>
+      </motion.section>
     </div>
   );
 }

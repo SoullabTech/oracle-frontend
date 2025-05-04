@@ -7,9 +7,11 @@ export function useOracleCheck() {
 
   useEffect(() => {
     async function checkOracle() {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) {
-        console.log("No user found.");
+        console.log('No user found.');
         return;
       }
 
@@ -20,10 +22,9 @@ export function useOracleCheck() {
         .maybeSingle();
 
       if (!data) {
-        console.log("No oracle assigned yet.");
+        console.log('No oracle assigned yet.');
       }
     }
     checkOracle();
   }, [navigate]);
 }
-

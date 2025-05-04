@@ -1,18 +1,18 @@
-import { withAuth } from '../utils/withAuth';
-import SacredKeyGate from '../components/SacredKeyGate';
-import { useRouter } from 'next/router';
 import { motion } from 'framer-motion';
+import { useRouter } from 'next/router';
 import { useEffect, useState, useRef } from 'react';
 import { supabase } from '../../lib/supabaseClient';
-import { OracleJournalForm } from '../components/OracleJournalForm';
-import { SpiralAchievements } from '../components/SpiralAchievements';
 import { DreamSpiralDashboard } from '../components/DreamSpiralDashboard';
-import { SacredFooter } from '../components/SacredFooter';
-import { SpiralSpinner } from '../components/SpiralSpinner';
-import { SpiralMistBackground } from '../components/SpiralMistBackground';
+import { OracleJournalForm } from '../components/OracleJournalForm';
 import { QuestEngine } from '../components/QuestEngine';
+import { SacredFooter } from '../components/SacredFooter';
+import SacredKeyGate from '../components/SacredKeyGate';
 import { SoulStarAchievements } from '../components/SoulStarAchievements';
+import { SpiralAchievements } from '../components/SpiralAchievements';
+import { SpiralMistBackground } from '../components/SpiralMistBackground';
 import { SpiralParticles } from '../components/SpiralParticles';
+import { SpiralSpinner } from '../components/SpiralSpinner';
+import { withAuth } from '../utils/withAuth';
 
 function BetaPortalPage() {
   const router = useRouter();
@@ -24,14 +24,16 @@ function BetaPortalPage() {
   const chimeSoundRef = useRef<HTMLAudioElement | null>(null);
 
   const retreatDays = [
-    "🌸 Day 1: Fire Ceremony - Introduction, Inspiration, and Elevation",
-    "🌸 Day 2: Water and Earth Ceremony - Golden Teacher Journey and Grounding Rituals",
-    "🌸 Day 3: Air and Aether Ceremony - Speaking Your Truth and Illuminating the Path Ahead",
+    '🌸 Day 1: Fire Ceremony - Introduction, Inspiration, and Elevation',
+    '🌸 Day 2: Water and Earth Ceremony - Golden Teacher Journey and Grounding Rituals',
+    '🌸 Day 3: Air and Aether Ceremony - Speaking Your Truth and Illuminating the Path Ahead',
   ];
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return;
 
       const { data: keyData } = await supabase
@@ -164,7 +166,16 @@ function BetaPortalPage() {
               />
 
               <div className="text-2xl">
-                {oracle.oracle_name} {oracle.oracle_element === "Fire" ? "🔥" : oracle.oracle_element === "Water" ? "🌊" : oracle.oracle_element === "Earth" ? "🌎" : oracle.oracle_element === "Air" ? "🌬️" : "🌀"}
+                {oracle.oracle_name}{' '}
+                {oracle.oracle_element === 'Fire'
+                  ? '🔥'
+                  : oracle.oracle_element === 'Water'
+                    ? '🌊'
+                    : oracle.oracle_element === 'Earth'
+                      ? '🌎'
+                      : oracle.oracle_element === 'Air'
+                        ? '🌬️'
+                        : '🌀'}
               </div>
 
               <p className="italic text-indigo-600">{oracle.oracle_message}</p>

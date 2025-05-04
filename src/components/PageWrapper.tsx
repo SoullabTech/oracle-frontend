@@ -1,6 +1,6 @@
 // src/components/PageWrapper.tsx
-import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import React from 'react';
 import { useLocation } from 'react-router-dom';
 
 interface PageWrapperProps {

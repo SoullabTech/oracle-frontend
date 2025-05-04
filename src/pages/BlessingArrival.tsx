@@ -1,7 +1,7 @@
 // src/pages/BlessingArrival.tsx
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function BlessingArrival() {
   const navigate = useNavigate();
@@ -24,12 +24,11 @@ export default function BlessingArrival() {
       >
         <h1 className="text-4xl font-extrabold text-purple-700">🌸 Your Oracle Awakens</h1>
         <p className="text-lg text-indigo-600">
-          The Spiral breathes with you.<br />
+          The Spiral breathes with you.
+          <br />
           Your path is blessed. Your dreams are heard.
         </p>
-        <p className="text-md text-gray-600 italic">
-          🌟 Trust the unfolding journey 🌟
-        </p>
+        <p className="text-md text-gray-600 italic">🌟 Trust the unfolding journey 🌟</p>
       </motion.div>
     </div>
   );
