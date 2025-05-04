@@ -1,6 +1,6 @@
 // src/pages/beta-welcome.tsx
-import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 export default function BetaWelcomePage() {
   return (
@@ -17,7 +17,10 @@ export default function BetaWelcomePage() {
           <br />
           Prepare to breathe, dream, and activate your deeper wisdom.
         </p>
-        <Link href="/login" className="inline-block mt-6 px-6 py-3 bg-indigo-500 text-white rounded-xl hover:bg-indigo-600 transition">
+        <Link
+          to="/login"
+          className="inline-block mt-6 px-6 py-3 bg-indigo-500 text-white rounded-xl hover:bg-indigo-600 transition"
+        >
           ✨ Enter the Portal
         </Link>
       </motion.div>
