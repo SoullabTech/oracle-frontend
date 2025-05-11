@@ -52,3 +52,5 @@ packages/*/dist/
 packages/*/.vite/
 .vercel
 ._*
+.DS_Store
+._*
