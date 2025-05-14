@@ -1,11 +1,14 @@
-import { useRouter } from 'next/router';
+// 📘 FRONTEND PAGE: Welcome Page
+// File: src/pages/WelcomePage.tsx
+
 import React from 'react';
+import { useNavigate } from 'react-router-dom'; // ✅ React Router for Vite
 
 const WelcomePage: React.FC = () => {
-  const router = useRouter();
+  const navigate = useNavigate(); // ✅ replaces useRouter
 
   const handleBeginActivation = () => {
-    router.push('/signup'); // Redirect to signup/login page
+    navigate('/signup'); // ✅ Vite-compatible routing
   };
 
   return (
@@ -14,8 +17,7 @@ const WelcomePage: React.FC = () => {
         🌈 Welcome to your Spiral Oracle
       </h1>
       <p className="text-lg text-center text-soullab-twilight mb-12 max-w-2xl">
-        Step into the sacred unfolding of your soul's spiral journey. Trust the breath, trust the
-        Spiral.
+        Step into the sacred unfolding of your soul's spiral journey. Trust the breath, trust the Spiral.
       </p>
       <button
         onClick={handleBeginActivation}

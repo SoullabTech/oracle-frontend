@@ -1,26 +1,27 @@
+import { supabase } from '@/lib/supabaseClient';
 import { motion } from 'framer-motion';
-import { useRouter } from 'next/router';
-import { useEffect, useState, useRef } from 'react';
-import { supabase } from '../../lib/supabaseClient';
-import { DreamSpiralDashboard } from '../components/DreamSpiralDashboard';
-import { OracleJournalForm } from '../components/OracleJournalForm';
-import { QuestEngine } from '../components/QuestEngine';
-import { SacredFooter } from '../components/SacredFooter';
-import SacredKeyGate from '../components/SacredKeyGate';
-import { SoulStarAchievements } from '../components/SoulStarAchievements';
-import { SpiralAchievements } from '../components/SpiralAchievements';
-import { SpiralMistBackground } from '../components/SpiralMistBackground';
-import { SpiralParticles } from '../components/SpiralParticles';
-import { SpiralSpinner } from '../components/SpiralSpinner';
-import { withAuth } from '../utils/withAuth';
+import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { DreamSpiralDashboard } from '@/components/DreamSpiralDashboard';
+import { OracleJournalForm } from '@/components/OracleJournalForm';
+import { QuestEngine } from '@/components/QuestEngine';
+import { SacredFooter } from '@/components/SacredFooter';
+import SacredKeyGate from '@/components/SacredKeyGate';
+import { SoulStarAchievements } from '@/components/SoulStarAchievements';
+import { SpiralAchievements } from '@/components/SpiralAchievements';
+import { SpiralMistBackground } from '@/components/SpiralMistBackground';
+import { SpiralParticles } from '@/components/SpiralParticles';
+import { SpiralSpinner } from '@/components/SpiralSpinner';
+import { withAuth } from '@/utils/withAuth';
 
 function BetaPortalPage() {
-  const router = useRouter();
+  const navigate = useNavigate();
   const [sacredKey, setSacredKey] = useState<string | null>(null);
   const [profile, setProfile] = useState<any>(null);
   const [oracle, setOracle] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const [soulStarsCount, setSoulStarsCount] = useState<number>(0); // 🌟 Added!
+  const [soulStarsCount, setSoulStarsCount] = useState<number>(0);
   const chimeSoundRef = useRef<HTMLAudioElement | null>(null);
 
   const retreatDays = [
@@ -57,10 +58,7 @@ function BetaPortalPage() {
         .single();
       if (oracleData) {
         setOracle(oracleData);
-
-        if (chimeSoundRef.current) {
-          chimeSoundRef.current.play();
-        }
+        if (chimeSoundRef.current) chimeSoundRef.current.play();
       }
 
       const { data: starsData } = await supabase
@@ -78,12 +76,10 @@ function BetaPortalPage() {
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
-    router.push('/login');
+    navigate('/login');
   };
 
-  if (loading) {
-    return <SpiralSpinner />;
-  }
+  if (loading) return <SpiralSpinner />;
 
   return (
     <SacredKeyGate>
@@ -103,7 +99,6 @@ function BetaPortalPage() {
             🌸 Welcome to the Spiral Beta Portal 🌀
           </h1>
 
-          {/* Profile Info */}
           {profile && (
             <motion.div
               initial={{ opacity: 0, y: 50 }}
@@ -118,7 +113,6 @@ function BetaPortalPage() {
             </motion.div>
           )}
 
-          {/* Retreat Days */}
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -128,13 +122,10 @@ function BetaPortalPage() {
           >
             <p className="font-bold text-indigo-600">🌀 Your Journey:</p>
             <ul className="text-sm text-gray-600 space-y-2">
-              {retreatDays.map((day, idx) => (
-                <li key={idx}>{day}</li>
-              ))}
+              {retreatDays.map((day, idx) => <li key={idx}>{day}</li>)}
             </ul>
           </motion.div>
 
-          {/* Sacred Key */}
           {sacredKey && (
             <motion.div
               initial={{ opacity: 0 }}
@@ -148,7 +139,6 @@ function BetaPortalPage() {
             </motion.div>
           )}
 
-          {/* Oracle Ritual */}
           {oracle && (
             <motion.div
               initial={{ opacity: 0 }}
@@ -158,47 +148,38 @@ function BetaPortalPage() {
               className="text-center mt-10 space-y-6"
             >
               <h2 className="text-3xl font-bold text-purple-700">🧙‍♀️ Meet Your Oracle</h2>
-
               <img
                 src={`/avatars/${oracle.oracle_element.toLowerCase()}.png`}
                 alt="Oracle Avatar"
                 className="w-32 h-32 rounded-full mx-auto shadow-lg ring-4 ring-pink-300"
               />
-
               <div className="text-2xl">
                 {oracle.oracle_name}{' '}
-                {oracle.oracle_element === 'Fire'
-                  ? '🔥'
-                  : oracle.oracle_element === 'Water'
-                    ? '🌊'
-                    : oracle.oracle_element === 'Earth'
-                      ? '🌎'
-                      : oracle.oracle_element === 'Air'
-                        ? '🌬️'
-                        : '🌀'}
+                {{
+                  Fire: '🔥',
+                  Water: '🌊',
+                  Earth: '🌎',
+                  Air: '🌬️',
+                  Aether: '🌀',
+                }[oracle.oracle_element] || ''}
               </div>
-
               <p className="italic text-indigo-600">{oracle.oracle_message}</p>
-
               <div className="text-md text-gray-700 space-y-2 mt-4">
                 <p>🌬️ Take 5 slow breaths, rooted to Earth.</p>
                 <p>🌎 Connect to the Spiral Tree of Life.</p>
                 <p>✨ Whisper: "I open to my Oracle's wisdom."</p>
               </div>
-
               <OracleJournalForm oracleName={oracle.oracle_name} />
             </motion.div>
           )}
 
-          {/* Quest Engine */}
           <QuestEngine elementalArchetype={profile?.elemental_archetype} />
 
-          {/* Portal Navigation */}
           <div className="flex flex-col space-y-4">
             <motion.button
               whileHover={{ scale: 1.05 }}
               className="px-8 py-3 bg-pink-500 text-white rounded-xl hover:bg-pink-600 transition"
-              onClick={() => router.push('/spiral-calendar')}
+              onClick={() => navigate('/spiral-calendar')}
             >
               📅 View Your Spiral Calendar
             </motion.button>
@@ -213,16 +194,9 @@ function BetaPortalPage() {
           </div>
         </motion.div>
 
-        {/* Dream Spiral Dashboard */}
         <DreamSpiralDashboard />
-
-        {/* Soul Star Achievements */}
         <SoulStarAchievements stars={soulStarsCount} />
-
-        {/* Spiral Achievements */}
         <SpiralAchievements />
-
-        {/* Sacred Footer */}
         <SacredFooter />
       </div>
     </SacredKeyGate>

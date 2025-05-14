@@ -1,7 +1,6 @@
 // src/components/FacilitatorTools.tsx
-import React, { useState, useEffect } from 'react';
-import { authenticatedFetch } from '../apiService'; // A helper function to include the JWT token in requests
-
+import { authenticatedFetch } from '@/lib/apiService'; // A helper function to include the JWT token in requests
+import React, { useEffect, useState } from 'react';
 const FacilitatorTools: React.FC = () => {
   const [clientSessions, setClientSessions] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);

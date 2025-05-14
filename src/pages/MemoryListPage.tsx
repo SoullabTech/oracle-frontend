@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { supabase } from '@/lib/supabaseClient';
+import { Link } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
 
-// Match the exact shape returned from Supabase
 interface Memory {
   id: string;
   title: string;
@@ -58,7 +57,7 @@ const MemoryListPage: React.FC = () => {
           {memories.map((mem) => (
             <li key={mem.id} className="border p-4 rounded-lg shadow-sm hover:shadow-md transition">
               <Link
-                to={`/insights?memoryId=${mem.id}`}
+                href={`/insights?memoryId=${mem.id}`}
                 className="block text-lg font-semibold text-indigo-700 hover:underline"
               >
                 {mem.title || 'Untitled Memory'}

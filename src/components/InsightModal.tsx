@@ -5,6 +5,7 @@ interface InsightModalProps {
   insight: string;
   onClose: () => void;
 }
+const voice = getVoiceProfile(user?.orgId) ;
 
 const InsightModal: React.FC<InsightModalProps> = ({ insight, onClose }) => {
   return (

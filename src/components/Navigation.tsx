@@ -1,5 +1,5 @@
 // src/components/Navigation.tsx
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 export default function Navigation() {
   return (
@@ -7,7 +7,7 @@ export default function Navigation() {
       <ul className="flex space-x-4 p-4">
         <li>
           <Link
-            to="/"
+            href="/"
             className="hover:text-indigo-600 transition focus:outline-none focus:ring focus:ring-indigo-300"
           >
             Home
@@ -15,7 +15,7 @@ export default function Navigation() {
         </li>
         <li>
           <Link
-            to="/spiral-checkin"
+            href="/spiral-checkin"
             className="hover:text-indigo-600 transition focus:outline-none focus:ring focus:ring-indigo-300"
           >
             Spiral Check-In
@@ -23,7 +23,7 @@ export default function Navigation() {
         </li>
         <li>
           <Link
-            to="/wild-portal"
+            href="/wild-portal"
             className="hover:text-indigo-600 transition focus:outline-none focus:ring focus:ring-indigo-300"
           >
             Wild Petal Portal

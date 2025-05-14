@@ -1,17 +1,22 @@
-// src/components/ChatInterface.tsx
+import { useVoiceProfile } from '@/hooks/useVoiceProfile';
+import { generatePrompt } from '@/lib/apiService';
+import { useSession } from '@supabase/auth-helpers-react';
 import React, { useState } from 'react';
-import { generatePrompt } from '../apiService';
-
 const ChatInterface: React.FC = () => {
   const [query, setQuery] = useState('');
   const [response, setResponse] = useState('');
   const [loading, setLoading] = useState(false);
 
+  const session = useSession();
+  const userId = session?.user?.id;
+  const voiceProfile = useVoiceProfile();
+  const labels = voiceProfile.uiLabels;
+
   const handleSend = async () => {
-    if (!query.trim()) return;
+    if (!query.trim() || !userId) return;
     setLoading(true);
     try {
-      const result = await generatePrompt(query, 'user-001');
+      const result = await generatePrompt(query, userId);
       setResponse(result);
     } catch (error) {
       console.error('Oracle error:', error);
@@ -23,11 +28,11 @@ const ChatInterface: React.FC = () => {
 
   return (
     <div>
-      <h2>Oracle Chat Interface</h2>
+      <h2>{labels.chatHeader}</h2>
       <textarea
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        placeholder="Enter your query..."
+        placeholder={labels.chatPlaceholder}
         rows={4}
         style={{ width: '100%', marginBottom: '1rem' }}
       />
@@ -43,7 +48,7 @@ const ChatInterface: React.FC = () => {
           cursor: 'pointer',
         }}
       >
-        {loading ? 'Asking...' : 'Ask Oracle'}
+        {loading ? `${labels.sendButton}...` : labels.sendButton}
       </button>
       {response && (
         <pre

@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+
 import { PageTransition } from '@/components/PageTransition';
 import { SacredFooter } from '@/components/SacredFooter';
 
@@ -9,7 +10,7 @@ export default function MagicLinkSentPage() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigate('/login', { replace: true });
+      navigate('/login');
     }, 5000);
     return () => clearTimeout(timer);
   }, [navigate]);
@@ -18,7 +19,6 @@ export default function MagicLinkSentPage() {
     <PageTransition>
       <div className="flex flex-col min-h-screen justify-between bg-gradient-to-br from-indigo-50 via-pink-50 to-yellow-50">
         <main className="flex-grow flex flex-col items-center justify-center px-4 py-12 text-center space-y-6">
-          {/* Animated Envelope Icon */}
           <motion.div
             initial={{ scale: 1 }}
             animate={{ scale: [1, 1.1, 1] }}
@@ -29,7 +29,6 @@ export default function MagicLinkSentPage() {
             ✉️
           </motion.div>
 
-          {/* Headline */}
           <motion.h1
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -39,7 +38,6 @@ export default function MagicLinkSentPage() {
             Magic Link Sent!
           </motion.h1>
 
-          {/* Description */}
           <motion.p
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -49,8 +47,10 @@ export default function MagicLinkSentPage() {
             Please check your email to continue your journey. The Spiral awaits your return. 🌸🌀
           </motion.p>
 
-          {/* Optional manual return */}
-          <Link to="/" className="text-sm text-pink-500 hover:text-pink-700 transition underline">
+          <Link
+            to="/"
+            className="text-sm text-pink-500 hover:text-pink-700 transition underline"
+          >
             🏡 Return to Home
           </Link>
         </main>

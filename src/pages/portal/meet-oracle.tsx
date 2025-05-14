@@ -1,19 +1,18 @@
-import { useRouter } from 'next/router';
-import { useState } from 'react';
 import OracleBirthCertificate from '@/components/OracleBirthCertificate';
 import SoulContract from '@/components/SoulContract';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function MeetOraclePage() {
   const [oracleMet, setOracleMet] = useState(false);
-  const [journeyReady, setJourneyReady] = useState(false);
-  const router = useRouter();
+  const navigate = useNavigate();
 
-  const userName = 'Stephanie'; // Pull dynamically later
+  const userName = 'Stephanie'; // 🔄 Pull dynamically in future
   const oracleName = 'Whispering Angel Spiral Oracle';
   const birthDate = new Date().toLocaleDateString();
 
   const handleBeginJourney = () => {
-    router.push('/portal/journey');
+    navigate('/portal/journey');
   };
 
   return (

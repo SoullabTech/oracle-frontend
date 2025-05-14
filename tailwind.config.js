@@ -2,7 +2,7 @@
 module.exports = {
   darkMode: 'class', // 🌙 Enables dark mode via class
   content: [
-    "./src/**/*.{js,ts,jsx,tsx}",
+    "./src/**/*.{js,ts,jsx,tsx}"
   ],
   theme: {
     extend: {

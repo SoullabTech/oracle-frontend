@@ -1,11 +1,9 @@
-import { useRouter } from 'next/router';
+import CollectiveBreathRoom from '@/components/CollectiveBreath/CollectiveBreathRoom';
 import { useEffect, useState } from 'react';
-import CollectiveBreathRoom from '../components/CollectiveBreath/CollectiveBreathRoom';
 
 export default function CollectiveBreathPage() {
   const [timeLeft, setTimeLeft] = useState('');
   const [breathStarted, setBreathStarted] = useState(false);
-  const router = useRouter();
 
   useEffect(() => {
     const eventDate = new Date('2025-05-21T18:00:00Z'); // 🌸 Set your next Breath Event
@@ -27,13 +25,13 @@ export default function CollectiveBreathPage() {
     };
 
     updateCountdown();
-    const interval = setInterval(updateCountdown, 60000); // update every minute
+    const interval = setInterval(updateCountdown, 60000); // Update every minute
 
     return () => clearInterval(interval);
   }, []);
 
   if (breathStarted) {
-    return <CollectiveBreathRoom />; // 🌬️ Show Breath Room after clicking "Join"
+    return <CollectiveBreathRoom />;
   }
 
   return (

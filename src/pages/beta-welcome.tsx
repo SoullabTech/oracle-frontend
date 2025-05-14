@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 export default function BetaWelcomePage() {
   return (
@@ -18,11 +18,10 @@ export default function BetaWelcomePage() {
           <br />
           Prepare to breathe, dream, and activate your deeper wisdom.
         </p>
-        <Link
-          to="/login"
-          className="inline-block px-6 py-3 text-lg font-medium bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition"
-        >
-          ✨ Enter the Portal
+        <Link href="/login">
+          <a className="inline-block px-6 py-3 text-lg font-medium bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition">
+            ✨ Enter the Portal
+          </a>
         </Link>
       </motion.section>
     </div>

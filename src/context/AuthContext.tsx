@@ -1,26 +1,27 @@
-// src/context/AuthContext.tsx
+// 📁 File: src/context/AuthContext.tsx
+import { supabase } from '@/lib/supabaseClient';
 import { Session, User } from '@supabase/supabase-js';
 import { createContext, useContext, useEffect, useState } from 'react';
-import { supabase } from '@/lib/supabaseClient';
 
-// 1. Define the AuthContext types
+interface ExtendedUser extends User {
+  orgId?: string;
+}
+
 interface AuthContextType {
   session: Session | null;
-  user: User | null;
+  user: ExtendedUser | null;
   loading: boolean;
 }
 
-// 2. Create the actual context
 const AuthContext = createContext<AuthContextType>({
   session: null,
   user: null,
   loading: true,
 });
 
-// 3. Provider component
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<ExtendedUser | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -29,17 +30,38 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (error) {
         console.error('Error loading session:', error.message);
       } else {
+        const baseUser = data.session?.user ?? null;
+        if (baseUser) {
+          const { data: profile } = await supabase
+            .from('profiles')
+            .select('org_id')
+            .eq('id', baseUser.id)
+            .single();
+
+          setUser({ ...baseUser, orgId: profile?.org_id });
+        } else {
+          setUser(null);
+        }
         setSession(data.session);
-        setUser(data.session?.user ?? null);
       }
       setLoading(false);
     };
 
     loadSession();
 
-    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: listener } = supabase.auth.onAuthStateChange(async (_event, session) => {
+      if (session?.user) {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('org_id')
+          .eq('id', session.user.id)
+          .single();
+
+        setUser({ ...session.user, orgId: profile?.org_id });
+      } else {
+        setUser(null);
+      }
       setSession(session);
-      setUser(session?.user ?? null);
     });
 
     return () => {
@@ -52,7 +74,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
-// 4. Hook to easily use the context
 export function useAuth() {
   return useContext(AuthContext);
 }

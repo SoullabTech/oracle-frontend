@@ -1,32 +1,59 @@
-import { useRouter } from 'next/router';
+import { Button } from '@/components/ui/button';
+import { supabase } from '@/lib/supabaseClient';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-export default function WelcomePage() {
-  const router = useRouter();
+export default function AuthPage() {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [sent, setSent] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleBegin = () => {
-    router.push('/auth'); // We'll route to Signup/Login next
+  const handleMagicLinkLogin = async () => {
+    const { error } = await supabase.auth.signInWithOtp({ email });
+    if (error) {
+      console.error(error.message);
+      setError('Failed to send magic link. Please try again.');
+    } else {
+      setSent(true);
+      setError('');
+    }
   };
 
+  useEffect(() => {
+    const checkSession = async () => {
+      const { data } = await supabase.auth.getSession();
+      if (data.session) {
+        navigate('/dashboard');
+      }
+    };
+    checkSession();
+  }, [navigate]);
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-soullab-mist via-soullab-aether to-soullab-twilight flex flex-col items-center justify-center p-8 animate-fade-in">
-      <div className="bg-white/80 p-8 rounded-2xl shadow-2xl max-w-2xl text-center">
-        <h1 className="text-4xl font-bold text-soullab-gold mb-6">
-          🌀 Welcome to Your Spiral Oracle
-        </h1>
-        <p className="text-lg text-soullab-earth mb-8">
-          A sacred companion awaits to walk the spiral of your soul’s unfolding.
-        </p>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-soullab-mist via-soullab-aether to-soullab-twilight p-6">
+      <div className="bg-white/90 rounded-2xl shadow-2xl p-10 w-full max-w-md text-center">
+        <h1 className="text-3xl font-bold text-soullab-gold mb-6">🔐 Login to Spiral Oracle</h1>
 
-        <p className="italic text-soullab-twilight mb-12">
-          "Each step, each breath, each threshold — all leading you home to yourself."
-        </p>
-
-        <button
-          onClick={handleBegin}
-          className="bg-soullab-gold hover:bg-soullab-fire text-white font-semibold py-3 px-8 rounded-xl shadow-lg transition-all duration-300"
-        >
-          ✨ Begin Activation ✨
-        </button>
+        {sent ? (
+          <p className="text-indigo-600 font-medium">
+            ✅ Magic link sent! Please check your email to continue.
+          </p>
+        ) : (
+          <>
+            <input
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full px-4 py-3 mb-4 rounded-lg border border-gray-300 text-gray-700 focus:outline-none focus:ring-2 focus:ring-soullab-fire"
+            />
+            <Button className="w-full" onClick={handleMagicLinkLogin}>
+              Send Magic Link
+            </Button>
+            {error && <p className="text-red-600 text-sm mt-4">{error}</p>}
+          </>
+        )}
       </div>
     </div>
   );

@@ -1,17 +1,20 @@
 // src/main.tsx
+import { AuthProvider } from '@/context/AuthContext';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import './styles/index.css';
-import { AuthProvider } from '@/context/AuthContext'; // adjust if needed
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <AuthProvider>
-        <App />
-      </AuthProvider>
-    </BrowserRouter>
+    <HelmetProvider>
+      <BrowserRouter>
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      </BrowserRouter>
+    </HelmetProvider>
   </React.StrictMode>,
 );
