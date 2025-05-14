@@ -1,5 +1,5 @@
+import Link from 'next/link';
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 export const Header: React.FC = () => {
   return (
@@ -7,7 +7,7 @@ export const Header: React.FC = () => {
       <div className="container mx-auto flex justify-between items-center px-6">
         {/* Logo */}
         <div className="text-2xl font-bold">
-          <Link to="/" className="hover:text-pink-500 transition" aria-label="Home">
+          <Link href="/" className="hover:text-pink-500 transition" aria-label="Home">
             My App
           </Link>
         </div>
@@ -16,22 +16,22 @@ export const Header: React.FC = () => {
         <nav role="navigation" aria-label="Main navigation">
           <ul className="flex space-x-6">
             <li>
-              <Link to="/" className="text-lg hover:text-pink-500 transition">
+              <Link href="/" className="text-lg hover:text-pink-500 transition">
                 Home
               </Link>
             </li>
             <li>
-              <Link to="/memories" className="text-lg hover:text-pink-500 transition">
+              <Link href="/memories" className="text-lg hover:text-pink-500 transition">
                 Memories
               </Link>
             </li>
             <li>
-              <Link to="/about" className="text-lg hover:text-pink-500 transition">
+              <Link href="/about" className="text-lg hover:text-pink-500 transition">
                 About
               </Link>
             </li>
             <li>
-              <Link to="/contact" className="text-lg hover:text-pink-500 transition">
+              <Link href="/contact" className="text-lg hover:text-pink-500 transition">
                 Contact
               </Link>
             </li>
@@ -41,13 +41,13 @@ export const Header: React.FC = () => {
         {/* Auth */}
         <div className="flex items-center space-x-4">
           <Link
-            to="/login"
+            href="/login"
             className="bg-pink-600 py-2 px-4 rounded-full hover:bg-pink-700 transition text-white"
           >
             Sign In
           </Link>
           <Link
-            to="/register"
+            href="/register"
             className="bg-indigo-500 py-2 px-4 rounded-full hover:bg-indigo-600 transition text-white"
           >
             Sign Up
