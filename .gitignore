@@ -7,6 +7,9 @@ dist/
 .oracle-prefect/
 *.tsbuildinfo
 
+# macOS resource-fork shadow files
+**/._*
+
 # ─────────────────────────────────────────────
 # ✅ Environment variables
 # ─────────────────────────────────────────────
@@ -55,3 +58,5 @@ packages/*/.vite/
 .DS_Store
 ._*
 ._*
+# macOS resource forks
+**/._*
