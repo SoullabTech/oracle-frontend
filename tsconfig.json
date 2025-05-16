@@ -10,19 +10,15 @@
     "skipLibCheck": true,
     "strict": true,
     "resolveJsonModule": true,
-    "baseUrl": "./",
     "allowJs": false,
-    "outDir": "dist",
-    "rootDir": "src",
-    "noEmit": true,
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
-      "@services/*": ["src/services/*"],
-      "@utils/*": ["src/utils/*"],
-      "@lib/*": ["src/lib/*"]
+      "@agents": ["packages/agents/src"],
+      "@frontend/*": ["apps/frontend/src/*"],
+      "@backend/*": ["apps/backend/src/*"]
     },
-    "types": ["vite/client", "vitest/globals"]
+    "types": ["vite/client", "vitest/globals"],
+    "noEmit": true
   },
-  "include": ["src", "src/types", "test", "vitest.config.ts"],
   "exclude": ["node_modules", "dist"]
 }

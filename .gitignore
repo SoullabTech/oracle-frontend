@@ -7,7 +7,11 @@ dist/
 .oracle-prefect/
 *.tsbuildinfo
 
-# macOS resource-fork shadow files
+# ─────────────────────────────────────────────
+# ✅ macOS resource-fork shadow files
+# ─────────────────────────────────────────────
+.DS_Store
+._*
 **/._*
 
 # ─────────────────────────────────────────────
@@ -15,12 +19,13 @@ dist/
 # ─────────────────────────────────────────────
 .env
 .env.*
-!.env.example  # Use this to show required env vars (without secrets)
+!.env.example
 
 # ─────────────────────────────────────────────
 # ✅ Logs and debug files
 # ─────────────────────────────────────────────
 *.log
+logs/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
@@ -33,30 +38,37 @@ pnpm-debug.log*
 *.tsbuildinfo
 
 # ─────────────────────────────────────────────
-# ✅ OS + Editor files
+# ✅ OS + Editor metadata
 # ─────────────────────────────────────────────
-.DS_Store
 Thumbs.db
 Icon?
-
 .vscode/
-.idea/        # JetBrains/WebStorm/IntelliJ
+.idea/
 
 # ─────────────────────────────────────────────
 # ✅ Test + coverage artifacts
 # ─────────────────────────────────────────────
 coverage/
 __pycache__/
+*.test.ts.snap
 
 # ─────────────────────────────────────────────
-# ✅ Monorepo support (optional, for future)
+# ✅ Monorepo & deployment
 # ─────────────────────────────────────────────
 packages/*/dist/
 packages/*/.vite/
-.vercel
-._*
-.DS_Store
-._*
-._*
-# macOS resource forks
-**/._*
+.vercel/
+
+# ─────────────────────────────────────────────
+# ✅ Docker artifacts
+# ─────────────────────────────────────────────
+.docker/
+Dockerfile*
+!Dockerfile  # keep base Dockerfile if present
+docker-compose*.yml
+*.local.yml
+
+# ─────────────────────────────────────────────
+# ✅ Miscellaneous project flags
+# ─────────────────────────────────────────────
+.fixes-complete/

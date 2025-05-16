@@ -1,4 +1,3 @@
-// vite.config.ts
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import { defineConfig, loadEnv } from 'vite';
@@ -15,8 +14,8 @@ export default defineConfig(({ mode }) => {
         '@components': path.resolve(__dirname, 'src/components'),
         '@lib': path.resolve(__dirname, 'src/lib'),
         '@services': path.resolve(__dirname, 'src/services'),
-        '@test-utils': path.resolve(__dirname, 'src/test-utils'),
-      },
+        '@test-utils': path.resolve(__dirname, 'src/test-utils')
+      }
     },
     build: {
       sourcemap: false,
@@ -31,33 +30,33 @@ export default defineConfig(({ mode }) => {
             react: ['react', 'react-dom'],
             framer: ['framer-motion'],
             supabase: ['@supabase/supabase-js'],
-            vendor: ['react-router-dom', 'classnames', 'zustand'],
-          },
-        },
-      },
+            vendor: ['react-router-dom', 'classnames', 'zustand']
+          }
+        }
+      }
     },
     server: {
       port,
       open: true,
       strictPort: false,
       headers: {
-        'x-powered-by': 'Golden-Spiral-Portal',
-      },
+        'x-powered-by': 'Golden-Spiral-Portal'
+      }
     },
     preview: {
       port: 5173,
       open: true,
       headers: {
-        'x-powered-by': 'Golden-Spiral-Portal',
-      },
+        'x-powered-by': 'Golden-Spiral-Portal'
+      }
     },
     define: {
-      __APP_ENV__: JSON.stringify(env.VITE_APP_ENV ?? 'development'),
+      __APP_ENV__: JSON.stringify(env.VITE_APP_ENV ?? 'development')
     },
     test: {
       globals: true,
       environment: 'jsdom',
-      setupFiles: './src/setupTests.ts',
-    },
+      setupFiles: './src/setupTests.ts'
+    }
   };
 });

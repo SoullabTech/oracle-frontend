@@ -1,68 +1,113 @@
-// 📁 Frontend: File - src/components/OracleChat.tsx
-
+// 📁 Frontend: src/components/OracleChat.tsx
 'use client';
 
 import { PolarChart } from '@/components/PolarChart';
 import VoiceRecorder from '@/components/VoiceRecorder';
-import { useAuth } from '@/context/AuthContext'; // 🔹 Added for org-based voice config
-import type { VoiceData } from '@/hooks/useOracleChat';
+import { useAuth } from '@/context/AuthContext';
 import { getVoiceProfile } from '@/lib/getVoiceProfile';
 import { useState } from 'react';
 import InsightModal from './InsightModal';
 
+export type Message = {
+  sender: 'user' | 'oracle';
+  content: string;
+};
+
+export type VoiceData = {
+  text: string;
+  emotion: string;
+  element: string;
+  phase: number;
+};
+
 export default function OracleChat() {
-  const { user } = useAuth(); // 🔹 Get orgId from user profile
-  const voice = getVoiceProfile(user?.orgId); // 🔹 Dynamically fetch branded voice config
+  const { user } = useAuth();
+  // derive your element/voice style key from the user's orgId (or default)
+  const styleKey = (user?.orgId as keyof ReturnType<typeof getVoiceProfile>) || 'default';
+  const voice    = getVoiceProfile(styleKey);
 
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [input, setInput] = useState('');
-  const [insight, setInsight] = useState<string | null>(null);
-  const [ritual, setRitual] = useState<string | null>(null);
+  const [messages, setMessages]   = useState<Message[]>([]);
+  const [input, setInput]         = useState('');
+  const [insight, setInsight]     = useState<string | null>(null);
+  const [ritual, setRitual]       = useState<string | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
-  const [emotion, setEmotion] = useState('neutral');
+  const [emotion, setEmotion]     = useState<'neutral'|'joy'|'sadness'|'anger'|'anxiety'>('neutral');
 
-  const [ttsEnabled, setTtsEnabled] = useState(true);
-  const [autoSendEnabled, setAutoSendEnabled] = useState(true);
+  const [ttsEnabled, setTtsEnabled]             = useState(true);
+  const [autoSendEnabled, setAutoSendEnabled]   = useState(true);
   const [memoryLoggingEnabled, setMemoryLoggingEnabled] = useState(true);
 
   const handleSend = async (text: string) => {
-    const userMessage = text.trim();
-    if (!userMessage) return;
+    const msg = text.trim();
+    if (!msg) return;
 
-    setMessages((prev) => [...prev, { sender: 'user', content: userMessage }]);
+    // 1️⃣ Show user message
+    setMessages((m) => [...m, { sender: 'user', content: msg }]);
 
-    const response = await fetch('/api/oracle/submit', {
+    // 2️⃣ Call your oracle backend
+    const res = await fetch('/api/oracle/submit', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ input: userMessage, element: 'fire', phase: 1, emotion }),
+      body: JSON.stringify({
+        input:   msg,
+        element: styleKey, // e.g. 'fireOracle'
+        phase:   1,
+        emotion,
+      }),
     });
-
-    const data = await response.json();
+    const data: { insight: string; ritual: string } = await res.json();
     setInsight(data.insight);
     setRitual(data.ritual);
     setModalOpen(true);
+
+    // 3️⃣ Speak it
+    if (ttsEnabled) {
+      handleTTS(data.insight);
+    }
+
+    // 4️⃣ Show oracle message
+    setMessages((m) => [...m, { sender: 'oracle', content: data.insight }]);
+
+    // 5️⃣ Optional memory‐logging
+    if (memoryLoggingEnabled) {
+      fetch('/api/memory/voice', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          query:     msg,
+          response:  data.insight,
+          element:   styleKey,
+          phase:     1,
+          emotion,
+        }),
+      }).catch(console.error);
+    }
+
+    setInput('');
   };
 
   const handleTTS = (oracleResponse: string) => {
-    if (ttsEnabled && typeof window !== 'undefined') {
-      try {
-        fetch('/api/tts', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ text: oracleResponse, emotion }),
-        })
-          .then((res) => res.blob())
-          .then((audioBlob) => {
-            const audioURL = URL.createObjectURL(audioBlob);
-            new Audio(audioURL).play();
-          });
-      } catch (error) {
-        console.error('TTS fallback error:', error);
-        const fallback = new SpeechSynthesisUtterance(oracleResponse);
-        fallback.lang = 'en-US';
-        window.speechSynthesis.speak(fallback);
-      }
-    }
+    if (typeof window === 'undefined') return;
+    fetch('/api/tts', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        text:    oracleResponse,
+        element: styleKey,
+        emotion,
+      }),
+    })
+      .then((r) => r.blob())
+      .then((b) => {
+        const url = URL.createObjectURL(b);
+        new Audio(url).play();
+      })
+      .catch((e) => {
+        console.error('TTS fallback error:', e);
+        const u = new SpeechSynthesisUtterance(oracleResponse);
+        u.lang = 'en-US';
+        window.speechSynthesis.speak(u);
+      });
   };
 
   const handleVoice = (voiceData: VoiceData) => {
@@ -75,26 +120,43 @@ export default function OracleChat() {
 
   return (
     <div className="max-w-3xl mx-auto py-12 space-y-6">
-      <h1 className="text-3xl font-bold text-center">{voice.uiLabels.chatHeader}</h1>
+      {/* Header */}
+      <h1 className="text-3xl font-bold text-center">
+        {voice.uiLabels.chatHeader}
+      </h1>
 
+      {/* Controls */}
       <div className="flex flex-wrap gap-4 justify-center text-sm text-gray-700">
         <label className="flex items-center gap-2">
-          <input type="checkbox" checked={ttsEnabled} onChange={() => setTtsEnabled(!ttsEnabled)} /> 🔊 TTS Enabled
+          <input
+            type="checkbox"
+            checked={ttsEnabled}
+            onChange={() => setTtsEnabled(!ttsEnabled)}
+          /> 🔊 TTS Enabled
         </label>
         <label className="flex items-center gap-2">
-          <input type="checkbox" checked={autoSendEnabled} onChange={() => setAutoSendEnabled(!autoSendEnabled)} /> 🧠 Auto-Send Voice
+          <input
+            type="checkbox"
+            checked={autoSendEnabled}
+            onChange={() => setAutoSendEnabled(!autoSendEnabled)}
+          /> 🧠 Auto‑Send Voice
         </label>
         <label className="flex items-center gap-2">
-          <input type="checkbox" checked={memoryLoggingEnabled} onChange={() => setMemoryLoggingEnabled(!memoryLoggingEnabled)} /> 📂 Store to Memory
+          <input
+            type="checkbox"
+            checked={memoryLoggingEnabled}
+            onChange={() => setMemoryLoggingEnabled(!memoryLoggingEnabled)}
+          /> 📂 Store to Memory
         </label>
       </div>
 
-      <div className="flex items-center gap-2 justify-center">
-        <label htmlFor="oracleVoice" className="text-sm font-medium">🎭 Oracle Voice</label>
+      {/* Emotion Selector */}
+      <div className="flex justify-center gap-2">
+        <label htmlFor="oracleEmotion" className="text-sm font-medium">🎭 Oracle Voice</label>
         <select
-          id="oracleVoice"
+          id="oracleEmotion"
           value={emotion}
-          onChange={(e) => setEmotion(e.target.value)}
+          onChange={(e) => setEmotion(e.target.value as any)}
           className="border rounded px-2 py-1 text-sm"
         >
           <option value="neutral">Neutral</option>
@@ -105,12 +167,15 @@ export default function OracleChat() {
         </select>
       </div>
 
+      {/* Chat Window */}
       <div className="border p-4 rounded bg-white shadow space-y-3 max-h-[60vh] overflow-y-auto">
         {messages.map((msg, i) => (
           <div
             key={i}
             className={`p-3 rounded-lg whitespace-pre-wrap text-sm ${
-              msg.sender === 'user' ? 'bg-emerald-100 text-right' : 'bg-indigo-100 text-left'
+              msg.sender === 'user'
+                ? 'bg-emerald-100 text-right'
+                : 'bg-indigo-100 text-left'
             }`}
           >
             {msg.content}
@@ -118,6 +183,7 @@ export default function OracleChat() {
         ))}
       </div>
 
+      {/* Input */}
       <textarea
         value={input}
         onChange={(e) => setInput(e.target.value)}
@@ -126,7 +192,7 @@ export default function OracleChat() {
         rows={3}
       />
 
-      <div className="flex flex-col md:flex-row gap-4">
+      <div className="flex gap-4">
         <button
           onClick={() => handleSend(input)}
           className="bg-emerald-600 text-white px-4 py-2 rounded hover:bg-emerald-700"
@@ -136,8 +202,10 @@ export default function OracleChat() {
         <VoiceRecorder onTranscription={handleVoice} />
       </div>
 
+      {/* Data Viz */}
       <PolarChart data={[]} />
 
+      {/* Insight & Ritual Modal */}
       {modalOpen && (
         <InsightModal
           insight={insight!}

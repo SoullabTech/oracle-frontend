@@ -1,53 +1,65 @@
-// src/lib/supabaseClient.ts
-import { createClient, SupabaseClient, Session, User } from '@supabase/supabase-js';
+// apps/frontend/src/lib/supabaseClient.ts
+
+import { Database } from '@/types/supabase'; // adjust path if needed
+import { createClient, Session, SupabaseClient, User } from '@supabase/supabase-js';
 import { useEffect, useState } from 'react';
-import { Database } from '@/types/supabase'; // Adjust if needed
 
-// Env variables
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL!;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY!;
+// ——————————————————————————————————————————
+// 1. Read VITE_* env vars injected by Vite
+// ——————————————————————————————————————————
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-// Create Supabase client
-const supabase: SupabaseClient<Database> = createClient(supabaseUrl, supabaseAnonKey);
+// ——————————————————————————————————————————
+// 2. Validate at startup
+// ——————————————————————————————————————————
+if (!supabaseUrl || !supabaseAnonKey) {
+  throw new Error('❌ Missing VITE_SUPABASE_URL or VITE_SUPABASE_ANON_KEY in your .env file');
+}
 
-// --- AUTH HELPERS ---
+// ——————————————————————————————————————————
+// 3. Create the typed Supabase client
+// ——————————————————————————————————————————
+export const supabase: SupabaseClient<Database> = createClient<Database>(
+  supabaseUrl,
+  supabaseAnonKey,
+);
 
+// ——————————————————————————————————————————
+// 4. React hooks for auth state
+// ——————————————————————————————————————————
 export const useAuth = () => {
   const [session, setSession] = useState<Session | null>(null);
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchSession = async () => {
-      try {
-        const { data, error } = await supabase.auth.getSession();
-        if (error) console.error('Error fetching session:', error);
-        setSession(data?.session || null);
-        setUser(data?.session?.user || null);
-      } catch (e) {
-        console.error('Unexpected error fetching session:', e);
-      } finally {
-        setLoading(false);
-      }
-    };
+    // initial session fetch
+    supabase.auth.getSession().then(({ data, error }) => {
+      if (error) console.error('Error fetching session:', error);
+      setSession(data.session);
+      setUser(data.session?.user ?? null);
+      setLoading(false);
+    });
 
-    fetchSession();
-
-    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+    // subscribe to auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
-      setUser(session?.user || null);
+      setUser(session?.user ?? null);
+      setLoading(false);
     });
 
     return () => {
-      listener.subscription.unsubscribe();
+      subscription.unsubscribe();
     };
   }, []);
 
   return { session, user, loading };
 };
 
-// --- Profile functions ---
-
+// ——————————————————————————————————————————
+// 5. Profile management
+// ——————————————————————————————————————————
 export const fetchUserProfile = async (userId: string) => {
   const { data, error } = await supabase
     .from('user_profiles')
@@ -78,15 +90,9 @@ export const updateUserProfile = async (
   return data;
 };
 
-// --- Auth functions ---
-
-export const signOut = async () => {
-  const { error } = await supabase.auth.signOut();
-  if (error) {
-    console.error('Error signing out:', error.message);
-  }
-};
-
+// ——————————————————————————————————————————
+// 6. Auth actions
+// ——————————————————————————————————————————
 export const signInWithMagicLink = async (email: string) => {
   const { error } = await supabase.auth.signInWithOtp({ email });
   if (error) {
@@ -96,17 +102,25 @@ export const signInWithMagicLink = async (email: string) => {
   return true;
 };
 
+export const signOut = async () => {
+  const { error } = await supabase.auth.signOut();
+  if (error) {
+    console.error('Error signing out:', error.message);
+  }
+};
+
 export const getUser = async () => {
   const { data, error } = await supabase.auth.getUser();
   if (error) {
     console.error('Error fetching user:', error.message);
     return null;
   }
-  return data?.user;
+  return data.user;
 };
 
-// --- Memory and Insights functions ---
-
+// ——————————————————————————————————————————
+// 7. Memory & Insights CRUD
+// ——————————————————————————————————————————
 export const fetchMemories = async (userId: string) => {
   const { data, error } = await supabase
     .from('memories')
@@ -134,7 +148,10 @@ export const createMemory = async (userId: string, content: string, metadata: st
 };
 
 export const fetchInsightsForMemory = async (memoryId: string) => {
-  const { data, error } = await supabase.from('insights').select('*').eq('memory_id', memoryId);
+  const { data, error } = await supabase
+    .from('insights')
+    .select('*')
+    .eq('memory_id', memoryId);
 
   if (error) {
     console.error('Error fetching insights:', error);
@@ -142,6 +159,3 @@ export const fetchInsightsForMemory = async (memoryId: string) => {
   }
   return data;
 };
-
-// Export supabase client
-export { supabase };
