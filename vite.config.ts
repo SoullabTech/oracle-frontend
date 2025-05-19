@@ -3,7 +3,6 @@ import path from 'path';
 import { defineConfig, loadEnv } from 'vite';
 
 export default defineConfig(({ mode }) => {
-  // Load VITE_ prefixed variables from .env
   const env = loadEnv(mode, process.cwd(), 'VITE_');
   const port = Number(env.VITE_PORT) || 3000;
 
