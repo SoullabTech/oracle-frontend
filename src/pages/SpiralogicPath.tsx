@@ -1,7 +1,6 @@
-// src/pages/SpiralogicPath.tsx
-
-import { motion } from 'framer-motion';
 import { SpiralParticles } from '@/components/SpiralParticles';
+import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 export default function SpiralogicPath() {
   return (
@@ -20,8 +19,7 @@ export default function SpiralogicPath() {
           🌀 Welcome to Your Spiralogic Journey
         </h1>
         <p className="text-lg text-purple-600">
-          You are now walking the Sacred Spiral — the path of vision, grounding, transformation, and
-          rebirth.
+          You are now walking the Sacred Spiral — the path of vision, grounding, transformation, and rebirth.
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-8">
@@ -32,24 +30,19 @@ export default function SpiralogicPath() {
             { phase: 'Water', meaning: 'Transformation, Healing, Rebirth' },
             { phase: 'Aether', meaning: 'Integration, Unity, Completion' },
           ].map(({ phase, meaning }) => (
-            <div
-              key={phase}
-              className="bg-white bg-opacity-80 p-6 rounded-xl shadow-md text-indigo-700"
-            >
+            <div key={phase} className="bg-white bg-opacity-80 p-6 rounded-xl shadow-md text-indigo-700">
               <h2 className="text-2xl font-bold">{phase}</h2>
               <p className="mt-2 text-md italic">{meaning}</p>
             </div>
           ))}
         </div>
 
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => (window.location.href = '/dashboard')}
+        <Link
+          to="/dashboard"
           className="mt-8 px-8 py-4 bg-pink-500 text-white rounded-full hover:bg-pink-600 transition"
         >
           🌸 Return to Dashboard
-        </motion.button>
+        </Link>
       </motion.div>
     </div>
   );

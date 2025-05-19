@@ -1,32 +1,39 @@
 import { render, RenderOptions } from '@testing-library/react';
-import React, { ReactElement } from 'react';
+import { ReactElement, ReactNode } from 'react';
 import { BrowserRouter, MemoryRouter } from 'react-router-dom';
 
-// Create a custom render function that wraps components with necessary providers
-const customRender = (
-  ui: ReactElement,
-  options?: Omit<RenderOptions, 'wrapper'> & {
-    route?: string;
-    initialEntries?: string[];
-  },
-) => {
-  const { route, initialEntries, ...renderOptions } = options || {};
+interface CustomRenderOptions extends Omit<RenderOptions, 'wrapper'> {
+  route?: string;
+  initialEntries?: string[];
+}
 
-  const AllProviders = ({ children }: { children: React.ReactNode }) => {
-    // For routing tests, use MemoryRouter with optional initial entries
-    if (initialEntries) {
-      return <MemoryRouter initialEntries={initialEntries}>{children}</MemoryRouter>;
-    }
-
-    // For regular tests, use BrowserRouter
-    return <BrowserRouter>{children}</BrowserRouter>;
-  };
-
-  return render(ui, { wrapper: AllProviders, ...renderOptions });
+const AllProviders = ({
+  children,
+  initialEntries,
+}: {
+  children: ReactNode;
+  initialEntries?: string[];
+}) => {
+  if (initialEntries) {
+    return <MemoryRouter initialEntries={initialEntries}>{children}</MemoryRouter>;
+  }
+  return <BrowserRouter>{children}</BrowserRouter>;
 };
 
-// Re-export everything from testing-library
-export * from '@testing-library/react';
+const customRender = (
+  ui: ReactElement,
+  options?: CustomRenderOptions
+) => {
+  const { initialEntries, ...rest } = options || {};
+  return render(ui, {
+    wrapper: ({ children }) => (
+      <AllProviders initialEntries={initialEntries}>{children}</AllProviders>
+    ),
+    ...rest,
+  });
+};
 
-// Override the render method
+// Re-export everything
+export * from '@testing-library/react';
 export { customRender as render };
+

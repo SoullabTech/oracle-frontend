@@ -12,13 +12,22 @@
     "resolveJsonModule": true,
     "allowJs": false,
     "baseUrl": ".",
+
+    // ✅ Absolute imports from apps & packages
     "paths": {
-      "@agents": ["packages/agents/src"],
-      "@frontend/*": ["apps/frontend/src/*"],
-      "@backend/*": ["apps/backend/src/*"]
+      "@/*": ["src/*"],                           // Local app-level imports
+      "@frontend/*": ["apps/frontend/src/*"],     // Frontend monorepo apps
+      "@backend/*": ["apps/backend/src/*"],       // Backend monorepo apps
+      "@agents": ["packages/agents/src"],         // Shared agents
+      "@components/*": ["src/components/*"],      // Optional: frontend alias
+      "@lib/*": ["src/lib/*"],
+      "@test-utils/*": ["src/test-utils/*"]
     },
+
+    // ✅ Vite & Vitest compatibility
     "types": ["vite/client", "vitest/globals"],
+
     "noEmit": true
   },
-  "exclude": ["node_modules", "dist"]
+  "exclude": ["node_modules", "dist", "coverage"]
 }

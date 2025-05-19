@@ -1,6 +1,5 @@
 // src/App.test.tsx
 import { render, screen, within } from '@testing-library/react';
-import React from 'react';
 import { RouterProvider, createMemoryRouter } from 'react-router-dom';
 import App from './App';
 
@@ -19,7 +18,10 @@ test('renders navigation links', () => {
 
   const nav = screen.getByRole('navigation');
   expect(within(nav).getByText(/home/i)).toBeInTheDocument();
-  expect(within(nav).getByText(/about/i)).toBeInTheDocument();
-  expect(within(nav).getByText(/chat/i)).toBeInTheDocument();
-  expect(within(nav).getByText(/transcripts/i)).toBeInTheDocument(); // ✅ Added test
+  expect(within(nav).getByText(/spiral path/i)).toBeInTheDocument();
+  expect(within(nav).getByText(/oracle/i)).toBeInTheDocument();
+  expect(within(nav).getByText(/memories/i)).toBeInTheDocument();
+
+  // Remove or comment this line unless you're re-adding the About page:
+  // expect(within(nav).getByText(/about/i)).toBeInTheDocument();
 });
