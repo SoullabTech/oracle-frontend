@@ -1,4 +1,5 @@
-// src/components/FieldPulseDashboard.tsx
+// 📁 File: src/components/FieldPulseDashboard.tsx
+
 import { useEffect, useState } from "react";
 import {
   Bar,

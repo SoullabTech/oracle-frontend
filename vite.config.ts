@@ -1,9 +1,12 @@
+// vite.config.ts
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import { defineConfig, loadEnv } from 'vite';
 
 export default defineConfig(({ mode }) => {
+  // Load any VITE_ vars from .env, .env.development, etc.
   const env = loadEnv(mode, process.cwd(), 'VITE_');
+  // Default VITE_PORT to 3000 if not set
   const port = Number(env.VITE_PORT) || 3000;
 
   return {
@@ -14,8 +17,8 @@ export default defineConfig(({ mode }) => {
         '@components': path.resolve(__dirname, 'src/components'),
         '@lib': path.resolve(__dirname, 'src/lib'),
         '@services': path.resolve(__dirname, 'src/services'),
-        '@test-utils': path.resolve(__dirname, 'src/test-utils')
-      }
+        '@test-utils': path.resolve(__dirname, 'src/test-utils'),
+      },
     },
     build: {
       sourcemap: false,
@@ -30,33 +33,44 @@ export default defineConfig(({ mode }) => {
             react: ['react', 'react-dom'],
             framer: ['framer-motion'],
             supabase: ['@supabase/supabase-js'],
-            vendor: ['react-router-dom', 'classnames', 'zustand']
-          }
-        }
-      }
+            vendor: ['react-router-dom', 'classnames', 'zustand'],
+          },
+        }, sv
+      },
     },
-    server: {
-      port,
-      open: true,
-      strictPort: false,
-      headers: {
-        'x-powered-by': 'Golden-Spiral-Portal'
-      }
+   server: {
+  proxy: {
+    '/api': {
+      target: 'http://localhost:4000',
+      changeOrigin: true,
+      secure: false,
+    },
+  },
+      proxy: {
+        // Forward any /api requests to your Express server on port 4000
+        '/api': {
+          target: 'http://localhost:4000',
+          changeOrigin: true,
+          secure: false,
+          // No rewrite needed if your server listens on /api/chat
+        },
+      },
     },
     preview: {
       port: 5173,
       open: true,
       headers: {
-        'x-powered-by': 'Golden-Spiral-Portal'
-      }
+        'x-powered-by': 'Golden-Spiral-Portal',
+      },
     },
     define: {
-      __APP_ENV__: JSON.stringify(env.VITE_APP_ENV ?? 'development')
+      // Make __APP_ENV__ available in your client code
+      __APP_ENV__: JSON.stringify(env.VITE_APP_ENV ?? 'development'),
     },
     test: {
       globals: true,
       environment: 'jsdom',
-      setupFiles: './src/setupTests.ts'
-    }
+      setupFiles: './src/setupTests.ts',
+    },
   };
 });

@@ -1,0 +1,388 @@
+.
+├── Main.jsx
+├── ORACLE-FRONTEND
+│   ├── components
+│   │   ├── AgentCard.tsx
+│   │   ├── JournalEntryForm.tsx
+│   │   └── Navigation.tsx
+│   ├── lib
+│   │   └── supabaseClient.ts
+│   └── pages
+│       ├── admin
+│       └── agents
+├── WildPetalMessage.tsx
+├── __tests__
+│   └── components
+├── all-files.txt
+├── apps
+│   ├── backend
+│   └── frontend
+├── backend-files.txt
+├── button
+├── docs
+│   └── index.tsx
+├── eslint.config.js
+├── frontend-files.txt
+├── index.html
+├── instructor.txt
+├── lib
+├── logs
+├── oracle-backend
+├── oracle-prefect
+│   └── flows
+├── oracle-test
+│   ├── README.md
+│   ├── eslint.config.js
+│   ├── index.html
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── postcss.config.js
+│   ├── public
+│   │   └── vite.svg
+│   ├── src
+│   │   ├── App.css
+│   │   ├── App.jsx
+│   │   ├── assets
+│   │   │   └── react.svg
+│   │   ├── index.css
+│   │   └── main.jsx
+│   ├── tailwind.config.js
+│   └── vite.config.js
+├── package-lock.json
+├── package.json
+├── packages
+│   └── agents
+│       └── src
+├── public
+│   ├── index.html
+│   ├── investor-assets
+│   ├── sounds
+│   │   └── soft-chime.aiff
+│   └── spiral-loader.png
+├── readme.md
+├── scripts
+│   └── utils
+├── server
+├── spirallogic_kb
+├── src
+│   ├── App.test.tsx
+│   ├── App.tsx
+│   ├── app
+│   ├── components
+│   │   ├── AdjusterAgentDashboard.jsx
+│   │   ├── AdminRoute.tsx
+│   │   ├── AetherOracleChat.tsx
+│   │   ├── AirOracleChat.tsx
+│   │   ├── BlessingsList.tsx
+│   │   ├── CeremonyCountdownWidget.tsx
+│   │   ├── ChatInterface.tsx
+│   │   ├── CollectiveBreath
+│   │   │   └── CollectiveBreathRoom.tsx
+│   │   ├── DreamSpiralDashboard.tsx
+│   │   ├── DreamSpiralJournal.tsx
+│   │   ├── EarthOracleChat.tsx
+│   │   ├── EndSession.tsx
+│   │   ├── ErrorBoundary.tsx
+│   │   ├── FacilitatorTools.tsx
+│   │   ├── FaviconSetter.tsx
+│   │   ├── FieldPulseDashboard.tsx
+│   │   ├── FireOracleChat.tsx
+│   │   ├── FirstLandingGuide.tsx
+│   │   ├── FrequencyResonanceModal.tsx
+│   │   ├── GuidanceDisplay.tsx
+│   │   ├── Header.tsx
+│   │   ├── Holoflower.tsx
+│   │   ├── HoloflowerSvg.tsx
+│   │   ├── InsightGeneration.tsx
+│   │   ├── InsightModal.tsx
+│   │   ├── JournalEntryForm.tsx
+│   │   ├── Journaling.tsx
+│   │   ├── Layout.tsx
+│   │   ├── MemoryInsights.tsx
+│   │   ├── MemoryUpload.tsx
+│   │   ├── NavBar.tsx
+│   │   ├── Navigation.tsx
+│   │   ├── OnboardingPrompt.tsx
+│   │   ├── OracleCeremonyModal.tsx
+│   │   ├── OracleChat.tsx
+│   │   ├── OracleJournalForm.tsx
+│   │   ├── PageTransition.tsx
+│   │   ├── PageWrapper.tsx
+│   │   ├── PetalCheckIn
+│   │   │   └── index.ts
+│   │   ├── PolarChart.tsx
+│   │   ├── PortalBlessing.tsx
+│   │   ├── PortalTransition.tsx
+│   │   ├── ProtectedRoute.tsx
+│   │   ├── QuestEngine.tsx
+│   │   ├── RequireAuth.tsx
+│   │   ├── SacredFooter.tsx
+│   │   ├── SacredKeyGate.tsx
+│   │   ├── Sanctum
+│   │   ├── Settings.tsx
+│   │   ├── SoulStarAchievements.tsx
+│   │   ├── SpiralAchievements.tsx
+│   │   ├── SpiralBreathConstellation
+│   │   │   ├── SpiralBreathLoader.tsx
+│   │   │   └── index.ts
+│   │   ├── SpiralBreathPortal
+│   │   │   └── SpiralBreathPortal.tsx
+│   │   ├── SpiralMemory
+│   │   │   ├── CeremonyCountdown.tsx
+│   │   │   ├── DreamPetalGallery.tsx
+│   │   │   ├── LightnessTrendGraph.tsx
+│   │   │   └── SpiralCalendar.tsx
+│   │   ├── SpiralMemoryMap.tsx
+│   │   ├── SpiralParticles.tsx
+│   │   ├── SpiralPetalCheckin
+│   │   │   ├── BreathSummary.tsx
+│   │   │   ├── LightnessSelector.tsx
+│   │   │   ├── Petal.tsx
+│   │   │   ├── PetalRing.tsx
+│   │   │   ├── SaveBreathButton.tsx
+│   │   │   └── SpiralPetalCheckinPage.tsx
+│   │   ├── SpiralSpinner.tsx
+│   │   ├── StartSession.tsx
+│   │   ├── ThemeInjector.tsx
+│   │   ├── ThresholdMessage.tsx
+│   │   ├── ThresholdUnlock.tsx
+│   │   ├── TranscriptCard.tsx
+│   │   ├── TranscriptForm.tsx
+│   │   ├── VoiceProfileSelector.tsx
+│   │   ├── VoiceRecorder.tsx
+│   │   ├── WhisperingBlessing.tsx
+│   │   ├── WildPortal
+│   │   │   ├── PortalAnimation.tsx
+│   │   │   ├── WildPetalButton.tsx
+│   │   │   ├── WildPetalGallery.tsx
+│   │   │   ├── WildPetalMessage.tsx
+│   │   │   ├── WildPetalQuests.tsx
+│   │   │   └── WildPortalPage.tsx
+│   │   ├── WisdomTransmission.tsx
+│   │   ├── _tests_
+│   │   │   ├── Header.test.tsx
+│   │   │   ├── MemoryInsights.test.tsx
+│   │   │   └── Session_Management.test.tx
+│   │   ├── agents
+│   │   │   └── elemental
+│   │   ├── auth
+│   │   │   ├── Login.tsx
+│   │   │   └── SignUp.tsx
+│   │   ├── button.tsx
+│   │   ├── feedback
+│   │   │   └── FeedbackForm.tsx
+│   │   ├── forms
+│   │   │   ├── FeedbackForm.tsx
+│   │   │   ├── JournalEntryForm.tsx
+│   │   │   └── MemoryForm.tsx
+│   │   ├── layouts
+│   │   │   └── AppLayout.tsx
+│   │   ├── login.tsx
+│   │   ├── memory
+│   │   │   └── MemoryList.tsx
+│   │   ├── oracle
+│   │   │   ├── MobileOracleChat.tsx
+│   │   │   └── mobile
+│   │   ├── queryPanel.tsx
+│   │   └── shared
+│   │       └── SaveBreathButton.tsx
+│   ├── config
+│   │   ├── orgConfig.ts
+│   │   ├── voiceProfile.ts
+│   │   └── voiceProfiles
+│   │       └── mindfulTech.ts
+│   ├── context
+│   │   └── AuthContext.tsx
+│   ├── hooks
+│   │   ├── useAuthInit.ts
+│   │   ├── useOracleCheck.ts
+│   │   ├── useOracleVoice.ts
+│   │   ├── useSession.ts
+│   │   └── useSoundEffect.ts
+│   ├── index.css
+│   ├── index.tsx
+│   ├── input.css
+│   ├── layouts
+│   │   └── AdminDashboardLayout.tsx
+│   ├── lib
+│   │   ├── __tests__
+│   │   │   └── getVoiceProfile.test.ts
+│   │   ├── agentPrompts.ts
+│   │   ├── agents.ts
+│   │   ├── apiService.ts
+│   │   ├── authHelpers.ts
+│   │   ├── brandingConfig.ts
+│   │   ├── facets.ts
+│   │   ├── getBranding.ts
+│   │   ├── getVoiceProfile.ts
+│   │   ├── hooks
+│   │   │   ├── useAuth.ts
+│   │   │   ├── useAuthInit.ts
+│   │   │   ├── useOracleCheck.ts
+│   │   │   ├── useSessionLogger.ts
+│   │   │   └── useVoiceProfile.ts
+│   │   ├── journals.ts
+│   │   ├── seedJournal.ts
+│   │   ├── supabaseClient.test.ts
+│   │   ├── supabaseClient.ts
+│   │   ├── updateVoiceProfile.ts
+│   │   ├── useSupabaseAdmin.ts
+│   │   └── voiceProfiles.ts
+│   ├── main.tsx
+│   ├── pages
+│   │   ├── 404.tsx
+│   │   ├── AboutPage.tsx
+│   │   ├── AuthPage.tsx
+│   │   ├── BlessingArrival.tsx
+│   │   ├── BlessingPage.tsx
+│   │   ├── ChatPage.tsx
+│   │   ├── CreateMemory.tsx
+│   │   ├── DebugJwt.tsx
+│   │   ├── GetTokenDebug.tsx
+│   │   ├── HomePage.tsx
+│   │   ├── JournalForm.tsx
+│   │   ├── LaunchCelebration.tsx
+│   │   ├── LoginPage.tsx
+│   │   ├── LoginSuccessPage.tsx
+│   │   ├── MagicLinkSentPage.tsx
+│   │   ├── MemoryBlossom.tsx
+│   │   ├── MemoryCreatePage.tsx
+│   │   ├── MemoryInsightsPage.tsx
+│   │   ├── MemoryListPage.tsx
+│   │   ├── MemoryUpdatePage.tsx
+│   │   ├── NotFoundPage.tsx
+│   │   ├── OracleCeremonyPage.tsx
+│   │   ├── OraclePage.tsx
+│   │   ├── QA.md
+│   │   ├── Sanctum
+│   │   ├── SpiralBreathConstellation.tsx
+│   │   ├── SpiralBreathMap.tsx
+│   │   ├── SpiralogicPath.tsx
+│   │   ├── SpiralogicPathPage.tsx
+│   │   ├── TranscriptsPage.test.tsx
+│   │   ├── TranscriptsPage.tsx
+│   │   ├── WelcomePage.tsx
+│   │   ├── __tests__
+│   │   │   ├── AboutPage.tsx
+│   │   │   ├── ChatInterface.test.tsx
+│   │   │   └── HomePage.tsx
+│   │   ├── admin
+│   │   │   ├── checkins.tsx
+│   │   │   ├── feedback.tsx
+│   │   │   ├── journal.tsx
+│   │   │   ├── memories.tsx
+│   │   │   ├── prompts.tsx
+│   │   │   └── sacred-key-generator
+│   │   ├── agents
+│   │   │   ├── [element].tsx
+│   │   │   ├── aether.tsx
+│   │   │   ├── air.tsx
+│   │   │   ├── earth.tsx
+│   │   │   ├── fire.tsx
+│   │   │   └── water.tsx
+│   │   ├── auth.tsx
+│   │   ├── beta-portal.tsx
+│   │   ├── beta-welcome.tsx
+│   │   ├── changelog.md
+│   │   ├── collective-breath.tsx
+│   │   ├── collective-rooms.tsx
+│   │   ├── convenant.tsx
+│   │   ├── covenant
+│   │   │   └── index.ts
+│   │   ├── dashboard.tsx
+│   │   ├── debug.tsx
+│   │   ├── docs
+│   │   │   ├── archetypes.tsx
+│   │   │   ├── changelog.tsx
+│   │   │   ├── index.tsx
+│   │   │   ├── manifesto.tsx
+│   │   │   ├── roles.tsx
+│   │   │   └── system.tsx
+│   │   ├── dream-journal.tsx
+│   │   ├── dream-portal.tsx
+│   │   ├── elemental
+│   │   ├── facilitator
+│   │   │   └── index.jsx
+│   │   ├── facilitator.tsx
+│   │   ├── feedback.tsx
+│   │   ├── fieldpulse
+│   │   │   └── index.tsx
+│   │   ├── guild
+│   │   │   ├── README.md
+│   │   │   ├── dao.tsx
+│   │   │   ├── index.ts
+│   │   │   ├── initiate.tsx
+│   │   │   ├── proposals.tsx
+│   │   │   └── propose.tsx
+│   │   ├── index.tsx
+│   │   ├── journal
+│   │   │   ├── JournalList.tsx
+│   │   │   └── index.tsx
+│   │   ├── journal-timeline.tsx
+│   │   ├── journal.tsx
+│   │   ├── landing.tsx
+│   │   ├── launch-sprint.ts
+│   │   ├── launch.md
+│   │   ├── memories
+│   │   │   ├── InsightGeneration.tsx
+│   │   │   ├── MemoryForm.tsx
+│   │   │   └── MemoryList.tsx
+│   │   ├── memories.tsx
+│   │   ├── memory.tsx
+│   │   ├── onboarding.tsx
+│   │   ├── oracle
+│   │   │   ├── [element].tsx
+│   │   │   └── index.tsx
+│   │   ├── oracle-journal.tsx
+│   │   ├── portal
+│   │   │   ├── meet-oracle.tsx
+│   │   │   ├── memo
+│   │   │   └── welcome.tsx
+│   │   ├── select-oracle.tsx
+│   │   ├── settings.tsx
+│   │   ├── spiral-calendar.tsx
+│   │   ├── spiral-checkin.tsx
+│   │   ├── spiral-portal.tsx
+│   │   ├── timeline.tsx
+│   │   ├── whitelabel-preview.tsx
+│   │   ├── wild-petal-quests.tsx
+│   │   └── wild-portal.tsx
+│   ├── routes
+│   │   ├── auth.routes.ts
+│   │   ├── index.ts
+│   │   └── main.tsx
+│   ├── seeds
+│   │   ├── oracleKnowledgeSeeds.ts
+│   │   └── wildPetalMessages.ts
+│   ├── services
+│   │   ├── spiralBreathAffirmationService.ts
+│   │   ├── spiralBreathDetectionService.ts
+│   │   ├── spiralBreathEvolutionTrackerService.ts
+│   │   ├── spiralReflectionExporterService.ts
+│   │   ├── spiralReflectionPromptService.ts
+│   │   ├── spiralThresholdTrackerService.ts
+│   │   ├── spiralogicPromptsService.ts
+│   │   └── symbolicTagService.ts
+│   ├── setupTests.ts
+│   ├── styles
+│   │   ├── brandThemes.ts
+│   │   └── tailwind.css
+│   ├── test-utils.tsx
+│   ├── tests
+│   │   └── setup.ts
+│   └── utils
+│       └── autoSave.ts
+├── structure-frontend.txt
+├── structure.txt
+├── supabase
+│   ├── README.md
+│   └── functions
+│       └── send-welcome-email.tsx
+├── tailwind.config.cjs
+├── tailwind.config.js
+├── tsconfig.json
+├── tsconfig.node.json
+├── vercel.json
+└── vite.config.ts
+
+86 directories, 300 files

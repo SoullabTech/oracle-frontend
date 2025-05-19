@@ -1,4 +1,4 @@
-import Header from '@/components/Header';
+import { Header } from '@/components/Header';
 import HoloflowerSvg from '@/components/HoloflowerSvg';
 import { PageTransition } from '@/components/PageTransition';
 import { SacredFooter } from '@/components/SacredFooter';
@@ -7,10 +7,14 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { useAuth } from '@/context/AuthContext';
 import { getVoiceProfile } from '@/lib/getVoiceProfile';
-import { supabase } from '@/lib/supabaseClient';
+import { supabase } from '@/lib/supabaseClient'; // Import Supabase client
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+// Journal Entry Components
+import JournalForm from './journal/JournalForm';
+import JournalList from './journal/JournalList';
 
 interface UserProfile {
   assignedGuide: string;
@@ -161,6 +165,19 @@ export default function DashboardPage() {
                   </div>
                 </CardContent>
               </Card>
+
+              {/* Journal Section */}
+              {user && (
+                <>
+                  <Card>
+                    <CardContent className="p-6">
+                      <h2 className="text-xl font-semibold">Your Journal</h2>
+                      <JournalForm userId={user.id} />
+                      <JournalList userId={user.id} />
+                    </CardContent>
+                  </Card>
+                </>
+              )}
             </div>
           )}
         </main>
