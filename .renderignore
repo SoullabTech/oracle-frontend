@@ -1,0 +1,29 @@
+# Node & build artifacts
+node_modules
+dist
+coverage
+*.log
+*.tsbuildinfo
+
+# Version control
+.git
+.gitignore
+.vscode
+
+# Tests and docs
+test
+tests
+__tests__
+coverage
+src/components/__tests__/
+src/tests/
+README.md
+readme.md
+
+# Local config and environment files
+.env
+.env.local
+
+# Assets not needed at build
+public/sounds/
+supabase/functions/

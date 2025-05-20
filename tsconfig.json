@@ -1,33 +1,38 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
+    "target": "ES2022",
+    "lib": ["DOM", "DOM.Iterable", "ES2023"],
     "module": "ESNext",
-    "moduleResolution": "Node",
-    "lib": ["DOM", "ESNext"],
+    "moduleResolution": "bundler",
     "jsx": "react-jsx",
-    "esModuleInterop": true,
-    "moduleDetection": "force",
-    "skipLibCheck": true,
-    "strict": true,
+    "allowImportingTsExtensions": true,
+    "isolatedModules": true,
     "resolveJsonModule": true,
-    "allowJs": false,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+
+    /* Linting & Safety */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+
+    /* Path Aliases (Optional) */
     "baseUrl": ".",
-
-    // ✅ Absolute imports from apps & packages
     "paths": {
-      "@/*": ["src/*"],                           // Local app-level imports
-      "@frontend/*": ["apps/frontend/src/*"],     // Frontend monorepo apps
-      "@backend/*": ["apps/backend/src/*"],       // Backend monorepo apps
-      "@agents": ["packages/agents/src"],         // Shared agents
-      "@components/*": ["src/components/*"],      // Optional: frontend alias
-      "@lib/*": ["src/lib/*"],
-      "@test-utils/*": ["src/test-utils/*"]
-    },
-
-    // ✅ Vite & Vitest compatibility
-    "types": ["vite/client", "vitest/globals"],
-
-    "noEmit": true
+      "@/*": ["src/*"]
+    }
   },
-  "exclude": ["node_modules", "dist", "coverage"]
+  "include": [
+    "src",
+    "server",
+    "apps",
+    "oracle-backend",
+    "oracle-prefect",
+    "vite.config.ts",
+    "vitest.config.ts"
+  ],
+  "exclude": ["node_modules", "dist", ".next"]
 }

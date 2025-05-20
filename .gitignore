@@ -72,3 +72,6 @@ docker-compose*.yml
 # ✅ Miscellaneous project flags
 # ─────────────────────────────────────────────
 .fixes-complete/
+# Never commit secrets
+.env
+node_modules

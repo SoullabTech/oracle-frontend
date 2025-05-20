@@ -4,17 +4,18 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "build:swisseph": "cd swisseph && emcc sweph.c swephlib.c swedate.c swehouse.c swehel.c swecl.c swejpl.c swemini.c swephgen4.c swevents.c swemplan.c \\\n  -O3 \\\n  -s MODULARIZE=1 \\\n  -s EXPORT_NAME=\"createSwissephModule\" \\\n  -s ALLOW_MEMORY_GROWTH=1 \\\n  -s EXPORTED_FUNCTIONS='[\"_JulianDay\",\"_calc_ut\"]' \\\n  -s EXTRA_EXPORTED_RUNTIME_METHODS='[\"cwrap\"]' \\\n  --no-entry \\\n  -Wl,--allow-multiple-definition \\\n  -o ../public/swisseph.js",
     "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
-    "boot": "concurrently \"npm:start\" \"npm:dev\"",
+    "build": "vite build --config vite.config.prod.ts",
+    "preview": "vite preview --port 8080",
+    "boot": "concurrently \"npm run start\" \"npm run dev\"",
     "lint": "eslint \"src/**/*.{ts,tsx}\"",
     "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,css,md}\"",
     "start": "node server.js",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
     "test:watch": "vitest",
-    "test:a11y": "vitest --include '**/*.a11y.test.tsx'"
+    "test:a11y": "vitest --include \"**/*.a11y.test.tsx\""
   },
   "dependencies": {
     "@supabase/auth-helpers-react": "^0.5.0",
@@ -31,10 +32,13 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-helmet": "^6.1.0",
+    "react-icons": "^5.5.0",
     "react-router-dom": "^7.6.0",
     "react-tsparticles": "^2.12.2",
     "tsparticles": "^3.8.1",
-    "zustand": "^5.0.3"
+    "zustand": "^5.0.3",
+    "react-datepicker": "^4.16.0",
+    "recharts": "^2.6.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.52.0",

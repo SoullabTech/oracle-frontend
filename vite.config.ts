@@ -1,8 +1,10 @@
+// vite.config.ts
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import { defineConfig, loadEnv } from 'vite';
 
 export default defineConfig(({ mode }) => {
+  // Load only VITE_ environment variables
   const env = loadEnv(mode, process.cwd(), 'VITE_');
   const port = Number(env.VITE_PORT) || 3000;
 
@@ -15,6 +17,12 @@ export default defineConfig(({ mode }) => {
         '@lib': path.resolve(__dirname, 'src/lib'),
         '@services': path.resolve(__dirname, 'src/services'),
         '@test-utils': path.resolve(__dirname, 'src/test-utils'),
+        '@context': path.resolve(__dirname, 'src/context'),
+        react: path.resolve('./node_modules/react'),
+        '@hooks': path.resolve(__dirname, 'src/hooks'),
+        '@pages': path.resolve(__dirname, 'src/pages'),
+        '@styles': path.resolve(__dirname, 'src/styles'),
+        '@types': path.resolve(__dirname, 'src/types'),
       },
     },
     build: {
