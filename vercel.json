@@ -1,15 +1,19 @@
 {
+  "version": 2,
   "builds": [
     {
-      "src": "vite.config.prod.ts",
+      "src": "oracle-frontend/vite.config.ts",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "dist"
+        "distDir": "oracle-frontend/dist"
       }
     }
   ],
   "routes": [
-    { "src": "/(.*)", "dest": "/" }
+    {
+      "src": "/(.*)",
+      "dest": "/"
+    }
   ],
   "ignore": [
     "node_modules",
