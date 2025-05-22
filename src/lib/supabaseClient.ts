@@ -1,20 +1,34 @@
 // src/lib/supabaseClient.ts
-import { Database } from '@/types/supabase'; // Adjust if needed
+
+import { Database } from '@/types/supabase';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+// ✅ Detect runtime environment: Vite (browser) or Node (Playwright)
+const isViteEnv = typeof import.meta !== 'undefined' && import.meta.env;
+const viteEnv = isViteEnv ? import.meta.env : undefined;
+const nodeEnv = !isViteEnv && (globalThis as any)?.import?.meta?.env
+  ? (globalThis as any).import.meta.env
+  : process.env;
+
+// ✅ Pull in the correct Supabase credentials
+const supabaseUrl = viteEnv?.VITE_SUPABASE_URL || nodeEnv?.VITE_SUPABASE_URL;
+const supabaseAnonKey = viteEnv?.VITE_SUPABASE_ANON_KEY || nodeEnv?.VITE_SUPABASE_ANON_KEY;
 
 if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error('❌ Missing VITE_SUPABASE_URL or VITE_SUPABASE_ANON_KEY in your .env');
+  console.error('❌ Missing Supabase credentials');
+  console.error('⛔ VITE_SUPABASE_URL:', supabaseUrl);
+  console.error('⛔ VITE_SUPABASE_ANON_KEY:', supabaseAnonKey);
+  throw new Error('❌ Missing VITE_SUPABASE_URL or VITE_SUPABASE_ANON_KEY in environment');
 }
 
+// ✅ Create Supabase client
 export const supabase: SupabaseClient<Database> = createClient(
   supabaseUrl,
   supabaseAnonKey
 );
 
-// 🔐 Utility: Fetch full profile
+// ─────────────────────────────────────────────────
+// 🔧 Utility: Fetch user profile
 export const fetchUserProfile = async (userId: string) => {
   const { data, error } = await supabase
     .from('user_profiles')
@@ -23,13 +37,14 @@ export const fetchUserProfile = async (userId: string) => {
     .single();
 
   if (error) {
-    console.error('Error fetching user profile:', error);
+    console.error('❌ Error fetching user profile:', error.message);
     return null;
   }
+
   return data;
 };
 
-// ✍️ Utility: Update user profile
+// 🔧 Utility: Update user profile
 export const updateUserProfile = async (
   userId: string,
   profileData: { full_name?: string; role?: string }
@@ -40,26 +55,29 @@ export const updateUserProfile = async (
     .eq('user_id', userId);
 
   if (error) {
-    console.error('Error updating user profile:', error);
+    console.error('❌ Error updating user profile:', error.message);
     return null;
   }
+
   return data;
 };
 
-// ✉️ Magic link auth
+// 📩 Utility: Send magic link
 export const signInWithMagicLink = async (email: string) => {
   const { error } = await supabase.auth.signInWithOtp({ email });
+
   if (error) {
-    console.error('Error sending magic link:', error.message);
+    console.error('❌ Error sending magic link:', error.message);
     return false;
   }
+
   return true;
 };
 
-// 🔓 Sign out
+// 🚪 Utility: Sign out
 export const signOut = async () => {
   const { error } = await supabase.auth.signOut();
   if (error) {
-    console.error('Error signing out:', error.message);
+    console.error('❌ Error signing out:', error.message);
   }
 };

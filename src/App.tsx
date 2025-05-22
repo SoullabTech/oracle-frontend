@@ -1,4 +1,3 @@
-// src/App.tsx
 import { Suspense } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -26,7 +25,7 @@ function AnimatedRoutes() {
   const location = useLocation();
   return (
     <PageTransition key={location.pathname}>
-      <Routes location={location} key={location.pathname}>
+      <Routes location={location}>
         <Route path="/" element={<Navigate to="/login" replace />} />
         {[...publicRoutes, ...protectedRoutes, fallbackRoute].map(({ path, element }) => (
           <Route key={path} path={path} element={element} />
@@ -37,11 +36,11 @@ function AnimatedRoutes() {
 }
 
 export default function App() {
-  const authReady = useAuthInit(); // ✅ Wait for Supabase to check session
-  useOracleCheck(); // Optional Oracle init
+  const authReady = useAuthInit();
+  useOracleCheck();
 
-  const { swe, loading: ephLoading, error: ephError } = useSwissEph(); // Ephemeris loading
-  const { date, setDate } = useDate(); // Global date state
+  const { swe, loading: ephLoading, error: ephError } = useSwissEph();
+  const { date, setDate } = useDate();
 
   if (!authReady) {
     return <div className="text-center p-6 text-gray-500">🔐 Initializing authentication…</div>;
@@ -53,8 +52,7 @@ export default function App() {
       <FaviconSetter />
       <Layout>
         <div className="p-6 grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-
-          {/* 1. Date Selector */}
+          {/* 1. Date Picker */}
           <div className="bg-white rounded-2xl shadow-lg p-4 md:col-span-2 lg:col-span-1">
             <label className="block mb-2 font-medium">📅 Select date/time (UTC):</label>
             <DatePicker
@@ -67,57 +65,18 @@ export default function App() {
             />
           </div>
 
-          {/* 2. Sun Position */}
-          <div className="bg-white rounded-2xl shadow-lg p-4">
-            {ephLoading ? (
-              <div>☀️ Loading ephemeris…</div>
-            ) : ephError ? (
-              <div className="text-red-500">❌ Error loading ephemeris</div>
-            ) : (
-              <SunPosition date={date} />
-            )}
-          </div>
+          {/* 2–5: Ephemeris */}
+          <div className="bg-white rounded-2xl shadow-lg p-4">{ephLoading ? '☀️ Loading ephemeris…' : ephError ? '❌ Error loading ephemeris' : <SunPosition date={date} />}</div>
+          <div className="bg-white rounded-2xl shadow-lg p-4">{ephLoading ? '📘 Loading…' : ephError ? '❌ Error' : <JulianDayDisplay />}</div>
+          <div className="bg-white rounded-2xl shadow-lg p-4 lg:col-span-2 overflow-auto">{ephLoading ? '🪐 Loading…' : ephError ? '❌ Error' : <PlanetPositions date={date} />}</div>
+          <div className="bg-white rounded-2xl shadow-lg p-4 lg:col-span-3">{ephLoading ? '📡 Loading chart…' : ephError ? '❌ Chart error' : <PlanetChart date={date} />}</div>
 
-          {/* 3. Julian Day Display */}
-          <div className="bg-white rounded-2xl shadow-lg p-4">
-            {ephLoading ? (
-              <div>📘 Loading ephemeris…</div>
-            ) : ephError ? (
-              <div className="text-red-500">❌ Error loading ephemeris</div>
-            ) : (
-              <JulianDayDisplay />
-            )}
-          </div>
-
-          {/* 4. Planet Positions Table */}
-          <div className="bg-white rounded-2xl shadow-lg p-4 lg:col-span-2 overflow-auto">
-            {ephLoading ? (
-              <div>🪐 Loading ephemeris…</div>
-            ) : ephError ? (
-              <div className="text-red-500">❌ Error loading ephemeris</div>
-            ) : (
-              <PlanetPositions date={date} />
-            )}
-          </div>
-
-          {/* 5. Planetary Radar Chart */}
-          <div className="bg-white rounded-2xl shadow-lg p-4 lg:col-span-3">
-            {ephLoading ? (
-              <div>📡 Loading chart…</div>
-            ) : ephError ? (
-              <div className="text-red-500">❌ Chart error</div>
-            ) : (
-              <PlanetChart date={date} />
-            )}
-          </div>
-
-          {/* 6. Router Container */}
+          {/* 6. Routes */}
           <div className="bg-white rounded-2xl shadow-lg p-4 lg:col-span-3">
             <Suspense fallback={<div className="text-center p-6">🧭 Loading routes…</div>}>
               <AnimatedRoutes />
             </Suspense>
           </div>
-
         </div>
       </Layout>
     </ErrorBoundary>

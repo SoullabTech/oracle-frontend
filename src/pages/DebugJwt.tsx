@@ -1,3 +1,4 @@
+// src/pages/DebugJwt.tsx
 import { getJwt } from '@/lib/authHelpers';
 import { useEffect, useState } from 'react';
 

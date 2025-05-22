@@ -1,4 +1,4 @@
-import { render, RenderOptions } from '@testing-library/react';
+import { render, RenderOptions } from '@test-utils/customRender';
 import { ReactElement, ReactNode } from 'react';
 import { BrowserRouter, MemoryRouter } from 'react-router-dom';
 
@@ -34,6 +34,6 @@ const customRender = (
 };
 
 // Re-export everything
-export * from '@testing-library/react';
+export * from '@test-utils/customRender';
 export { customRender as render };
 

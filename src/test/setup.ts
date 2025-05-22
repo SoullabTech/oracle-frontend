@@ -1,19 +1,12 @@
-import '@testing-library/jest-dom';
+// src/test/playwright/setup.ts
+import dotenv from 'dotenv';
+dotenv.config({ path: '.env.test' }); // ✅ Load before supabase import
 
-// Mock matchMedia for UI libraries using it
-Object.defineProperty(window, 'matchMedia', {
-  writable: true,
-  value: (query: string) => ({
-    matches: false,
-    media: query,
-    onchange: null,
-    addListener: vi.fn(), // deprecated
-    removeListener: vi.fn(), // deprecated
-    addEventListener: vi.fn(),
-    removeEventListener: vi.fn(),
-    dispatchEvent: vi.fn(),
-  }),
-});
+import { seedTestOracle } from '@/lib/seedOracles';
 
-// Mock scrollIntoView for refs used in test environments
-window.HTMLElement.prototype.scrollIntoView = vi.fn();
+const globalSetup = async () => {
+  console.log('🌱 Seeding test oracle...');
+  await seedTestOracle();
+};
+
+export default globalSetup;

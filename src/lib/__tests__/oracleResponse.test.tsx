@@ -1,5 +1,5 @@
 import ChatInterface from '@/components/ChatInterface';
-import { render, screen } from '@testing-library/react';
+import { render, screen } from '@test-utils/customRender';
 import { vi } from 'vitest';
 
 vi.mock('@/hooks/useChatInput', () => ({

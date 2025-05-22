@@ -4,9 +4,7 @@ import path from 'path';
 import { defineConfig, loadEnv } from 'vite';
 
 export default defineConfig(({ mode }) => {
-  // Load only VITE_ environment variables
-  const env = loadEnv(mode, process.cwd(), 'VITE_');
-  const port = Number(env.VITE_PORT) || 3000;
+  const env = loadEnv(mode, process.cwd(), '');
 
   return {
     plugins: [react()],
@@ -18,7 +16,6 @@ export default defineConfig(({ mode }) => {
         '@services': path.resolve(__dirname, 'src/services'),
         '@test-utils': path.resolve(__dirname, 'src/test-utils'),
         '@context': path.resolve(__dirname, 'src/context'),
-        react: path.resolve('./node_modules/react'),
         '@hooks': path.resolve(__dirname, 'src/hooks'),
         '@pages': path.resolve(__dirname, 'src/pages'),
         '@styles': path.resolve(__dirname, 'src/styles'),
@@ -44,7 +41,7 @@ export default defineConfig(({ mode }) => {
       },
     },
     server: {
-      port,
+      port: 3000,
       proxy: {
         '/api': {
           target: 'http://localhost:4000',
@@ -67,6 +64,14 @@ export default defineConfig(({ mode }) => {
       globals: true,
       environment: 'jsdom',
       setupFiles: './src/setupTests.ts',
+      exclude: [
+        'node_modules',
+        'dist',
+        '.idea',
+        '.git',
+        '.cache',
+        'tests/playwright/**'
+      ]
     },
   };
 });

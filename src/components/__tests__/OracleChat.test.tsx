@@ -1,5 +1,5 @@
 // src/components/__tests__/OracleChat.test.tsx
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@test-utils/customRender';
 import ChatInterface from '../ChatInterface';
 
 describe('Oracle Chat', () => {

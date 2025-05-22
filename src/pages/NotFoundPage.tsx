@@ -1,3 +1,4 @@
+// src/pages/NotFoundPage.tsx
 import { Link } from 'react-router-dom';
 
 export default function NotFoundPage() {

@@ -1,20 +1,24 @@
+// src/routes.tsx
+
+import { RouteObject } from 'react-router-dom';
+
+import AstroFormPage from '@/pages/astro';
 import AuthPage from '@/pages/AuthPage';
 import DashboardPage from '@/pages/DashboardPage';
 import DreamOraclePage from '@/pages/DreamOraclePage';
-import AstroFormPage from '@/pages/astro'; // ✅ Import AstroFormPage
 import NotFoundPage from '@/pages/NotFoundPage';
 
-export const publicRoutes = [
+export const publicRoutes: RouteObject[] = [
   { path: '/login', element: <AuthPage /> },
-  { path: '/astro', element: <AstroFormPage /> }, // ✅ Add /astro route
+  { path: '/astro', element: <AstroFormPage /> },
 ];
 
-export const protectedRoutes = [
+export const protectedRoutes: RouteObject[] = [
   { path: '/dashboard', element: <DashboardPage /> },
   { path: '/dream-oracle', element: <DreamOraclePage /> },
 ];
 
-export const fallbackRoute = {
+export const fallbackRoute: RouteObject = {
   path: '*',
   element: <NotFoundPage />,
 };

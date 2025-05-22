@@ -18,7 +18,7 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
       const {
         data: { session },
         error,
-      } = await supabase.auth.getSession(); // getSession → includes user if logged in
+      } = await supabase.auth.getSession();
 
       if (error || !session?.user) {
         setAuthenticated(false);
@@ -38,10 +38,8 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
   }
 
   if (!authenticated) {
-    // send them to login, preserving where they came from
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  // they’re in—wrap their page in your transition
   return <PageTransition>{children}</PageTransition>;
 }

@@ -1,5 +1,5 @@
 // src/pages/__tests__/HomePage.tsx
-import { render, screen } from '@testing-library/react';
+import { render, screen } from '@test-utils/customRender';
 import { MemoryRouter } from 'react-router-dom';
 import HomePage from '../HomePage';
 

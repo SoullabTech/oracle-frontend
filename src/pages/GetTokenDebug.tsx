@@ -1,3 +1,4 @@
+// src/pages/GetTokenDebug.tsx
 import { supabase } from '@/lib/supabaseClient';
 import { useEffect } from 'react';
 

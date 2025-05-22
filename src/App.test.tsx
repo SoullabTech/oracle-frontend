@@ -1,5 +1,5 @@
 // src/App.test.tsx
-import { render, screen, within } from '@testing-library/react';
+import { render, screen, within } from '@test-utils/customRender';
 import { RouterProvider, createMemoryRouter } from 'react-router-dom';
 import App from './App';
 
